@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:maju_trackmate/utils/constant_values/size.dart';
+import 'package:maju_trackmate/widgets/student/logout_button.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -39,13 +40,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 color: Colors.white,
                                 fontSize: 30,
                                 fontWeight: FontWeight.bold)),
-                        IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
-                              Icons.more_vert,
-                              color: Colors.white,
-                              size: 35,
-                            )),
+                        getLogoutButton(),
                       ],
                     ),
                     Image.asset(

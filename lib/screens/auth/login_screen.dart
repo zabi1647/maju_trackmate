@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:maju_trackmate/controller/apis/auth/login_api.dart';
 import 'package:maju_trackmate/screens/auth/first_auth_screen.dart';
-import 'package:maju_trackmate/screens/student/student_landing_page.dart';
 import 'package:maju_trackmate/utils/constant_values/size.dart';
+import 'package:maju_trackmate/utils/dialog/my_dialogs.dart';
 
 class LoginScreen extends StatefulWidget {
   final String type;
@@ -114,7 +115,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       alignment: Alignment.centerRight,
                       child: ElevatedButton(
                         onPressed: () {
-                          Get.off(() => const StudentLandingPageController());
+                          // Get.off(() => const StudentLandingPageController());
+                          if (emailController.text.isEmpty ||
+                              passwordController.text.isEmpty) {
+                            MyDialogs.error(msg: "Please fill all fields");
+                            return;
+                          }
+                          SignInApi().studentLogin(
+                              emailController.text, passwordController.text);
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xff0D4065),

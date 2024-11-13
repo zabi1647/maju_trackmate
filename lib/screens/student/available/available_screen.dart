@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:maju_trackmate/utils/constant_values/size.dart';
+import 'package:maju_trackmate/widgets/student/logout_button.dart';
 
 class AvailableScreen extends StatefulWidget {
   const AvailableScreen({super.key});
@@ -34,13 +35,7 @@ class _AvailableScreenState extends State<AvailableScreen> {
                   children: [
                     Align(
                       alignment: Alignment.topRight,
-                      child: IconButton(
-                          onPressed: () {},
-                          icon: const Icon(
-                            Icons.more_vert,
-                            color: Colors.white,
-                            size: 35,
-                          )),
+                      child: getLogoutButton(),
                     ),
                     Image.asset(
                       'assets/png/icons/student/availiablity.png',

@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:maju_trackmate/model/student_classes/class_schedual.dart';
 import 'package:maju_trackmate/model/student_classes/todo_item.dart';
+import 'package:maju_trackmate/screens/student/homepage/home_page_screens/academic_calender.dart';
 import 'package:maju_trackmate/screens/student/homepage/home_page_screens/profile_screen.dart';
 import 'package:maju_trackmate/utils/constant_values/get_weekday.dart';
 import 'package:maju_trackmate/utils/constant_values/size.dart';
 import 'package:maju_trackmate/widgets/student/classes_timing_widget.dart';
+import 'package:maju_trackmate/widgets/student/logout_button.dart';
 
 class HomePageScreen extends StatefulWidget {
   const HomePageScreen({super.key});
@@ -134,13 +136,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                         SizedBox(
                           width: mq.width * 0.02,
                         ),
-                        IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
-                              Icons.more_vert,
-                              color: Colors.white,
-                              size: 35,
-                            )),
+                        getLogoutButton(),
                       ],
                     ),
                     // SizedBox(
@@ -340,7 +336,9 @@ class _HomePageScreenState extends State<HomePageScreen> {
                           ],
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.to(() => const AcademicCalender());
+                          },
                           icon: const ImageIcon(
                             AssetImage(
                                 "assets/png/icons/student/calender_icon.png"),
