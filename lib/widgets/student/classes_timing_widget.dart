@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:maju_trackmate/model/student_classes/class_schedual.dart';
+
+import 'package:maju_trackmate/model/student_classes/home_page/time_table_data.dart';
+
 class ScheduleItemWidget extends StatelessWidget {
-  final ScheduleItem item;
+  final Timetable item;
   final bool isLast;
 
-  const ScheduleItemWidget({Key? key, required this.item, this.isLast = false})
-      : super(key: key);
+  const ScheduleItemWidget(
+      {super.key, required this.item, this.isLast = false});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,7 @@ class ScheduleItemWidget extends StatelessWidget {
                 Container(
                   width: 12,
                   height: 12,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     color: Colors.blue,
                   ),
@@ -49,14 +51,14 @@ class ScheduleItemWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '${item.startTime} ${item.endTime}',
-                  style: TextStyle(
+                  '${item.startTime} - ${item.endTime}',
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
-                  '${item.subject} (${item.classRoom})',
+                  '${item.courseName} (${item.room})',
                   style: TextStyle(
                     color: Colors.grey[600],
                   ),

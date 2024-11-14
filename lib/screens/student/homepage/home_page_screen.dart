@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:maju_trackmate/model/student_classes/class_schedual.dart';
+import 'package:maju_trackmate/controller/apis/student/get_timetable_data.dart';
+import 'package:maju_trackmate/model/student_classes/home_page/time_table_data.dart';
 import 'package:maju_trackmate/model/student_classes/todo_item.dart';
 import 'package:maju_trackmate/screens/student/homepage/home_page_screens/academic_calender.dart';
+import 'package:maju_trackmate/screens/student/homepage/home_page_screens/news_event_screen.dart';
 import 'package:maju_trackmate/screens/student/homepage/home_page_screens/profile_screen.dart';
 import 'package:maju_trackmate/utils/constant_values/get_weekday.dart';
 import 'package:maju_trackmate/utils/constant_values/size.dart';
@@ -27,27 +29,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
     'Sun'
   ];
 
-  // Content for each day
-  final Map<String, List<ScheduleItem>> daySchedules = {
-    'Mon': [
-      ScheduleItem('10:00AM', '11:30AM', 'Software Re-Engineering', 'CG-C8'),
-      ScheduleItem(
-          '11:30AM', '01:00PM', 'Information & Network Security', 'CG-C6'),
-    ],
-    'Tue': [
-      ScheduleItem('09:00AM', '10:30AM', 'Data Structures', 'CG-A3'),
-      ScheduleItem('11:00AM', '12:30PM', 'Machine Learning', 'CG-B5'),
-    ],
-    'Wed': [
-      ScheduleItem('10:30AM', '12:00PM', 'Cloud Computing', 'CG-D2'),
-      ScheduleItem('02:00PM', '03:30PM', 'Artificial Intelligence', 'CG-E7'),
-    ],
-    // Add schedules for other days
-    'Thu': [],
-    'Fri': [],
-    'Sat': [],
-    'Sun': [],
-  };
+  Map<String, List<Timetable>> daySchedules = {};
 
   // Track the selected day
   String _selectedDay = 'Mon';
@@ -130,18 +112,15 @@ class _HomePageScreenState extends State<HomePageScreen> {
                           "MAJU TRACKMATE",
                           style: TextStyle(
                               color: Colors.white,
-                              fontSize: 30,
+                              fontSize: 25,
                               fontWeight: FontWeight.bold),
                         ),
                         SizedBox(
-                          width: mq.width * 0.02,
+                          width: mq.width * 0.1,
                         ),
                         getLogoutButton(),
                       ],
                     ),
-                    // SizedBox(
-                    //   height: mq.height * 0.02,
-                    // ),
                     Row(
                       children: [
                         Padding(
@@ -272,30 +251,70 @@ class _HomePageScreenState extends State<HomePageScreen> {
                             .toList(),
                       ),
                     ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: daySchedules[_selectedDay]!.isNotEmpty
-                            ? ListView.builder(
-                                itemCount: daySchedules[_selectedDay]!.length,
-                                itemBuilder: (context, index) {
-                                  return ScheduleItemWidget(
-                                    item: daySchedules[_selectedDay]![index],
-                                    isLast: index ==
-                                        daySchedules[_selectedDay]!.length - 1,
-                                  );
-                                },
-                              )
-                            : const Center(
-                                child: Text(
-                                  'No schedule for this day',
-                                  style: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 18,
-                                  ),
+                    FutureBuilder<TimeTableData>(
+                      future: GetTimeTableData().fetchData(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else if (snapshot.hasError) {
+                          return const Center(
+                            child: Text("Error fetching data"),
+                          );
+                        } else if (!snapshot.hasData ||
+                            snapshot.data!.timetable == null) {
+                          return const Center(
+                            child: Text(
+                              'No schedule available',
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 18,
+                              ),
+                            ),
+                          );
+                        } else {
+                          final TimeTableData timeTableData = snapshot.data!;
+                          // Filter the timetable based on the selected day
+                          final List<Timetable> filteredTimetable =
+                              timeTableData.timetable!
+                                  .where((item) => item.day!
+                                      .toLowerCase()
+                                      .startsWith(_selectedDay.toLowerCase()))
+                                  .toList();
+
+                          // Check if there are any classes for the selected day
+                          if (filteredTimetable.isEmpty) {
+                            return const Center(
+                              child: Text(
+                                'No schedule for this day',
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 18,
                                 ),
                               ),
-                      ),
+                            );
+                          }
+
+                          return Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: ListView.builder(
+                                itemCount: filteredTimetable.length,
+                                itemBuilder: (context, index) {
+                                  final time = filteredTimetable[index];
+                                  return ScheduleItemWidget(
+                                    item: time,
+                                    isLast:
+                                        index == (filteredTimetable.length - 1),
+                                  );
+                                },
+                              ),
+                            ),
+                          );
+                        }
+                      },
                     ),
                   ],
                 ),
@@ -379,7 +398,9 @@ class _HomePageScreenState extends State<HomePageScreen> {
                           ],
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.to(() => const NewsEventScreen());
+                          },
                           icon: const ImageIcon(
                             AssetImage("assets/png/icons/student/speaker.png"),
                           ),

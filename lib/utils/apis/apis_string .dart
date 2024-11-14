@@ -8,3 +8,6 @@ const String studentNewsApi =
     'https://mujtaba-io-university-portal.hf.space/api/news/';
 const String studentTimeTable =
     "https://mujtaba-io-university-portal.hf.space/api/student/timetable/";
+
+const String extraCuricularApi =
+    "https://mujtaba-io-university-portal.hf.space/api/extracurricularactivities/";
