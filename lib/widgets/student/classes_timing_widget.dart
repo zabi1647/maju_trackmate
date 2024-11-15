@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:maju_trackmate/model/student_classes/extra_mile/extra_classes_Data.dart';
 
 import 'package:maju_trackmate/model/student_classes/home_page/time_table_data.dart';
 
@@ -7,6 +8,76 @@ class ScheduleItemWidget extends StatelessWidget {
   final bool isLast;
 
   const ScheduleItemWidget(
+      {super.key, required this.item, this.isLast = false});
+
+  @override
+  Widget build(BuildContext context) {
+    return IntrinsicHeight(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Time Column
+
+          // Vertical Line and Dot
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: Column(
+              children: [
+                Container(
+                  width: 12,
+                  height: 12,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.blue,
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    width: 2,
+                    color: !isLast
+                        ? Colors.blue.withOpacity(0.5)
+                        : Colors.transparent,
+                    child: CustomPaint(
+                      painter: DashedLinePainter(),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          // Subject Details
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '${item.startTime} - ${item.endTime}',
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  '${item.courseName} (${item.room})',
+                  style: TextStyle(
+                    color: Colors.grey[600],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class ExtraScheduleItemWidget extends StatelessWidget {
+  final MakeupLectures item;
+  final bool isLast;
+
+  const ExtraScheduleItemWidget(
       {super.key, required this.item, this.isLast = false});
 
   @override

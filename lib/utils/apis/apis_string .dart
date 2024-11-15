@@ -11,3 +11,5 @@ const String studentTimeTable =
 
 const String extraCuricularApi =
     "https://mujtaba-io-university-portal.hf.space/api/extracurricularactivities/";
+const String extraClassesApi =
+    'https://mujtaba-io-university-portal.hf.space/api/student/makeuplectures/';

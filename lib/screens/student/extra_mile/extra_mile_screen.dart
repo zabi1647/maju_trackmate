@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:maju_trackmate/controller/apis/student/get_extra_classes_data.dart';
 import 'package:maju_trackmate/controller/apis/student/get_extra_curricular_data.dart';
+import 'package:maju_trackmate/model/student_classes/extra_mile/extra_classes_Data.dart';
 import 'package:maju_trackmate/utils/constant_values/size.dart';
+import 'package:maju_trackmate/widgets/student/classes_timing_widget.dart';
 import 'package:maju_trackmate/widgets/student/logout_button.dart';
 
 class ExtraMileScreen extends StatefulWidget {
@@ -14,6 +17,18 @@ class _ExtraMileScreenState extends State<ExtraMileScreen> {
   // Booleans to manage visibility of containers
   bool showExtraCurricular = false;
   bool showExtraClassNotification = false;
+  final List<String> weekdays = [
+    'Mon',
+    'Tue',
+    'Wed',
+    'Thu',
+    'Fri',
+    'Sat',
+    'Sun'
+  ];
+
+  // Track the selected day
+  String _selectedDay = 'Mon';
 
   @override
   Widget build(BuildContext context) {
@@ -123,7 +138,7 @@ class _ExtraMileScreenState extends State<ExtraMileScreen> {
                             decoration: BoxDecoration(
                               color: Colors.white,
                               border: Border.all(color: Colors.black),
-                              borderRadius: BorderRadius.only(
+                              borderRadius: const BorderRadius.only(
                                 topLeft: Radius.circular(20),
                                 topRight: Radius.circular(20),
                               ),
@@ -140,7 +155,7 @@ class _ExtraMileScreenState extends State<ExtraMileScreen> {
                             height: mq.height * 0.24,
                             decoration: BoxDecoration(
                               color: Colors.grey[200],
-                              borderRadius: BorderRadius.only(
+                              borderRadius: const BorderRadius.only(
                                 bottomLeft: Radius.circular(20),
                                 bottomRight: Radius.circular(20),
                               ),
@@ -150,16 +165,16 @@ class _ExtraMileScreenState extends State<ExtraMileScreen> {
                                 builder: (context, snapshot) {
                                   if (snapshot.connectionState ==
                                       ConnectionState.waiting) {
-                                    return Center(
+                                    return const Center(
                                         child: CircularProgressIndicator());
                                   } else if (snapshot.hasError) {
-                                    return Center(
+                                    return const Center(
                                       child: Text("error"),
                                     );
                                   } else {
                                     if (snapshot.data?.activities?.isEmpty ??
                                         snapshot.data?.activities == null) {
-                                      return Center(
+                                      return const Center(
                                         child: Text("No activities found"),
                                       );
                                     } else {
@@ -216,17 +231,146 @@ class _ExtraMileScreenState extends State<ExtraMileScreen> {
                 // Extra Class Notification Container
                 if (showExtraClassNotification)
                   Container(
+                    height: mq.height * 0.34,
                     width: mq.width * 0.9,
-                    margin: const EdgeInsets.only(top: 10),
-                    padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: Colors.orange[50],
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: Colors.orange),
+                      border: Border.all(
+                        color: const Color(0xff0D4065),
+                        width: 1,
+                      ),
+                      borderRadius: BorderRadius.circular(20),
                     ),
-                    child: const Text(
-                      'Details about Extra Classes go here...',
-                      style: TextStyle(fontSize: 16, color: Colors.black),
+                    child: Column(
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 12.0),
+                          child: Row(
+                            children: [
+                              Text(
+                                "Extra Classes",
+                                style: TextStyle(
+                                    color: Color(0xff0D4065),
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                              Spacer(),
+                              ImageIcon(
+                                AssetImage(
+                                    "assets/png/icons/student/calender_icon.png"),
+                                size: 50,
+                                color: Color(0xff0D4065),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: mq.height * 0.003,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: weekdays
+                                .map((day) => GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          _selectedDay = day;
+                                        });
+                                      },
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 12, vertical: 8),
+                                        decoration: BoxDecoration(
+                                          color: _selectedDay == day
+                                              ? Colors.blue
+                                              : Colors.grey[300],
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        child: Text(
+                                          day,
+                                          style: TextStyle(
+                                            color: _selectedDay == day
+                                                ? Colors.white
+                                                : Colors.black,
+                                            fontWeight: _selectedDay == day
+                                                ? FontWeight.bold
+                                                : FontWeight.normal,
+                                          ),
+                                        ),
+                                      ),
+                                    ))
+                                .toList(),
+                          ),
+                        ),
+                        FutureBuilder<MakeUpClassesData>(
+                          future: GetExtraClassData().fetchData(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            } else if (snapshot.hasError) {
+                              return const Center(
+                                child: Text("Error fetching data"),
+                              );
+                            } else if (!snapshot.hasData ||
+                                snapshot.data!.makeupLectures == null) {
+                              return const Center(
+                                child: Text(
+                                  'No schedule available',
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                              );
+                            } else {
+                              final MakeUpClassesData timeTableData =
+                                  snapshot.data!;
+                              // Filter the timetable based on the selected day
+                              final List<MakeupLectures> filteredTimetable =
+                                  timeTableData.makeupLectures!
+                                      .where((item) => item.day!
+                                          .toLowerCase()
+                                          .startsWith(
+                                              _selectedDay.toLowerCase()))
+                                      .toList();
+
+                              // Check if there are any classes for the selected day
+                              if (filteredTimetable.isEmpty) {
+                                return const Center(
+                                  child: Text(
+                                    'No schedule for this day',
+                                    style: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                );
+                              }
+
+                              return Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: ListView.builder(
+                                    itemCount: filteredTimetable.length,
+                                    itemBuilder: (context, index) {
+                                      final time = filteredTimetable[index];
+                                      return ExtraScheduleItemWidget(
+                                        item: time,
+                                        isLast: index ==
+                                            (filteredTimetable.length - 1),
+                                      );
+                                    },
+                                  ),
+                                ),
+                              );
+                            }
+                          },
+                        ),
+                      ],
                     ),
                   ),
               ],

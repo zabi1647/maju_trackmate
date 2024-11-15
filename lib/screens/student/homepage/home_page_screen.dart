@@ -29,8 +29,6 @@ class _HomePageScreenState extends State<HomePageScreen> {
     'Sun'
   ];
 
-  Map<String, List<Timetable>> daySchedules = {};
-
   // Track the selected day
   String _selectedDay = 'Mon';
 
