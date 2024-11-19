@@ -25,7 +25,6 @@ class GetExtraCurricularData {
         return ExtraCurricularData();
       }
     } catch (e) {
-      print('Error: $e');
       throw Exception();
     }
   }

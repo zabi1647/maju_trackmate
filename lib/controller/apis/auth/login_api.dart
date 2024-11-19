@@ -52,7 +52,6 @@ class SignInApi {
     } catch (e) {
       Get.back();
       MyDialogs.error(msg: "Internet is not working...");
-      print('An error occurred: $e');
     }
   }
 }

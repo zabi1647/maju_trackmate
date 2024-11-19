@@ -13,3 +13,6 @@ const String extraCuricularApi =
     "https://mujtaba-io-university-portal.hf.space/api/extracurricularactivities/";
 const String extraClassesApi =
     'https://mujtaba-io-university-portal.hf.space/api/student/makeuplectures/';
+
+const String eventsApi =
+    "http://mujtaba-io-university-portal.hf.space/api/events/";

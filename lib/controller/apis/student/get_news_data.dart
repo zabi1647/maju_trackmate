@@ -25,7 +25,6 @@ class GetNewsData {
         return NewsData();
       }
     } catch (e) {
-      print('Error: $e');
       throw Exception();
     }
   }

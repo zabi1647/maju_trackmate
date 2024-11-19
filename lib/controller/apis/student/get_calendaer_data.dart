@@ -22,11 +22,9 @@ class GetCalenderData {
       if (response.statusCode == 200) {
         return CalenderData.fromJson(jsonDecode(response.body));
       } else {
-        print('Failed to load data: ${response.statusCode}');
         return CalenderData();
       }
     } catch (e) {
-      print('Error: $e');
       throw Exception();
     }
   }
