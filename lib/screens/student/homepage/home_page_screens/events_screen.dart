@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:maju_trackmate/controller/apis/student/get_news_data.dart';
+import 'package:maju_trackmate/controller/apis/student/get_events_data.dart';
 import 'package:maju_trackmate/utils/constant_values/size.dart';
 import 'package:maju_trackmate/utils/url/url_luncher.dart';
 import 'package:maju_trackmate/widgets/student/logout_button.dart';
 
-class NewsScreenStudent extends StatefulWidget {
-  const NewsScreenStudent({super.key});
+class EventsScreen extends StatefulWidget {
+  const EventsScreen({super.key});
 
   @override
-  State<NewsScreenStudent> createState() => _NewsScreenStudentState();
+  State<EventsScreen> createState() => _EventsScreenState();
 }
 
-class _NewsScreenStudentState extends State<NewsScreenStudent> {
+class _EventsScreenState extends State<EventsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +42,7 @@ class _NewsScreenStudentState extends State<NewsScreenStudent> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const Text("News",
+                    const Text("Events",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 40,
@@ -62,7 +62,7 @@ class _NewsScreenStudentState extends State<NewsScreenStudent> {
                 height: mq.height * 0.78,
                 width: mq.width * 0.9,
                 child: FutureBuilder(
-                  future: GetNewsData().fetchData(),
+                  future: GetEventsData().fetchData(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(child: CircularProgressIndicator());
@@ -71,8 +71,8 @@ class _NewsScreenStudentState extends State<NewsScreenStudent> {
                         child: Text("Error"),
                       );
                     } else {
-                      if (snapshot.data!.news?.isEmpty ??
-                          snapshot.data!.news == null) {
+                      if (snapshot.data!.events?.isEmpty ??
+                          snapshot.data!.events == null) {
                         return const Center(
                           child: Text(
                             "No news available",
@@ -85,10 +85,10 @@ class _NewsScreenStudentState extends State<NewsScreenStudent> {
                         );
                       } else {
                         return ListView.builder(
-                            itemCount: snapshot.data!.news!.length,
+                            itemCount: snapshot.data!.events!.length,
                             itemBuilder: (context, index) {
                               return Container(
-                                height: mq.height * 0.3,
+                                height: mq.height * 0.5,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(15),
                                   color: Colors.white,
@@ -111,10 +111,12 @@ class _NewsScreenStudentState extends State<NewsScreenStudent> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     SizedBox(
-                                      height: mq.height * 0.2,
-                                      width: mq.width * 0.7,
-                                      child: Image.asset(
-                                          'assets/png/icons/student/majunews.png'),
+                                      height: mq.height * 0.35,
+                                      width: mq.width * 0.85,
+                                      child: Image.network(
+                                        "https://mujtaba-io-university-portal.hf.space${snapshot.data!.events![index].image!}",
+                                        fit: BoxFit.fill,
+                                      ),
                                     ),
                                     const Padding(
                                       padding: EdgeInsets.only(left: 30.0),
@@ -133,10 +135,10 @@ class _NewsScreenStudentState extends State<NewsScreenStudent> {
                                     TextButton(
                                         onPressed: () {
                                           UrlLuncher.launchURL(snapshot
-                                              .data!.news![index].content!);
+                                              .data!.events![index].link!);
                                         },
                                         child: Text(
-                                          snapshot.data!.news![index].content!,
+                                          snapshot.data!.events![index].link!,
                                           style: TextStyle(
                                               color: Colors.blue, fontSize: 14),
                                         )),

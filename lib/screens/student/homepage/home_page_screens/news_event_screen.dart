@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:maju_trackmate/screens/student/homepage/home_page_screens/events_screen.dart';
 import 'package:maju_trackmate/screens/student/homepage/home_page_screens/news_screen.dart';
 import 'package:maju_trackmate/utils/constant_values/size.dart';
 import 'package:maju_trackmate/widgets/student/logout_button.dart';
@@ -102,7 +103,9 @@ class _NewsEventScreenState extends State<NewsEventScreen> {
               Semantics(
                 button: true,
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Get.to(() => const EventsScreen());
+                  },
                   child: Container(
                     height: mq.height * 0.08,
                     width: mq.width * 0.8,
