@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:maju_trackmate/controller/apis/student/get_events_data.dart';
+import 'package:maju_trackmate/apis/student/get_events_data.dart';
 import 'package:maju_trackmate/utils/constant_values/size.dart';
 import 'package:maju_trackmate/utils/url/url_luncher.dart';
 import 'package:maju_trackmate/widgets/student/logout_button.dart';
@@ -75,7 +75,7 @@ class _EventsScreenState extends State<EventsScreen> {
                           snapshot.data!.events == null) {
                         return const Center(
                           child: Text(
-                            "No news available",
+                            "No events available",
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 20,

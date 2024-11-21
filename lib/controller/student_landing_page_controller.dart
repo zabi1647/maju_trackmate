@@ -11,7 +11,7 @@ class NavigationController extends GetxController {
     const LeaveScreen(),
     const ExtraMileScreen(),
     const HomePageScreen(),
-    const AvailableScreen(),
+    AvailableScreen(),
     const TranscriptScreen(),
   ];
 

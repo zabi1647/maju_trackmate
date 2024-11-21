@@ -16,3 +16,8 @@ const String extraClassesApi =
 
 const String eventsApi =
     "http://mujtaba-io-university-portal.hf.space/api/events/";
+
+const String availableRoomsApi =
+    'https://mujtaba-io-university-portal.hf.space/api/pcs/get/';
+const String bookPcApi =
+    'https://mujtaba-io-university-portal.hf.space/api/pcs/book/';

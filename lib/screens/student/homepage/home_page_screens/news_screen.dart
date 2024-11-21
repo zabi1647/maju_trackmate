@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:maju_trackmate/controller/apis/student/get_news_data.dart';
+import 'package:maju_trackmate/apis/student/get_news_data.dart';
 import 'package:maju_trackmate/utils/constant_values/size.dart';
 import 'package:maju_trackmate/utils/url/url_luncher.dart';
 import 'package:maju_trackmate/widgets/student/logout_button.dart';

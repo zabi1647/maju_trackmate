@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:maju_trackmate/controller/apis/student/get_extra_classes_data.dart';
-import 'package:maju_trackmate/controller/apis/student/get_extra_curricular_data.dart';
+import 'package:get/get.dart';
+import 'package:maju_trackmate/apis/student/get_extra_classes_data.dart';
+import 'package:maju_trackmate/apis/student/get_extra_curricular_data.dart';
 import 'package:maju_trackmate/model/student_classes/extra_mile/extra_classes_Data.dart';
+import 'package:maju_trackmate/screens/student/extra_mile/activity_details.dart';
 import 'package:maju_trackmate/utils/constant_values/size.dart';
 import 'package:maju_trackmate/widgets/student/classes_timing_widget.dart';
 import 'package:maju_trackmate/widgets/student/logout_button.dart';
@@ -172,15 +174,20 @@ class _ExtraMileScreenState extends State<ExtraMileScreen> {
                                       child: Text("error"),
                                     );
                                   } else {
-                                    if (snapshot.data?.activities?.isEmpty ??
-                                        snapshot.data?.activities == null) {
+                                    if (snapshot.data?.extracurricularactivities
+                                            ?.isEmpty ??
+                                        snapshot.data
+                                                ?.extracurricularactivities ==
+                                            null) {
                                       return const Center(
                                         child: Text("No activities found"),
                                       );
                                     } else {
                                       return ListView.builder(
                                           itemCount: snapshot
-                                                  .data?.activities?.length ??
+                                                  .data
+                                                  ?.extracurricularactivities
+                                                  ?.length ??
                                               0,
                                           itemBuilder: (context, index) {
                                             return Padding(
@@ -188,8 +195,17 @@ class _ExtraMileScreenState extends State<ExtraMileScreen> {
                                                 left: 20,
                                                 top: 20,
                                               ),
-                                              child: Text(
-                                                  "${snapshot.data?.activities?[index].title} "),
+                                              child: InkWell(
+                                                onTap: () {
+                                                  Get.to(() => ActivityDetails(
+                                                        activity: snapshot.data!
+                                                                .extracurricularactivities![
+                                                            index],
+                                                      ));
+                                                },
+                                                child: Text(
+                                                    "${snapshot.data?.extracurricularactivities?[index].title} "),
+                                              ),
                                             );
                                           });
                                     }

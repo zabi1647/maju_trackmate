@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:maju_trackmate/controller/apis/student/get_timetable_data.dart';
+import 'package:maju_trackmate/apis/student/get_timetable_data.dart';
 import 'package:maju_trackmate/model/student_classes/home_page/time_table_data.dart';
 import 'package:maju_trackmate/model/student_classes/todo_item.dart';
 import 'package:maju_trackmate/screens/student/homepage/home_page_screens/academic_calender.dart';

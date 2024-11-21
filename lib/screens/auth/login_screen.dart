@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:maju_trackmate/controller/apis/auth/login_api.dart';
+import 'package:maju_trackmate/apis/auth/login_api.dart';
 import 'package:maju_trackmate/screens/auth/first_auth_screen.dart';
 import 'package:maju_trackmate/utils/constant_values/size.dart';
 import 'package:maju_trackmate/utils/dialog/my_dialogs.dart';

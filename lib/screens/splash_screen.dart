@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:maju_trackmate/screens/auth/first_auth_screen.dart';
+import 'package:maju_trackmate/screens/student/student_landing_page.dart';
 import 'package:maju_trackmate/utils/constant_values/size.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -39,8 +41,21 @@ class _SplashScreenState extends State<SplashScreen> {
             Padding(
               padding: const EdgeInsets.all(30.0),
               child: ElevatedButton(
-                onPressed: () {
-                  Get.to(() => const FirstAuthScreen());
+                onPressed: () async {
+                  final prefs = await SharedPreferences.getInstance();
+                  final int userType = prefs.getInt('type') ?? 0;
+                  final bool isUserLoggedIn = prefs.getBool('login') ?? false;
+
+                  if (isUserLoggedIn) {
+                    if (userType == 0) {
+                      Get.to(() => const StudentLandingPageController());
+                    } else if (userType == 1) {
+                      // Get.to(() => const TeacherLandingPageController());
+                    }
+                    // Get.to(() => const FirstAuthScreen());
+                  } else {
+                    Get.to(() => const FirstAuthScreen());
+                  }
                 },
                 style: ButtonStyle(
                   backgroundColor: WidgetStateProperty.all(Colors.white),

@@ -1,44 +1,53 @@
 class ExtraCurricularData {
-  List<Activities>? activities;
+  List<Extracurricularactivities>? extracurricularactivities;
 
-  ExtraCurricularData({this.activities});
+  ExtraCurricularData({this.extracurricularactivities});
 
   ExtraCurricularData.fromJson(Map<String, dynamic> json) {
-    if (json['activities'] != null) {
-      activities = <Activities>[];
-      json['activities'].forEach((v) {
-        activities!.add(new Activities.fromJson(v));
+    if (json['extracurricularactivities'] != null) {
+      extracurricularactivities = <Extracurricularactivities>[];
+      json['extracurricularactivities'].forEach((v) {
+        extracurricularactivities!
+            .add(new Extracurricularactivities.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (activities != null) {
-      data['activities'] = activities!.map((v) => v.toJson()).toList();
+    if (this.extracurricularactivities != null) {
+      data['extracurricularactivities'] =
+          this.extracurricularactivities!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
-class Activities {
+class Extracurricularactivities {
   String? title;
+  String? image;
   String? description;
+  String? link;
   String? createdAt;
 
-  Activities({this.title, this.description, this.createdAt});
+  Extracurricularactivities(
+      {this.title, this.image, this.description, this.link, this.createdAt});
 
-  Activities.fromJson(Map<String, dynamic> json) {
+  Extracurricularactivities.fromJson(Map<String, dynamic> json) {
     title = json['title'];
+    image = json['image'];
     description = json['description'];
+    link = json['link'];
     createdAt = json['created_at'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['title'] = title;
-    data['description'] = description;
-    data['created_at'] = createdAt;
+    data['title'] = this.title;
+    data['image'] = this.image;
+    data['description'] = this.description;
+    data['link'] = this.link;
+    data['created_at'] = this.createdAt;
     return data;
   }
 }
