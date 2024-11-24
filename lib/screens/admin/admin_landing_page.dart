@@ -19,17 +19,25 @@ class AdminLandingPage extends StatelessWidget {
               controller.onDestinationSelected(index),
           destinations: const [
             NavigationDestination(
-              icon: ImageIcon(AssetImage('assets/png/icons/student/mile.png')),
-              label: 'Extra Mile',
+              icon: ImageIcon(
+                AssetImage('assets/png/icons/student/mile.png'),
+                size: 40,
+              ),
+              label: 'Extra Class Request',
             ),
             NavigationDestination(
-              icon: ImageIcon(AssetImage('assets/png/icons/student/home.png')),
+              icon: ImageIcon(
+                AssetImage('assets/png/icons/student/home.png'),
+                size: 40,
+              ),
               label: 'Home',
             ),
             NavigationDestination(
               icon: ImageIcon(
-                  AssetImage('assets/png/icons/student/available.png')),
-              label: 'Available',
+                AssetImage('assets/png/icons/student/available.png'),
+                size: 40,
+              ),
+              label: 'Availability',
             ),
           ],
         ),
