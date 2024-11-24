@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:maju_trackmate/apis/student/get_student_profile_data.dart';
 import 'package:maju_trackmate/utils/constant_values/size.dart';
 import 'package:maju_trackmate/widgets/student/logout_button.dart';
 
@@ -14,129 +15,160 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+          backgroundColor: const Color(0xff0D4065),
+          foregroundColor: Colors.white,
+          actions: [
+            getLogoutButton(),
+          ]),
       body: SafeArea(
           child: SingleChildScrollView(
         child: Center(
-          child: Column(
-            children: [
-              Container(
-                height: mq.height * 0.25,
-                width: mq.width,
-                decoration: const BoxDecoration(
-                  color: Color(0xff0D4065),
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(40),
-                    bottomRight: Radius.circular(40),
-                  ),
-                ),
-                child: Column(
+          child: FutureBuilder(
+            future: GetStudentProfileData().fetchData(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
+                return Center(
+                  child: Text(snapshot.error.toString()),
+                );
+              } else {
+                return Column(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SizedBox(width: mq.width * 0.05),
-                        const Text("Profile",
+                    Container(
+                      height: mq.height * 0.22,
+                      width: mq.width,
+                      decoration: const BoxDecoration(
+                        color: Color(0xff0D4065),
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(40),
+                          bottomRight: Radius.circular(40),
+                        ),
+                      ),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SizedBox(width: mq.width * 0.05),
+                              const Text("Profile",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.bold)),
+                            ],
+                          ),
+                          Image.asset(
+                            'assets/png/icons/student/profile.png',
+                            height: mq.height * 0.07,
+                          ),
+                          SizedBox(
+                            height: mq.height * 0.01,
+                          ),
+                          Text(
+                            '${snapshot.data!.firstName} ${snapshot.data!.lastName}',
                             style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 30,
-                                fontWeight: FontWeight.bold)),
-                        getLogoutButton(),
-                      ],
-                    ),
-                    Image.asset(
-                      'assets/png/icons/student/profile.png',
-                      height: mq.height * 0.07,
-                    ),
-                    SizedBox(
-                      height: mq.height * 0.01,
-                    ),
-                    const Text(
-                      'Abdul Moiz',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(
+                            height: mq.height * 0.01,
+                          ),
+                          Text(
+                            '${snapshot.data!.username}',
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     SizedBox(
                       height: mq.height * 0.01,
                     ),
-                    const Text(
-                      'SP22-BSE-042',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                    Container(
+                      height: mq.height * 0.6,
+                      width: mq.width * 0.9,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[300],
+                        borderRadius: BorderRadius.circular(60),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 1,
+                            blurRadius: 7,
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          getRow('FATHER NAME', '${snapshot.data!.fatherName}'),
+                          SizedBox(
+                            height: mq.height * 0.01,
+                          ),
+                          getRow('FATHER OCCUPATION',
+                              '${snapshot.data!.fatherOccupation}'),
+                          SizedBox(
+                            height: mq.height * 0.01,
+                          ),
+                          getRow('GUARDIAN  NAME',
+                              '${snapshot.data!.guardianName}'),
+                          SizedBox(
+                            height: mq.height * 0.01,
+                          ),
+                          getRow('GUARDIAN OCCUPATION',
+                              '${snapshot.data!.guardianOccupation}'),
+                          SizedBox(
+                            height: mq.height * 0.01,
+                          ),
+                          getRow(
+                              'DATE OF BIRTH', '${snapshot.data!.dateOfBirth}'),
+                          SizedBox(
+                            height: mq.height * 0.01,
+                          ),
+                          getRow('NIC', '${snapshot.data!.nic}'),
+                          SizedBox(
+                            height: mq.height * 0.01,
+                          ),
+                          getRow('BLOOD GROUP', '${snapshot.data!.bloodGroup}'),
+                          SizedBox(
+                            height: mq.height * 0.01,
+                          ),
+                          getRow('PASSPORT NUMBER', '--'),
+                          SizedBox(
+                            height: mq.height * 0.01,
+                          ),
+                          getRow('PERMANENT ADDRESS', '--'),
+                          SizedBox(
+                            height: mq.height * 0.01,
+                          ),
+                          getRow('PERMANENT CITY', '-'),
+                          SizedBox(
+                            height: mq.height * 0.01,
+                          ),
+                          getRow('PHONE', '${snapshot.data!.phone}'),
+                          SizedBox(
+                            height: mq.height * 0.01,
+                          ),
+                          getRow('EMAIL', '${snapshot.data!.email}'),
+                          SizedBox(
+                            height: mq.height * 0.01,
+                          ),
+                        ],
                       ),
                     ),
                   ],
-                ),
-              ),
-              SizedBox(
-                height: mq.height * 0.01,
-              ),
-              Container(
-                height: mq.height * 0.6,
-                width: mq.width * 0.9,
-                decoration: BoxDecoration(
-                  color: Colors.grey[300],
-                  borderRadius: BorderRadius.circular(60),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 1,
-                      blurRadius: 7,
-                      offset: const Offset(0, 3),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    getRow('FATHER NAME', 'Abdul Moiz'),
-                    SizedBox(
-                      height: mq.height * 0.01,
-                    ),
-                    getRow('FATHER OCCUPATION', '--'),
-                    SizedBox(
-                      height: mq.height * 0.01,
-                    ),
-                    getRow('GUARDIAN  NAME', '--'),
-                    SizedBox(
-                      height: mq.height * 0.01,
-                    ),
-                    getRow('GUARDIAN OCCUPATION', '--'),
-                    SizedBox(
-                      height: mq.height * 0.01,
-                    ),
-                    getRow('DATE OF BIRTH', '-'),
-                    SizedBox(
-                      height: mq.height * 0.01,
-                    ),
-                    getRow('NIC', '31205-123467-1'),
-                    SizedBox(
-                      height: mq.height * 0.01,
-                    ),
-                    getRow('BLOOD GROUP', '-'),
-                    SizedBox(
-                      height: mq.height * 0.01,
-                    ),
-                    getRow('GUARDIAN  NAME', '--'),
-                    SizedBox(
-                      height: mq.height * 0.01,
-                    ),
-                    getRow('GUARDIAN OCCUPATION', '--'),
-                    SizedBox(
-                      height: mq.height * 0.01,
-                    ),
-                    getRow('DATE OF BIRTH', '-'),
-                    SizedBox(
-                      height: mq.height * 0.01,
-                    ),
-                  ],
-                ),
-              ),
-            ],
+                );
+              }
+            },
           ),
         ),
       )),
@@ -149,11 +181,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
       children: [
         Text(
           first,
-          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
         ),
         Text(
           second,
-          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
         ),
       ],
     );

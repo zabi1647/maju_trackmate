@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:maju_trackmate/apis/auth/login_api.dart';
+import 'package:maju_trackmate/screens/admin/admin_landing_page.dart';
 import 'package:maju_trackmate/screens/auth/first_auth_screen.dart';
 import 'package:maju_trackmate/utils/constant_values/size.dart';
 import 'package:maju_trackmate/utils/dialog/my_dialogs.dart';
@@ -121,13 +122,21 @@ class _LoginScreenState extends State<LoginScreen> {
                             MyDialogs.error(msg: "Please fill all fields");
                             return;
                           }
-                          SignInApi().studentLogin(
-                              emailController.text, passwordController.text);
+
+                          if (widget.type == "Student") {
+                            SignInApi().studentLogin(
+                                emailController.text, passwordController.text);
+                          } else if (widget.type == "Faculty") {
+                          } else if (widget.type == "Admin") {
+                            Get.to(() => const AdminLandingPage());
+                          }
+                          // SignInApi().studentLogin(
+                          //     emailController.text, passwordController.text);
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xff0D4065),
-                          shape: CircleBorder(),
-                          padding: EdgeInsets.all(24),
+                          shape: const CircleBorder(),
+                          padding: const EdgeInsets.all(24),
                         ),
                         child: const Icon(
                           Icons.arrow_forward,
@@ -136,7 +145,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   TextButton(
                     onPressed: () {
                       Get.to(() => const FirstAuthScreen());

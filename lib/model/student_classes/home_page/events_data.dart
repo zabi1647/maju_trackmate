@@ -14,8 +14,8 @@ class EventsData {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (events != null) {
-      data['events'] = events!.map((v) => v.toJson()).toList();
+    if (this.events != null) {
+      data['events'] = this.events!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -27,8 +27,25 @@ class Events {
   String? description;
   String? link;
   String? createdAt;
+  String? day;
+  String? time;
+  String? venue;
+  String? registration;
+  String? participationRegistration;
+  String? linkedin;
 
-  Events({this.title, this.image, this.description, this.link, this.createdAt});
+  Events(
+      {this.title,
+      this.image,
+      this.description,
+      this.link,
+      this.createdAt,
+      this.day,
+      this.time,
+      this.venue,
+      this.registration,
+      this.participationRegistration,
+      this.linkedin});
 
   Events.fromJson(Map<String, dynamic> json) {
     title = json['title'];
@@ -36,15 +53,27 @@ class Events {
     description = json['description'];
     link = json['link'];
     createdAt = json['created_at'];
+    day = json['day'];
+    time = json['time'];
+    venue = json['venue'];
+    registration = json['registration'];
+    participationRegistration = json['participation_registration'];
+    linkedin = json['linkedin'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['title'] = title;
-    data['image'] = image;
-    data['description'] = description;
-    data['link'] = link;
-    data['created_at'] = createdAt;
+    data['title'] = this.title;
+    data['image'] = this.image;
+    data['description'] = this.description;
+    data['link'] = this.link;
+    data['created_at'] = this.createdAt;
+    data['day'] = this.day;
+    data['time'] = this.time;
+    data['venue'] = this.venue;
+    data['registration'] = this.registration;
+    data['participation_registration'] = this.participationRegistration;
+    data['linkedin'] = this.linkedin;
     return data;
   }
 }

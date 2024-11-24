@@ -59,7 +59,7 @@ class _EventsScreenState extends State<EventsScreen> {
                 height: mq.height * 0.02,
               ),
               SizedBox(
-                height: mq.height * 0.78,
+                height: mq.height * 0.85,
                 width: mq.width * 0.9,
                 child: FutureBuilder(
                   future: GetEventsData().fetchData(),
@@ -88,7 +88,9 @@ class _EventsScreenState extends State<EventsScreen> {
                             itemCount: snapshot.data!.events!.length,
                             itemBuilder: (context, index) {
                               return Container(
-                                height: mq.height * 0.5,
+                                margin: const EdgeInsets.only(bottom: 20),
+                                padding: const EdgeInsets.all(15),
+                                height: mq.height * 0.82,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(15),
                                   color: Colors.white,
@@ -107,41 +109,122 @@ class _EventsScreenState extends State<EventsScreen> {
                                   ],
                                 ),
                                 child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    SizedBox(
-                                      height: mq.height * 0.35,
+                                    Container(
+                                      height: mq.height * 0.45,
                                       width: mq.width * 0.85,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
                                       child: Image.network(
                                         "https://mujtaba-io-university-portal.hf.space${snapshot.data!.events![index].image!}",
                                         fit: BoxFit.fill,
                                       ),
                                     ),
-                                    const Padding(
-                                      padding: EdgeInsets.only(left: 30.0),
-                                      child: Align(
-                                        alignment: Alignment.topLeft,
-                                        child: Text(
-                                          "Watch Now:",
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500,
-                                          ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(snapshot.data!.events![index].title!,
+                                        style: const TextStyle(
+                                          color: Color(0xff0D4065),
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                        )),
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        "Data and time: ${snapshot.data!.events![index].day!} ${snapshot.data!.events![index].time!}",
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 12,
                                         ),
                                       ),
                                     ),
-                                    TextButton(
-                                        onPressed: () {
-                                          UrlLuncher.launchURL(snapshot
-                                              .data!.events![index].link!);
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        "Venu: ${snapshot.data!.events![index].venue!}",
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                    ),
+                                    const Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        "Registration:",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                    ),
+                                    InkWell(
+                                        onTap: () {
+                                          UrlLuncher.launchURL(snapshot.data!
+                                              .events![index].registration!);
                                         },
                                         child: Text(
-                                          snapshot.data!.events![index].link!,
+                                          snapshot.data!.events![index]
+                                              .registration!,
                                           style: TextStyle(
                                               color: Colors.blue, fontSize: 14),
                                         )),
+                                    const Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        "Partcipation Registration:",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                    ),
+                                    InkWell(
+                                        onTap: () {
+                                          UrlLuncher.launchURL(snapshot
+                                              .data!
+                                              .events![index]
+                                              .participationRegistration!);
+                                        },
+                                        child: Text(
+                                          snapshot.data!.events![index]
+                                              .participationRegistration!,
+                                          style: TextStyle(
+                                              color: Colors.blue, fontSize: 14),
+                                        )),
+                                    const Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        "LinkedIn:",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: mq.height * 0.05,
+                                      child: SingleChildScrollView(
+                                        child: TextButton(
+                                            onPressed: () {
+                                              UrlLuncher.launchURL(snapshot
+                                                  .data!
+                                                  .events![index]
+                                                  .linkedin!);
+                                            },
+                                            child: Text(
+                                              snapshot.data!.events![index]
+                                                  .linkedin!,
+                                              style: TextStyle(
+                                                  color: Colors.blue,
+                                                  fontSize: 14),
+                                            )),
+                                      ),
+                                    ),
                                   ],
                                 ),
                               );
