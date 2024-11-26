@@ -41,3 +41,8 @@ const String addNewEventApi =
 
 const String getExtraClassesDataApi =
     'https://mujtaba-io-university-portal.hf.space/api/makeuplectures/requests/';
+
+const String acceptMakeupLectureApi =
+    'https://mujtaba-io-university-portal.hf.space/api/makeuplectures/accept/';
+const String rejectMakeupLectureApi =
+    'https://mujtaba-io-university-portal.hf.space/api/makeuplectures/reject/';

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:maju_trackmate/apis/admin/get_extra_classes_data.dart';
+import 'package:maju_trackmate/apis/admin/accept_makeup_lecture.dart';
+import 'package:maju_trackmate/model/admin/extra_classes_data.dart';
 import 'package:maju_trackmate/utils/constant_values/size.dart';
 import 'package:maju_trackmate/widgets/admin/schedule_class_widget.dart';
 import 'package:maju_trackmate/widgets/student/logout_button.dart';
@@ -12,7 +14,30 @@ class ExtraClassRequestPage extends StatefulWidget {
 }
 
 class _ExtraClassRequestPageState extends State<ExtraClassRequestPage> {
-  // Booleans to manage visibility of containers
+  late Future<ExtraClassesData?> _extraClassesFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _refreshExtraClasses();
+  }
+
+  void _refreshExtraClasses() {
+    setState(() {
+      _extraClassesFuture = GetExtraClassesData().fetchData();
+    });
+  }
+
+  Future<void> _confirmAllClasses() async {
+    final snapshot = await _extraClassesFuture;
+    if (snapshot?.makeupLectures != null) {
+      for (var lecture in snapshot!.makeupLectures!) {
+        await AcceptMakeupLectureApi()
+            .acceptLecture(lecture.lectureId.toString());
+      }
+      _refreshExtraClasses();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +48,7 @@ class _ExtraClassRequestPageState extends State<ExtraClassRequestPage> {
           child: Center(
             child: Column(
               children: [
-                // Header Section
+                // Header Section (unchanged)
                 Container(
                   height: mq.height * 0.2,
                   width: mq.width,
@@ -80,7 +105,7 @@ class _ExtraClassRequestPageState extends State<ExtraClassRequestPage> {
                   ),
                   child: Column(
                     children: [
-                      Text("Request",
+                      const Text("Request",
                           style: TextStyle(
                             color: Color(0xff0D4065),
                             fontSize: 20,
@@ -89,7 +114,7 @@ class _ExtraClassRequestPageState extends State<ExtraClassRequestPage> {
                       SizedBox(height: mq.height * 0.01),
                       SizedBox(
                         width: mq.width * 0.6,
-                        child: Divider(
+                        child: const Divider(
                           color: Color(0xff0D4065),
                         ),
                       ),
@@ -97,20 +122,20 @@ class _ExtraClassRequestPageState extends State<ExtraClassRequestPage> {
                       SizedBox(
                         height: mq.height * 0.4,
                         child: FutureBuilder(
-                            future: GetExtraClassesData().fetchData(),
+                            future: _extraClassesFuture,
                             builder: (context, snapshot) {
                               if (snapshot.connectionState ==
                                   ConnectionState.waiting) {
                                 return const Center(
                                     child: CircularProgressIndicator());
                               } else if (snapshot.hasError) {
-                                return Center(
+                                return const Center(
                                   child: Text("Error in data"),
                                 );
                               } else {
                                 if (snapshot.data?.makeupLectures?.isEmpty ??
                                     snapshot.data == null) {
-                                  return Center(
+                                  return const Center(
                                     child: Text("No Extra Classes Request"),
                                   );
                                 } else {
@@ -120,12 +145,43 @@ class _ExtraClassRequestPageState extends State<ExtraClassRequestPage> {
                                               .data!.makeupLectures?.length ??
                                           0,
                                       itemBuilder: (context, index) {
-                                        return scheduleClassWidget(snapshot
-                                            .data!.makeupLectures![index]);
+                                        return Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 4.0),
+                                          child: scheduleClassWidget(
+                                            snapshot
+                                                .data!.makeupLectures![index],
+                                            _refreshExtraClasses,
+                                          ),
+                                        );
                                       });
                                 }
                               }
                             }),
+                      ),
+                      SizedBox(
+                        height: mq.height * 0.05,
+                        width: mq.width * 0.4,
+                        child: ElevatedButton(
+                          onPressed: _confirmAllClasses,
+                          style: ButtonStyle(
+                            backgroundColor:
+                                const WidgetStatePropertyAll(Color(0xff0D4065)),
+                            shape: WidgetStatePropertyAll(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(13),
+                              ),
+                            ),
+                          ),
+                          child: const Text(
+                            "Confirm",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
                       )
                     ],
                   ),
