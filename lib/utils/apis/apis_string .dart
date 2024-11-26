@@ -16,7 +16,7 @@ const String extraClassesApi =
     'https://mujtaba-io-university-portal.hf.space/api/student/makeuplectures/';
 
 const String eventsApi =
-    "http://mujtaba-io-university-portal.hf.space/api/events/";
+    "https://mujtaba-io-university-portal.hf.space/api/events/";
 
 const String availableRoomsApi =
     'https://mujtaba-io-university-portal.hf.space/api/pcs/get/';
@@ -26,3 +26,18 @@ const String getAttendanceApi =
     'https://mujtaba-io-university-portal.hf.space/api/student/attendance/';
 const String getStudentProfileApi =
     'https://mujtaba-io-university-portal.hf.space/api/student/get/';
+
+//
+// Admin apis
+//
+const String addNewActivityApi =
+    "https://mujtaba-io-university-portal.hf.space/api/calendar/addevent/";
+
+const String addNewNewsApi =
+    'https://mujtaba-io-university-portal.hf.space/api/news/create/';
+
+const String addNewEventApi =
+    'https://mujtaba-io-university-portal.hf.space/api/events/create/';
+
+const String getExtraClassesDataApi =
+    'https://mujtaba-io-university-portal.hf.space/api/makeuplectures/requests/';

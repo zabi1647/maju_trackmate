@@ -23,7 +23,7 @@ class EventsData {
 
 class Events {
   String? title;
-  String? image;
+  String? imageUrl;
   String? description;
   String? link;
   String? createdAt;
@@ -36,7 +36,7 @@ class Events {
 
   Events(
       {this.title,
-      this.image,
+      this.imageUrl,
       this.description,
       this.link,
       this.createdAt,
@@ -49,7 +49,7 @@ class Events {
 
   Events.fromJson(Map<String, dynamic> json) {
     title = json['title'];
-    image = json['image'];
+    imageUrl = json['image_url'];
     description = json['description'];
     link = json['link'];
     createdAt = json['created_at'];
@@ -64,7 +64,7 @@ class Events {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['title'] = this.title;
-    data['image'] = this.image;
+    data['image_url'] = this.imageUrl;
     data['description'] = this.description;
     data['link'] = this.link;
     data['created_at'] = this.createdAt;
@@ -73,7 +73,7 @@ class Events {
     data['venue'] = this.venue;
     data['registration'] = this.registration;
     data['participation_registration'] = this.participationRegistration;
-    data['linkedin'] = this.linkedin;
+    data['linkedin'] = linkedin;
     return data;
   }
 }

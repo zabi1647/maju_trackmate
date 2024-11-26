@@ -1,31 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:maju_trackmate/apis/admin/add_new_activity.dart';
+import 'package:maju_trackmate/apis/admin/add_new_news.dart';
 import 'package:maju_trackmate/utils/constant_values/size.dart';
 import 'package:maju_trackmate/utils/dialog/my_dialogs.dart';
 import 'package:maju_trackmate/widgets/student/logout_button.dart';
 
-class AddNewActivity extends StatefulWidget {
-  final String year;
-  const AddNewActivity({super.key, required this.year});
+class AddNewNewsScreen extends StatefulWidget {
+  const AddNewNewsScreen({
+    super.key,
+  });
 
   @override
-  State<AddNewActivity> createState() => _AddNewActivityState();
+  State<AddNewNewsScreen> createState() => _AddNewNewsScreenState();
 }
 
-class _AddNewActivityState extends State<AddNewActivity> {
-  final activityNameController = TextEditingController();
-  final dateController = TextEditingController();
-  final monthController = TextEditingController();
-  final yearController = TextEditingController();
+class _AddNewNewsScreenState extends State<AddNewNewsScreen> {
+  final newsTitleController = TextEditingController();
+  final newsContentController = TextEditingController();
+  final youtubeLinkController = TextEditingController();
+  final uploadPosterController = TextEditingController();
 
   @override
   void dispose() {
     super.dispose();
-
-    activityNameController.dispose();
-    dateController.dispose();
-    monthController.dispose();
-    yearController.dispose();
+    newsContentController.dispose();
+    newsTitleController.dispose();
+    youtubeLinkController.dispose();
+    uploadPosterController.dispose();
   }
 
   @override
@@ -55,21 +55,25 @@ class _AddNewActivityState extends State<AddNewActivity> {
                       bottomRight: Radius.circular(40),
                     ),
                   ),
-                  child: Row(
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const Text(
-                        'Academic Calendar',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
+                      SizedBox(
+                        width: mq.width * 0.3,
+                        height: mq.height * 0.1,
+                        child: Image.asset(
+                          'assets/png/icons/student/events.png',
+                          fit: BoxFit.fill,
                         ),
                       ),
-                      Image.asset(
-                        'assets/png/icons/student/events.png',
-                        height: mq.height * 0.07,
+                      const Text(
+                        'Add Updated News',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ],
                   ),
@@ -77,22 +81,11 @@ class _AddNewActivityState extends State<AddNewActivity> {
                 SizedBox(
                   height: mq.height * 0.02,
                 ),
-                Text(
-                  "Academic Calendar ${widget.year}",
-                  style: const TextStyle(
-                    color: Color(0xff0D4065),
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(
-                  height: mq.height * 0.01,
-                ),
                 const Text(
-                  "Add new Activity",
+                  "Maju Highlights",
                   style: TextStyle(
                     color: Color(0xff0D4065),
-                    fontSize: 18,
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -111,9 +104,9 @@ class _AddNewActivityState extends State<AddNewActivity> {
                 SizedBox(
                   width: mq.width * 0.8,
                   child: TextFormField(
-                    controller: activityNameController,
+                    controller: newsTitleController,
                     decoration: const InputDecoration(
-                      labelText: 'Activity',
+                      labelText: 'News title',
                       labelStyle: TextStyle(
                         color: Color(0xff0D4065),
                         fontSize: 18,
@@ -132,50 +125,21 @@ class _AddNewActivityState extends State<AddNewActivity> {
                 ),
                 SizedBox(
                   width: mq.width * 0.8,
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: mq.width * 0.39,
-                        child: TextFormField(
-                          controller: dateController,
-                          decoration: const InputDecoration(
-                            labelText: 'Date',
-                            labelStyle: TextStyle(
-                              color: Color(0xff0D4065),
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(10),
-                              ),
-                            ),
-                          ),
+                  child: TextFormField(
+                    controller: newsContentController,
+                    decoration: const InputDecoration(
+                      labelText: 'News content',
+                      labelStyle: TextStyle(
+                        color: Color(0xff0D4065),
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(10),
                         ),
                       ),
-                      SizedBox(
-                        width: mq.width * 0.02,
-                      ),
-                      SizedBox(
-                        width: mq.width * 0.39,
-                        child: TextFormField(
-                          controller: monthController,
-                          decoration: const InputDecoration(
-                            labelText: 'Month',
-                            labelStyle: TextStyle(
-                              color: Color(0xff0D4065),
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(10),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
                 SizedBox(
@@ -184,9 +148,31 @@ class _AddNewActivityState extends State<AddNewActivity> {
                 SizedBox(
                   width: mq.width * 0.8,
                   child: TextFormField(
-                    controller: yearController,
+                    controller: youtubeLinkController,
                     decoration: const InputDecoration(
-                      labelText: 'Year',
+                      labelText: 'Youtube link',
+                      labelStyle: TextStyle(
+                        color: Color(0xff0D4065),
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(10),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: mq.height * 0.01,
+                ),
+                SizedBox(
+                  width: mq.width * 0.8,
+                  child: TextFormField(
+                    controller: uploadPosterController,
+                    decoration: const InputDecoration(
+                      labelText: 'upload poster',
                       labelStyle: TextStyle(
                         color: Color(0xff0D4065),
                         fontSize: 18,
@@ -208,25 +194,25 @@ class _AddNewActivityState extends State<AddNewActivity> {
                   width: mq.width * 0.5,
                   child: ElevatedButton(
                     onPressed: () async {
-                      if (activityNameController.text.isEmpty ||
-                          dateController.text.isEmpty ||
-                          monthController.text.isEmpty ||
-                          yearController.text.isEmpty) {
+                      if (newsTitleController.text.isEmpty ||
+                          newsContentController.text.isEmpty ||
+                          youtubeLinkController.text.isEmpty ||
+                          uploadPosterController.text.isEmpty) {
                         MyDialogs.error(
                             msg:
                                 "Activity name, date, month and year are required");
                       } else {
-                        bool value = await AddNewActivityApi().addActivity(
-                          widget.year,
-                          activityNameController.text,
-                          "${dateController.text}-${monthController.text}-${yearController.text}",
-                        );
+                        bool value = await AddNewNewsApi().addActivity(
+                            newsTitleController.text,
+                            newsContentController.text,
+                            youtubeLinkController.text,
+                            uploadPosterController.text);
                         if (value) {
                           showDialog(
                               context: context,
                               builder: (context) => AlertDialog(
                                     title: const Text(
-                                      "New Activity is Added",
+                                      "News Uploaded",
                                       style: TextStyle(
                                         color: Color(0xff0D4065),
                                         fontSize: 20,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:maju_trackmate/screens/student/homepage/home_page_screens/events_screen.dart';
-import 'package:maju_trackmate/screens/student/homepage/home_page_screens/news_screen.dart';
+import 'package:maju_trackmate/screens/admin/home_page.dart/home_page_screen.dart/admin_event_screen.dart';
+import 'package:maju_trackmate/screens/admin/home_page.dart/home_page_screen.dart/admin_news_screen.dart';
 import 'package:maju_trackmate/utils/constant_values/size.dart';
 import 'package:maju_trackmate/widgets/student/logout_button.dart';
 
@@ -68,7 +68,7 @@ class _AdminNewsEventScreenState extends State<AdminNewsEventScreen> {
                 button: true,
                 child: GestureDetector(
                   onTap: () {
-                    Get.to(() => const NewsScreenStudent());
+                    Get.to(() => const NewsScreenAdmin());
                   },
                   child: Container(
                     height: mq.height * 0.08,
@@ -104,7 +104,7 @@ class _AdminNewsEventScreenState extends State<AdminNewsEventScreen> {
                 button: true,
                 child: GestureDetector(
                   onTap: () {
-                    Get.to(() => const EventsScreen());
+                    Get.to(() => const EventsScreenAdmin());
                   },
                   child: Container(
                     height: mq.height * 0.08,

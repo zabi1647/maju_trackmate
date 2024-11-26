@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:maju_trackmate/screens/admin/admin_landing_page.dart';
 import 'package:maju_trackmate/screens/auth/first_auth_screen.dart';
 import 'package:maju_trackmate/screens/student/student_landing_page.dart';
 import 'package:maju_trackmate/utils/constant_values/size.dart';
@@ -50,7 +51,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     if (userType == 0) {
                       Get.to(() => const StudentLandingPageController());
                     } else if (userType == 1) {
-                      // Get.to(() => const TeacherLandingPageController());
+                      Get.to(() => const AdminLandingPage());
                     }
                     // Get.to(() => const FirstAuthScreen());
                   } else {

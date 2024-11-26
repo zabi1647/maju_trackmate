@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:maju_trackmate/apis/student/get_attendance_data.dart';
 import 'package:maju_trackmate/controller/student_rooms_controller.dart';
 import 'package:maju_trackmate/utils/constant_values/size.dart';
+import 'package:maju_trackmate/widgets/student/logout_button.dart';
 
 class LeaveScreen extends StatefulWidget {
   const LeaveScreen({super.key});
@@ -47,13 +48,7 @@ class _LeaveScreenState extends State<LeaveScreen> {
                         const Spacer(),
                         Align(
                           alignment: Alignment.topRight,
-                          child: IconButton(
-                              onPressed: () {},
-                              icon: const Icon(
-                                Icons.more_vert,
-                                color: Colors.white,
-                                size: 35,
-                              )),
+                          child: getLogoutButton(),
                         ),
                       ],
                     ),

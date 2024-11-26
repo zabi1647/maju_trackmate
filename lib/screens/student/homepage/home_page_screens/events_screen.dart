@@ -119,7 +119,7 @@ class _EventsScreenState extends State<EventsScreen> {
                                         borderRadius: BorderRadius.circular(20),
                                       ),
                                       child: Image.network(
-                                        "https://mujtaba-io-university-portal.hf.space${snapshot.data!.events![index].image!}",
+                                        "${snapshot.data!.events![index].imageUrl!}",
                                         fit: BoxFit.fill,
                                       ),
                                     ),

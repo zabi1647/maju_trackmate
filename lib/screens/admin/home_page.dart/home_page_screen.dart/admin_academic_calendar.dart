@@ -18,6 +18,13 @@ class _AdminAcademicCalenderState extends State<AdminAcademicCalender> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: const Color(0xff0D4065),
+        foregroundColor: Colors.white,
+        actions: [
+          getLogoutButton(),
+        ],
+      ),
       body: SafeArea(
           child: SingleChildScrollView(
         child: Center(
@@ -33,13 +40,9 @@ class _AdminAcademicCalenderState extends State<AdminAcademicCalender> {
                     bottomRight: Radius.circular(40),
                   ),
                 ),
-                child: Column(
+                child: const Column(
                   children: [
-                    Align(
-                      alignment: Alignment.topRight,
-                      child: getLogoutButton(),
-                    ),
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Text(
@@ -81,122 +84,127 @@ class _AdminAcademicCalenderState extends State<AdminAcademicCalender> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          Table(
-                            border:
-                                TableBorder.all(color: const Color(0xff0D4065)),
-                            columnWidths: const {
-                              0: FractionColumnWidth(0.1),
-                              1: FractionColumnWidth(0.6),
-                              2: FractionColumnWidth(0.3),
-                            },
-                            children: [
-                              const TableRow(
-                                decoration:
-                                    BoxDecoration(color: Color(0xff0D4065)),
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Text(
-                                      "No",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Text(
-                                      "Activity",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Text(
-                                      "Date",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                ],
-                              ),
-
-                              // Course Rows
-                              ...snapshot.data!.calendar!
-                                  .asMap()
-                                  .entries
-                                  .map((entry) {
-                                int index = entry.key;
-                                final cal = entry.value;
-                                return TableRow(
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Table(
+                              border: TableBorder.all(
+                                  color: const Color(0xff0D4065)),
+                              columnWidths: const {
+                                0: FractionColumnWidth(0.1),
+                                1: FractionColumnWidth(0.6),
+                                2: FractionColumnWidth(0.3),
+                              },
+                              children: [
+                                const TableRow(
+                                  decoration:
+                                      BoxDecoration(color: Color(0xff0D4065)),
                                   children: [
                                     Padding(
-                                      padding: const EdgeInsets.all(8.0),
+                                      padding: EdgeInsets.all(8.0),
                                       child: Text(
-                                        "${index + 1}",
+                                        "No",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white),
                                         textAlign: TextAlign.center,
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.all(8.0),
+                                      padding: EdgeInsets.all(8.0),
                                       child: Text(
-                                        cal.title ?? "",
+                                        "Activity",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
                                         textAlign: TextAlign.center,
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.all(8.0),
+                                      padding: EdgeInsets.all(8.0),
                                       child: Text(
-                                        cal.startDate ?? "",
+                                        "Date",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
                                         textAlign: TextAlign.center,
                                       ),
                                     ),
                                   ],
-                                );
-                              }).toList(),
-                            ],
+                                ),
+
+                                // Course Rows
+                                ...snapshot.data!.calendar!
+                                    .asMap()
+                                    .entries
+                                    .map((entry) {
+                                  int index = entry.key;
+                                  final cal = entry.value;
+                                  return TableRow(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          "${index + 1}",
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          cal.title ?? "",
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          cal.startDate ?? "",
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                }).toList(),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: mq.height * 0.02,
+                          ),
+                          SizedBox(
+                            height: mq.height * 0.05,
+                            width: mq.width * 0.5,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                Get.to(() => AddNewActivity(
+                                      year: snapshot.data!.semester!,
+                                    ));
+                              },
+                              style: ButtonStyle(
+                                backgroundColor: const WidgetStatePropertyAll(
+                                    Color(0xff0D4065)),
+                                shape: WidgetStatePropertyAll(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(13),
+                                  ),
+                                ),
+                              ),
+                              child: const Text(
+                                "Add New Activity",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
                           ),
                         ],
                       );
                     }
                   }),
-              SizedBox(
-                height: mq.height * 0.02,
-              ),
-              SizedBox(
-                height: mq.height * 0.05,
-                width: mq.width * 0.5,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Get.to(() => const AddNewActivity());
-                  },
-                  style: ButtonStyle(
-                    backgroundColor:
-                        const WidgetStatePropertyAll(Color(0xff0D4065)),
-                    shape: WidgetStatePropertyAll(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(13),
-                      ),
-                    ),
-                  ),
-                  child: const Text(
-                    "Add New Activity",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
             ],
           ),
         ),
