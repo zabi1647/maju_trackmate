@@ -141,16 +141,26 @@ class _ExtraClassRequestPageState extends State<ExtraClassRequestPage> {
                                 } else {
                                   return ListView.builder(
                                       shrinkWrap: true,
-                                      itemCount: snapshot
-                                              .data!.makeupLectures?.length ??
+                                      itemCount: snapshot.data!.makeupLectures
+                                              ?.where((lecture) =>
+                                                  lecture.isMakeupApproved ==
+                                                  false)
+                                              .length ??
                                           0,
                                       itemBuilder: (context, index) {
+                                        // Filter lectures where is_makeup_approved is false
+                                        final filteredLectures = snapshot
+                                            .data!.makeupLectures
+                                            ?.where((lecture) =>
+                                                lecture.isMakeupApproved ==
+                                                false)
+                                            .toList();
+
                                         return Padding(
                                           padding: const EdgeInsets.symmetric(
                                               vertical: 4.0),
                                           child: scheduleClassWidget(
-                                            snapshot
-                                                .data!.makeupLectures![index],
+                                            filteredLectures![index],
                                             _refreshExtraClasses,
                                           ),
                                         );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:maju_trackmate/apis/admin/add_new_activity.dart';
 import 'package:maju_trackmate/utils/constant_values/size.dart';
 import 'package:maju_trackmate/utils/dialog/my_dialogs.dart';
@@ -237,8 +238,9 @@ class _AddNewActivityState extends State<AddNewActivity> {
                                       width: mq.width * 0.2,
                                       child: ElevatedButton(
                                           onPressed: () {
-                                            Navigator.pop(context);
-                                            Navigator.pop(context);
+                                            Navigator.pop(
+                                                context); // Close the dialog
+                                            Get.back(result: true);
                                           },
                                           style: ButtonStyle(
                                               backgroundColor:

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:maju_trackmate/apis/admin/add_new_news.dart';
 import 'package:maju_trackmate/utils/constant_values/size.dart';
 import 'package:maju_trackmate/utils/dialog/my_dialogs.dart';
@@ -224,7 +225,7 @@ class _AddNewNewsScreenState extends State<AddNewNewsScreen> {
                                       child: ElevatedButton(
                                           onPressed: () {
                                             Navigator.pop(context);
-                                            Navigator.pop(context);
+                                            Get.back(result: true);
                                           },
                                           style: ButtonStyle(
                                               backgroundColor:

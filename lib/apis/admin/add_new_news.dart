@@ -41,7 +41,6 @@ class AddNewNewsApi {
       }
     } catch (e) {
       MyDialogs.error(msg: "Internet is not working...");
-      print('An error occurred: $e');
       return false;
     }
   }

@@ -6,8 +6,8 @@ import 'package:maju_trackmate/utils/apis/apis_string%20.dart';
 import 'package:maju_trackmate/utils/dialog/my_dialogs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class AcceptMakeupLectureApi {
-  Future<bool> acceptLecture(String id) async {
+class RejectPcsReservationApi {
+  Future<bool> rejectPCs(String id, String user, String slot) async {
     MyDialogs.showProgress();
     final prefs = await SharedPreferences.getInstance();
 
@@ -16,10 +16,8 @@ class AcceptMakeupLectureApi {
     try {
       var headers = {'token': token!};
       var request =
-          http.MultipartRequest('POST', Uri.parse(acceptMakeupLectureApi));
-      request.fields.addAll({
-        "lecture_id": id, // Required, id of the lecture
-      });
+          http.MultipartRequest('POST', Uri.parse(rejectPcsReservationApi));
+      request.fields.addAll({"pc_name": id, "username": user, "slot": slot});
 
       request.headers.addAll(headers);
 
@@ -31,7 +29,7 @@ class AcceptMakeupLectureApi {
       } else if (response.statusCode == 401) {
         Get.back();
         MyDialogs.error(
-            msg: "Error while accepting the lecture, please try again");
+            msg: "Error while accepting the Pcs Reservation, please try again");
         return false;
       } else {
         // If the server returns an error response, handle it
@@ -42,6 +40,7 @@ class AcceptMakeupLectureApi {
     } catch (e) {
       Get.back();
       MyDialogs.error(msg: "Internet is not working...");
+      print('An error occurred: $e');
       return false;
     }
   }

@@ -46,3 +46,12 @@ const String acceptMakeupLectureApi =
     'https://mujtaba-io-university-portal.hf.space/api/makeuplectures/accept/';
 const String rejectMakeupLectureApi =
     'https://mujtaba-io-university-portal.hf.space/api/makeuplectures/reject/';
+
+const String getPcsReservationDataApi =
+    'https://mujtaba-io-university-portal.hf.space/api/pcs/pcrequests/';
+
+const String rejectPcsReservationApi =
+    'https://mujtaba-io-university-portal.hf.space/api/pcs/reject/';
+
+const String acceptPcsReservationApi =
+    'https://mujtaba-io-university-portal.hf.space/api/pcs/accept/';

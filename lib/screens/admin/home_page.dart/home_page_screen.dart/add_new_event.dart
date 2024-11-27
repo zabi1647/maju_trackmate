@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:maju_trackmate/apis/admin/add_new_event.dart';
 import 'package:maju_trackmate/utils/constant_values/size.dart';
-import 'package:maju_trackmate/utils/dialog/my_dialogs.dart';
 import 'package:maju_trackmate/widgets/student/logout_button.dart';
 
 class AddNeweventScreen extends StatefulWidget {
@@ -328,9 +328,45 @@ class _AddNeweventScreenState extends State<AddNeweventScreen> {
                         linkedInController.text,
                       );
                       if (result) {
-                        MyDialogs.success(msg: "Event added successfully");
-                      } else {
-                        MyDialogs.error(msg: "Failed to add event");
+                        showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                                  title: const Text(
+                                    "New Event is Added",
+                                    style: TextStyle(
+                                      color: Color(0xff0D4065),
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  content: SizedBox(
+                                    width: mq.width * 0.2,
+                                    child: ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.pop(
+                                              context); // Close the dialog
+                                          Get.back(result: true);
+                                        },
+                                        style: ButtonStyle(
+                                            backgroundColor:
+                                                const WidgetStatePropertyAll(
+                                              Color(0xff0D4065),
+                                            ),
+                                            shape: WidgetStatePropertyAll(
+                                              RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                            )),
+                                        child: const Text(
+                                          "Ok",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold),
+                                        )),
+                                  ),
+                                ));
                       }
                     },
                     style: ButtonStyle(

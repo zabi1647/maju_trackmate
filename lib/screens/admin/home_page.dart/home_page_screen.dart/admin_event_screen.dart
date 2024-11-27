@@ -23,8 +23,12 @@ class _EventsScreenAdminState extends State<EventsScreenAdmin> {
         height: mq.height * 0.05,
         width: mq.width * 0.5,
         child: ElevatedButton(
-          onPressed: () {
-            Get.to(() => const AddNeweventScreen());
+          onPressed: () async {
+            final result = await Get.to(() => const AddNeweventScreen());
+            if (result == true) {
+              // Trigger a refresh
+              setState(() {});
+            }
           },
           style: ButtonStyle(
             backgroundColor: const WidgetStatePropertyAll(Color(0xff0D4065)),

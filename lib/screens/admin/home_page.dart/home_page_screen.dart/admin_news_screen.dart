@@ -31,8 +31,11 @@ class _NewsScreenAdminState extends State<NewsScreenAdmin> {
         height: mq.height * 0.05,
         width: mq.width * 0.5,
         child: ElevatedButton(
-          onPressed: () {
-            Get.to(() => const AddNewNewsScreen());
+          onPressed: () async {
+            bool result = await Get.to(() => const AddNewNewsScreen());
+            if (result) {
+              setState(() {});
+            }
           },
           style: ButtonStyle(
             backgroundColor: const WidgetStatePropertyAll(Color(0xff0D4065)),

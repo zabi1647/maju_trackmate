@@ -177,10 +177,15 @@ class _AdminAcademicCalenderState extends State<AdminAcademicCalender> {
                             height: mq.height * 0.05,
                             width: mq.width * 0.5,
                             child: ElevatedButton(
-                              onPressed: () {
-                                Get.to(() => AddNewActivity(
-                                      year: snapshot.data!.semester!,
-                                    ));
+                              onPressed: () async {
+                                final result =
+                                    await Get.to(() => AddNewActivity(
+                                          year: snapshot.data!.semester!,
+                                        ));
+                                if (result == true) {
+                                  // Trigger a refresh
+                                  setState(() {});
+                                }
                               },
                               style: ButtonStyle(
                                 backgroundColor: const WidgetStatePropertyAll(
