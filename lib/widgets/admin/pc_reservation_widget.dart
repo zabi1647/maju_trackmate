@@ -5,6 +5,7 @@ import 'package:maju_trackmate/model/admin/pc_reservation_data.dart';
 
 Widget pcReservationWidget(Reservations pcs, VoidCallback refreshCallback) {
   return Container(
+    margin: const EdgeInsets.only(bottom: 8),
     padding: const EdgeInsets.all(8),
     decoration: BoxDecoration(
       border: Border.all(color: Colors.blue),

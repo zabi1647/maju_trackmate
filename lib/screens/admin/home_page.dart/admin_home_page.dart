@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:maju_trackmate/model/student_classes/todo_item.dart';
 import 'package:maju_trackmate/screens/admin/home_page.dart/home_page_screen.dart/admin_academic_calendar.dart';
 import 'package:maju_trackmate/screens/admin/home_page.dart/home_page_screen.dart/admin_news_event_screen.dart';
-import 'package:maju_trackmate/screens/student/homepage/home_page_screens/profile_screen.dart';
+import 'package:maju_trackmate/screens/admin/home_page.dart/home_page_screen.dart/admin_profile_screen.dart';
 import 'package:maju_trackmate/utils/constant_values/get_weekday.dart';
 import 'package:maju_trackmate/utils/constant_values/size.dart';
 import 'package:maju_trackmate/widgets/student/logout_button.dart';
@@ -111,7 +111,7 @@ class _AdminHomePageScreenState extends State<AdminHomePageScreen> {
                             alignment: Alignment.centerLeft,
                             child: ElevatedButton(
                               onPressed: () {
-                                Get.to(() => const ProfileScreen());
+                                Get.to(() => const AdminProfileScreen());
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: const Color(0xff0D4065),

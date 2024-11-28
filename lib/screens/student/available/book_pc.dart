@@ -171,8 +171,8 @@ class _BookPcState extends State<BookPc> {
                           onPressed: () async {
                             // Call the api to book the pc
 
-                            bool val = await BookPcApi()
-                                .bookPc(widget.pcId, _selectedTimeSlot!);
+                            bool val = await BookPcApi().bookPc(widget.pcId,
+                                _selectedTimeSlot!, _studentIdController.text);
                             if (val) {
                               showDialog(
                                   context: context,

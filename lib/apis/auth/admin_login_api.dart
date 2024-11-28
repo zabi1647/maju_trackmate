@@ -10,7 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SignInApiAdmin {
   Future<void> adminLogin(String username, String password) async {
     MyDialogs.showProgress();
-    String url = loginApi;
+    String url = adminLoginApi;
 
     try {
       // Use MultipartRequest for form-data

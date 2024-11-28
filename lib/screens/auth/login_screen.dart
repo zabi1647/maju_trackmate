@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:maju_trackmate/apis/auth/admin_login_api.dart';
+import 'package:maju_trackmate/apis/auth/faculty_login_api.dart';
 import 'package:maju_trackmate/apis/auth/login_api.dart';
 import 'package:maju_trackmate/screens/auth/first_auth_screen.dart';
 import 'package:maju_trackmate/utils/constant_values/size.dart';
@@ -127,6 +128,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             SignInApi().studentLogin(
                                 emailController.text, passwordController.text);
                           } else if (widget.type == "Faculty") {
+                            FacultyLoginApi().facultyLogin(
+                                emailController.text, passwordController.text);
                           } else if (widget.type == "Admin") {
                             SignInApiAdmin().adminLogin(
                                 emailController.text, passwordController.text);

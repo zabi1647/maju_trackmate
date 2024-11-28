@@ -1,5 +1,9 @@
-const String loginApi =
-    'https://mujtaba-io-university-portal.hf.space/api/login/';
+const String studentLoginApi =
+    'https://mujtaba-io-university-portal.hf.space/api/login/student/';
+const String adminLoginApi =
+    'https://mujtaba-io-university-portal.hf.space/api/login/admin/';
+const String facultyLoginApi =
+    'https://mujtaba-io-university-portal.hf.space/api/login/faculty/';
 //
 // Student apis
 //
@@ -30,6 +34,9 @@ const String getStudentProfileApi =
 //
 // Admin apis
 //
+
+const String getAdminProfileApi =
+    'https://mujtaba-io-university-portal.hf.space/api/user/get/';
 const String addNewActivityApi =
     "https://mujtaba-io-university-portal.hf.space/api/calendar/addevent/";
 
@@ -55,3 +62,8 @@ const String rejectPcsReservationApi =
 
 const String acceptPcsReservationApi =
     'https://mujtaba-io-university-portal.hf.space/api/pcs/accept/';
+
+
+// 
+// Faculty apis
+// 
