@@ -63,7 +63,17 @@ const String rejectPcsReservationApi =
 const String acceptPcsReservationApi =
     'https://mujtaba-io-university-portal.hf.space/api/pcs/accept/';
 
-
-// 
+//
 // Faculty apis
-// 
+//
+
+const String getFacultyAllLecturesApi =
+    'https://mujtaba-io-university-portal.hf.space/api/faculty/alllectures/';
+
+const String getStudentAttendanceNamesApi =
+    'https://mujtaba-io-university-portal.hf.space/api/faculty/studentsinlecture/';
+const String postMarkAttendenceApi =
+    'https://mujtaba-io-university-portal.hf.space/api/faculty/markattendance/';
+
+const String addExtraClassApi =
+    'https://mujtaba-io-university-portal.hf.space/api/faculty/requestmakeuplecture/';

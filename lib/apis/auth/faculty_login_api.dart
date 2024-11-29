@@ -36,7 +36,7 @@ class FacultyLoginApi {
         // Save the data if login is successful
         final prefs = await SharedPreferences.getInstance();
         prefs.setBool('login', true);
-        prefs.setInt('type', 0);
+        prefs.setInt('type', 2);
 
         final token = responseBody['token'];
         prefs.setString("token", token);

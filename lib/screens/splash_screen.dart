@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:maju_trackmate/screens/admin/admin_landing_page.dart';
 import 'package:maju_trackmate/screens/auth/first_auth_screen.dart';
+import 'package:maju_trackmate/screens/faculty/faculity_landing_page.dart';
 import 'package:maju_trackmate/screens/student/student_landing_page.dart';
 import 'package:maju_trackmate/utils/constant_values/size.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -52,8 +53,11 @@ class _SplashScreenState extends State<SplashScreen> {
                       Get.to(() => const StudentLandingPageController());
                     } else if (userType == 1) {
                       Get.to(() => const AdminLandingPage());
+                    } else if (userType == 2) {
+                      Get.to(() => const FaculityLandingPage());
+                    } else {
+                      Get.to(() => const FirstAuthScreen());
                     }
-                    // Get.to(() => const FirstAuthScreen());
                   } else {
                     Get.to(() => const FirstAuthScreen());
                   }
