@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:maju_trackmate/apis/admin/add_new_activity.dart';
 import 'package:maju_trackmate/apis/student/get_calendaer_data.dart';
 import 'package:maju_trackmate/screens/admin/home_page.dart/home_page_screen.dart/add_new_activity.dart';
+import 'package:maju_trackmate/screens/admin/home_page.dart/home_page_screen.dart/edit_new_activity.dart';
 import 'package:maju_trackmate/widgets/student/logout_button.dart';
 
 import '../../../../utils/constant_values/size.dart';
@@ -91,8 +93,9 @@ class _AdminAcademicCalenderState extends State<AdminAcademicCalender> {
                                   color: const Color(0xff0D4065)),
                               columnWidths: const {
                                 0: FractionColumnWidth(0.1),
-                                1: FractionColumnWidth(0.6),
-                                2: FractionColumnWidth(0.3),
+                                1: FractionColumnWidth(0.5),
+                                2: FractionColumnWidth(0.2),
+                                3: FractionColumnWidth(0.2),
                               },
                               children: [
                                 const TableRow(
@@ -124,6 +127,17 @@ class _AdminAcademicCalenderState extends State<AdminAcademicCalender> {
                                       padding: EdgeInsets.all(8.0),
                                       child: Text(
                                         "Date",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: Text(
+                                        "Actions",
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           color: Colors.white,
@@ -163,6 +177,138 @@ class _AdminAcademicCalenderState extends State<AdminAcademicCalender> {
                                           cal.startDate ?? "",
                                           textAlign: TextAlign.center,
                                         ),
+                                      ),
+                                      IconButton(
+                                        // ignore: prefer_const_constructors
+                                        icon: Icon(Icons.more_vert),
+                                        onPressed: () {
+                                          showDialog(
+                                              context: context,
+                                              builder: (context) => AlertDialog(
+                                                    title: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        const Text(
+                                                          "Select",
+                                                          style: TextStyle(
+                                                            color: Color(
+                                                                0xff0D4065),
+                                                            fontSize: 20,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                          ),
+                                                        ),
+                                                        IconButton(
+                                                            onPressed: () {
+                                                              Get.back();
+                                                            },
+                                                            icon: const Icon(
+                                                              Icons.close,
+                                                              color: Colors.red,
+                                                            ))
+                                                      ],
+                                                    ),
+                                                    content: SizedBox(
+                                                      width: mq.width * 0.2,
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceAround,
+                                                        children: [
+                                                          ElevatedButton(
+                                                              onPressed:
+                                                                  () async {
+                                                                final result =
+                                                                    await Get.to(
+                                                                        () =>
+                                                                            EditNewActivity(
+                                                                              year: snapshot.data!.semester!,
+                                                                              calendar: cal,
+                                                                            ));
+                                                                if (result ==
+                                                                    true) {
+                                                                  // Trigger a refresh
+                                                                  setState(
+                                                                      () {});
+                                                                }
+                                                              },
+                                                              style:
+                                                                  ButtonStyle(
+                                                                      backgroundColor:
+                                                                          const WidgetStatePropertyAll(
+                                                                        Color(
+                                                                            0xff0D4065),
+                                                                      ),
+                                                                      shape:
+                                                                          WidgetStatePropertyAll(
+                                                                        RoundedRectangleBorder(
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(10),
+                                                                        ),
+                                                                      )),
+                                                              child: const Text(
+                                                                "Edit",
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontSize:
+                                                                        20,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              )),
+
+                                                          //
+                                                          // Delete Button
+                                                          //
+                                                          ElevatedButton(
+                                                              onPressed:
+                                                                  () async {
+                                                                bool value =
+                                                                    await AddNewActivityApi()
+                                                                        .deleteActivity(
+                                                                  cal.calendarEventId
+                                                                      .toString(),
+                                                                );
+
+                                                                if (value) {
+                                                                  setState(
+                                                                      () {});
+                                                                  Get.back();
+                                                                }
+                                                              },
+                                                              style:
+                                                                  ButtonStyle(
+                                                                      backgroundColor:
+                                                                          const WidgetStatePropertyAll(
+                                                                        Color(
+                                                                            0xff0D4065),
+                                                                      ),
+                                                                      shape:
+                                                                          WidgetStatePropertyAll(
+                                                                        RoundedRectangleBorder(
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(10),
+                                                                        ),
+                                                                      )),
+                                                              child: const Text(
+                                                                "Delete",
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .redAccent,
+                                                                    fontSize:
+                                                                        20,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              )),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ));
+                                        },
                                       ),
                                     ],
                                   );

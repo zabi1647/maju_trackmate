@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:maju_trackmate/utils/apis/apis_string%20.dart';
@@ -7,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class AddNewNewsApi {
   Future<bool> addActivity(
-      String title, String content, String youtubeLink, String imageUrl) async {
+      String title, String content, String youtubeLink, File imageUrl) async {
     final prefs = await SharedPreferences.getInstance();
 
     String? token = prefs.getString('token');
@@ -15,14 +16,10 @@ class AddNewNewsApi {
     try {
       var headers = {'token': token!};
       var request = http.MultipartRequest('POST', Uri.parse(addNewNewsApi));
-      request.fields.addAll({
-        "title": title, // Required, title of the news article
-        "content": content, // Required, content of the news article
-        "youtube_link":
-            youtubeLink, // Required, URL of the YouTube video (optional if empty string)
-        "image_url":
-            imageUrl // Required, URL of the news article image (optional if empty string)
-      });
+      request.fields.addAll(
+          {'title': title, 'content': content, 'youtube_link': youtubeLink});
+      request.files
+          .add(await http.MultipartFile.fromPath('image', imageUrl.path));
 
       request.headers.addAll(headers);
 

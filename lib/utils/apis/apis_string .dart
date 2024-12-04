@@ -63,6 +63,11 @@ const String rejectPcsReservationApi =
 const String acceptPcsReservationApi =
     'https://mujtaba-io-university-portal.hf.space/api/pcs/accept/';
 
+const String editActivityApi =
+    "https://mujtaba-io-university-portal.hf.space/api/calendar/edit/";
+const String deleteActivityApi =
+    "https://mujtaba-io-university-portal.hf.space/api/calendar/delete/";
+
 //
 // Faculty apis
 //

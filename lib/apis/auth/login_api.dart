@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:maju_trackmate/screens/student/student_landing_page.dart';
@@ -27,8 +26,8 @@ class SignInApi {
       var streamedResponse = await request.send();
       var response = await http.Response.fromStream(streamedResponse);
 
-      log('Response status: ${response.statusCode}');
-      log('Response body: ${response.body}');
+      // log('Response status: ${response.statusCode}');
+      // log('Response body: ${response.body}');
 
       final responseBody = jsonDecode(response.body);
 
@@ -52,7 +51,7 @@ class SignInApi {
       }
     } catch (e) {
       Get.back();
-      MyDialogs.error(msg: "Internet is not working...");
+      MyDialogs.error(msg: "An error occurred: $e");
     }
   }
 }

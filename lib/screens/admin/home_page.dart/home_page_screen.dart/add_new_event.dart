@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:maju_trackmate/apis/admin/add_new_event.dart';
@@ -16,7 +19,7 @@ class AddNeweventScreen extends StatefulWidget {
 class _AddNeweventScreenState extends State<AddNeweventScreen> {
   final newsTitleController = TextEditingController();
   final descriptionController = TextEditingController();
-  final uploadPosterController = TextEditingController();
+  File? _file;
   final registrationController = TextEditingController();
   final participtionController = TextEditingController();
   final linkedInController = TextEditingController();
@@ -27,7 +30,6 @@ class _AddNeweventScreenState extends State<AddNeweventScreen> {
   void dispose() {
     super.dispose();
     newsTitleController.dispose();
-    uploadPosterController.dispose();
 
     registrationController.dispose();
     participtionController.dispose();
@@ -36,6 +38,18 @@ class _AddNeweventScreenState extends State<AddNeweventScreen> {
     dayController.dispose();
     timeController.dispose();
     venuController.dispose();
+  }
+
+  Future<void> _pickFile(Function(File) onFilePicked) async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    if (result != null) {
+      final file = File(result.files.single.path!);
+      onFilePicked(file);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Please select a file'),
+      ));
+    }
   }
 
   @override
@@ -221,23 +235,50 @@ class _AddNeweventScreenState extends State<AddNeweventScreen> {
                 SizedBox(
                   height: mq.height * 0.01,
                 ),
-                SizedBox(
+                Container(
+                  height: mq.height * 0.06,
                   width: mq.width * 0.8,
-                  child: TextFormField(
-                    controller: uploadPosterController,
-                    decoration: const InputDecoration(
-                      labelText: 'Upload poster',
-                      labelStyle: TextStyle(
-                        color: Color(0xff0D4065),
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(10),
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade200,
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Row(
+                    children: [
+                      Semantics(
+                        button: true,
+                        child: InkWell(
+                          onTap: () {
+                            _pickFile((file) => setState(() {
+                                  _file = file;
+                                }));
+                          },
+                          child: Container(
+                            height: mq.height * 0.06,
+                            width: mq.width * 0.2,
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade400,
+                              borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(10),
+                                  bottomLeft: Radius.circular(10)),
+                              border: Border.all(color: Colors.grey),
+                            ),
+                            child: const Center(child: Text("Choose File")),
+                          ),
                         ),
                       ),
-                    ),
+                      Expanded(
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 5),
+                            child: _file == null
+                                ? const Text("No file selected")
+                                : Text(_file!.path.split('/').last),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 SizedBox(
@@ -318,7 +359,7 @@ class _AddNeweventScreenState extends State<AddNeweventScreen> {
                       final result = await addNewEventApi.addEvent(
                         newsTitleController.text,
                         descriptionController.text,
-                        uploadPosterController.text,
+                        _file!,
                         "",
                         dayController.text,
                         timeController.text,

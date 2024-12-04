@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:maju_trackmate/utils/apis/apis_string%20.dart';
@@ -9,7 +10,7 @@ class AddNewEventApi {
   Future<bool> addEvent(
     String title,
     String description,
-    String imageUrl,
+    File imageUrl,
     String link,
     String day,
     String time,
@@ -27,7 +28,6 @@ class AddNewEventApi {
       var request = http.MultipartRequest('POST', Uri.parse(addNewEventApi));
       request.fields.addAll({
         "title": title,
-        "image_url": imageUrl,
         "description": description,
         "link": link,
         "date": day,
@@ -37,6 +37,8 @@ class AddNewEventApi {
         "participation_registration": participationRegistration,
         "linkedin": linkedin,
       });
+      request.files
+          .add(await http.MultipartFile.fromPath('image', imageUrl.path));
 
       request.headers.addAll(headers);
       http.StreamedResponse response = await request.send();

@@ -16,29 +16,32 @@ class CalenderData {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['semester'] = this.semester;
-    if (this.calendar != null) {
-      data['calendar'] = this.calendar!.map((v) => v.toJson()).toList();
+    data['semester'] = semester;
+    if (calendar != null) {
+      data['calendar'] = calendar!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Calendar {
+  int? calendarEventId;
   String? title;
   String? startDate;
 
-  Calendar({this.title, this.startDate});
+  Calendar({this.calendarEventId, this.title, this.startDate});
 
   Calendar.fromJson(Map<String, dynamic> json) {
+    calendarEventId = json['calendar_event_id'];
     title = json['title'];
     startDate = json['start_date'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['title'] = this.title;
-    data['start_date'] = this.startDate;
+    data['calendar_event_id'] = calendarEventId;
+    data['title'] = title;
+    data['start_date'] = startDate;
     return data;
   }
 }

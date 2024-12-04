@@ -18,7 +18,6 @@ class GetNewsData {
 
     try {
       final response = await get(url, headers: headers);
-
       if (response.statusCode == 200) {
         return NewsData.fromJson(jsonDecode(response.body));
       } else {

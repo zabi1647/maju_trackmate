@@ -1,46 +1,48 @@
-import 'dart:io';
-
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:maju_trackmate/apis/admin/add_new_news.dart';
+import 'package:maju_trackmate/apis/admin/add_new_activity.dart';
+import 'package:maju_trackmate/model/student_classes/home_page/calender_data.dart';
 import 'package:maju_trackmate/utils/constant_values/size.dart';
 import 'package:maju_trackmate/utils/dialog/my_dialogs.dart';
 import 'package:maju_trackmate/widgets/student/logout_button.dart';
 
-class AddNewNewsScreen extends StatefulWidget {
-  const AddNewNewsScreen({
+class EditNewActivity extends StatefulWidget {
+  final Calendar calendar;
+  final String year;
+  const EditNewActivity({
     super.key,
+    required this.calendar,
+    required this.year,
   });
 
   @override
-  State<AddNewNewsScreen> createState() => _AddNewNewsScreenState();
+  State<EditNewActivity> createState() => _EditNewActivityState();
 }
 
-class _AddNewNewsScreenState extends State<AddNewNewsScreen> {
-  File? _file;
-  final newsTitleController = TextEditingController();
-  final newsContentController = TextEditingController();
-  final youtubeLinkController = TextEditingController();
+class _EditNewActivityState extends State<EditNewActivity> {
+  final activityNameController = TextEditingController();
+  final dateController = TextEditingController();
+  final monthController = TextEditingController();
+  final yearController = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    activityNameController.text = widget.calendar.title!;
+    dateController.text = widget.calendar.startDate!.split("-")[0];
+    monthController.text = widget.calendar.startDate!.split("-")[1];
+    yearController.text = widget.calendar.startDate!.split("-")[2];
+  }
 
   @override
   void dispose() {
     super.dispose();
-    newsContentController.dispose();
-    newsTitleController.dispose();
-    youtubeLinkController.dispose();
-  }
 
-  Future<void> _pickFile(Function(File) onFilePicked) async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
-    if (result != null) {
-      final file = File(result.files.single.path!);
-      onFilePicked(file);
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('Please select a file'),
-      ));
-    }
+    activityNameController.dispose();
+    dateController.dispose();
+    monthController.dispose();
+    yearController.dispose();
   }
 
   @override
@@ -70,25 +72,21 @@ class _AddNewNewsScreenState extends State<AddNewNewsScreen> {
                       bottomRight: Radius.circular(40),
                     ),
                   ),
-                  child: Column(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      SizedBox(
-                        width: mq.width * 0.3,
-                        height: mq.height * 0.1,
-                        child: Image.asset(
-                          'assets/png/icons/student/events.png',
-                          fit: BoxFit.fill,
-                        ),
-                      ),
                       const Text(
-                        'Add Updated News',
+                        'Academic Calendar',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 30,
+                          fontSize: 24,
                           fontWeight: FontWeight.bold,
                         ),
+                      ),
+                      Image.asset(
+                        'assets/png/icons/student/events.png',
+                        height: mq.height * 0.07,
                       ),
                     ],
                   ),
@@ -96,11 +94,22 @@ class _AddNewNewsScreenState extends State<AddNewNewsScreen> {
                 SizedBox(
                   height: mq.height * 0.02,
                 ),
-                const Text(
-                  "Maju Highlights",
-                  style: TextStyle(
+                Text(
+                  "Academic Calendar ${widget.year}",
+                  style: const TextStyle(
                     color: Color(0xff0D4065),
                     fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(
+                  height: mq.height * 0.01,
+                ),
+                const Text(
+                  "Edit Activity",
+                  style: TextStyle(
+                    color: Color(0xff0D4065),
+                    fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -119,9 +128,9 @@ class _AddNewNewsScreenState extends State<AddNewNewsScreen> {
                 SizedBox(
                   width: mq.width * 0.8,
                   child: TextFormField(
-                    controller: newsTitleController,
+                    controller: activityNameController,
                     decoration: const InputDecoration(
-                      labelText: 'News title',
+                      labelText: 'Activity',
                       labelStyle: TextStyle(
                         color: Color(0xff0D4065),
                         fontSize: 18,
@@ -140,92 +149,72 @@ class _AddNewNewsScreenState extends State<AddNewNewsScreen> {
                 ),
                 SizedBox(
                   width: mq.width * 0.8,
-                  child: TextFormField(
-                    controller: newsContentController,
-                    decoration: const InputDecoration(
-                      labelText: 'News content',
-                      labelStyle: TextStyle(
-                        color: Color(0xff0D4065),
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(10),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: mq.height * 0.01,
-                ),
-                SizedBox(
-                  width: mq.width * 0.8,
-                  child: TextFormField(
-                    controller: youtubeLinkController,
-                    decoration: const InputDecoration(
-                      labelText: 'Youtube link',
-                      labelStyle: TextStyle(
-                        color: Color(0xff0D4065),
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(10),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: mq.height * 0.01,
-                ),
-                Container(
-                  height: mq.height * 0.06,
-                  width: mq.width * 0.8,
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade200,
-                    border: Border.all(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
                   child: Row(
                     children: [
-                      Semantics(
-                        button: true,
-                        child: InkWell(
-                          onTap: () {
-                            _pickFile((file) => setState(() {
-                                  _file = file;
-                                }));
-                          },
-                          child: Container(
-                            height: mq.height * 0.06,
-                            width: mq.width * 0.2,
-                            decoration: BoxDecoration(
-                              color: Colors.grey.shade400,
-                              borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(10),
-                                  bottomLeft: Radius.circular(10)),
-                              border: Border.all(color: Colors.grey),
+                      SizedBox(
+                        width: mq.width * 0.39,
+                        child: TextFormField(
+                          controller: dateController,
+                          decoration: const InputDecoration(
+                            labelText: 'Date',
+                            labelStyle: TextStyle(
+                              color: Color(0xff0D4065),
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
                             ),
-                            child: const Center(child: Text("Choose File")),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10),
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                      Expanded(
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 5),
-                            child: _file == null
-                                ? const Text("No file selected")
-                                : Text(_file!.path.split('/').last),
+                      SizedBox(
+                        width: mq.width * 0.02,
+                      ),
+                      SizedBox(
+                        width: mq.width * 0.39,
+                        child: TextFormField(
+                          controller: monthController,
+                          decoration: const InputDecoration(
+                            labelText: 'Month',
+                            labelStyle: TextStyle(
+                              color: Color(0xff0D4065),
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10),
+                              ),
+                            ),
                           ),
                         ),
                       ),
                     ],
+                  ),
+                ),
+                SizedBox(
+                  height: mq.height * 0.01,
+                ),
+                SizedBox(
+                  width: mq.width * 0.8,
+                  child: TextFormField(
+                    controller: yearController,
+                    decoration: const InputDecoration(
+                      labelText: 'Year',
+                      labelStyle: TextStyle(
+                        color: Color(0xff0D4065),
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(10),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
                 SizedBox(
@@ -236,25 +225,26 @@ class _AddNewNewsScreenState extends State<AddNewNewsScreen> {
                   width: mq.width * 0.5,
                   child: ElevatedButton(
                     onPressed: () async {
-                      if (newsTitleController.text.isEmpty ||
-                          newsContentController.text.isEmpty ||
-                          youtubeLinkController.text.isEmpty ||
-                          _file == null) {
+                      if (activityNameController.text.isEmpty ||
+                          dateController.text.isEmpty ||
+                          monthController.text.isEmpty ||
+                          yearController.text.isEmpty) {
                         MyDialogs.error(
                             msg:
                                 "Activity name, date, month and year are required");
                       } else {
-                        bool value = await AddNewNewsApi().addActivity(
-                            newsTitleController.text,
-                            newsContentController.text,
-                            youtubeLinkController.text,
-                            _file!);
+                        bool value = await AddNewActivityApi().editActivity(
+                          widget.year,
+                          activityNameController.text,
+                          "${dateController.text}-${monthController.text}-${yearController.text}",
+                          widget.calendar.calendarEventId.toString(),
+                        );
                         if (value) {
                           showDialog(
                               context: context,
                               builder: (context) => AlertDialog(
                                     title: const Text(
-                                      "News Uploaded",
+                                      " Activity is Edit",
                                       style: TextStyle(
                                         color: Color(0xff0D4065),
                                         fontSize: 20,
@@ -265,7 +255,8 @@ class _AddNewNewsScreenState extends State<AddNewNewsScreen> {
                                       width: mq.width * 0.2,
                                       child: ElevatedButton(
                                           onPressed: () {
-                                            Navigator.pop(context);
+                                            Navigator.pop(
+                                                context); // Close the dialog
                                             Get.back(result: true);
                                           },
                                           style: ButtonStyle(
