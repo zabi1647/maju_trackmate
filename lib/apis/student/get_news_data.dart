@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:http/http.dart';
 import 'package:maju_trackmate/model/student_classes/home_page/news_data.dart';
 import 'package:maju_trackmate/utils/apis/apis_string%20.dart';

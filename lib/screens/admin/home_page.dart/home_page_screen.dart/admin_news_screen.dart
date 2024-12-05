@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
+import 'package:maju_trackmate/apis/admin/add_new_news.dart';
 import 'package:maju_trackmate/apis/student/get_news_data.dart';
 import 'package:maju_trackmate/screens/admin/home_page.dart/home_page_screen.dart/add_new_news_screen.dart';
+import 'package:maju_trackmate/screens/admin/home_page.dart/home_page_screen.dart/edit_news_screen.dart';
 import 'package:maju_trackmate/utils/constant_values/size.dart';
 import 'package:maju_trackmate/utils/url/url_luncher.dart';
 import 'package:maju_trackmate/widgets/student/logout_button.dart';
@@ -56,8 +57,8 @@ class _NewsScreenAdminState extends State<NewsScreenAdmin> {
         ),
       ),
       body: SafeArea(
-          child: SingleChildScrollView(
-        child: Center(
+          child: Center(
+        child: SingleChildScrollView(
           child: Column(
             children: [
               Container(
@@ -143,11 +144,153 @@ class _NewsScreenAdminState extends State<NewsScreenAdmin> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    SizedBox(
-                                      height: mq.height * 0.2,
-                                      width: mq.width * 0.7,
-                                      child: Image.asset(
-                                          'assets/png/icons/student/majunews.png'),
+                                    // icon button for delete and edit
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(left: 15.0),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          SizedBox(
+                                            height: mq.height * 0.2,
+                                            width: mq.width * 0.7,
+                                            child: Image.network(
+                                                "https://mujtaba-io-university-portal.hf.space${snapshot.data!.news![index].image!}"),
+                                          ),
+                                          IconButton(
+                                            // ignore: prefer_const_constructors
+                                            icon: Icon(Icons.more_vert),
+                                            onPressed: () {
+                                              showDialog(
+                                                  context: context,
+                                                  builder:
+                                                      (context) => AlertDialog(
+                                                            title: Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
+                                                              children: [
+                                                                const Text(
+                                                                  "Select",
+                                                                  style:
+                                                                      TextStyle(
+                                                                    color: Color(
+                                                                        0xff0D4065),
+                                                                    fontSize:
+                                                                        20,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                  ),
+                                                                ),
+                                                                IconButton(
+                                                                    onPressed:
+                                                                        () {
+                                                                      Get.back();
+                                                                    },
+                                                                    icon:
+                                                                        const Icon(
+                                                                      Icons
+                                                                          .close,
+                                                                      color: Colors
+                                                                          .red,
+                                                                    ))
+                                                              ],
+                                                            ),
+                                                            content: SizedBox(
+                                                              width: mq.width *
+                                                                  0.2,
+                                                              child: Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceAround,
+                                                                children: [
+                                                                  ElevatedButton(
+                                                                      onPressed:
+                                                                          () async {
+                                                                        final result = await Get.to(() =>
+                                                                            EditNewsScreen(
+                                                                              news: snapshot.data!.news![index],
+                                                                            ));
+                                                                        if (result ==
+                                                                            true) {
+                                                                          // Trigger a refresh
+                                                                          setState(
+                                                                              () {});
+                                                                        }
+                                                                      },
+                                                                      style: ButtonStyle(
+                                                                          backgroundColor: const WidgetStatePropertyAll(
+                                                                            Color(0xff0D4065),
+                                                                          ),
+                                                                          shape: WidgetStatePropertyAll(
+                                                                            RoundedRectangleBorder(
+                                                                              borderRadius: BorderRadius.circular(10),
+                                                                            ),
+                                                                          )),
+                                                                      child: const Text(
+                                                                        "Edit",
+                                                                        style: TextStyle(
+                                                                            color: Colors
+                                                                                .white,
+                                                                            fontSize:
+                                                                                20,
+                                                                            fontWeight:
+                                                                                FontWeight.bold),
+                                                                      )),
+
+                                                                  //
+                                                                  // Delete Button
+                                                                  //
+                                                                  ElevatedButton(
+                                                                      onPressed:
+                                                                          () async {
+                                                                        bool
+                                                                            value =
+                                                                            await AddNewNewsApi().deleteNewsDate(
+                                                                          snapshot
+                                                                              .data!
+                                                                              .news![index]
+                                                                              .newsId
+                                                                              .toString(),
+                                                                        );
+
+                                                                        if (value) {
+                                                                          setState(
+                                                                              () {});
+                                                                          Get.back();
+                                                                        }
+                                                                      },
+                                                                      style: ButtonStyle(
+                                                                          backgroundColor: const WidgetStatePropertyAll(
+                                                                            Color(0xff0D4065),
+                                                                          ),
+                                                                          shape: WidgetStatePropertyAll(
+                                                                            RoundedRectangleBorder(
+                                                                              borderRadius: BorderRadius.circular(10),
+                                                                            ),
+                                                                          )),
+                                                                      child: const Text(
+                                                                        "Delete",
+                                                                        style: TextStyle(
+                                                                            color: Colors
+                                                                                .redAccent,
+                                                                            fontSize:
+                                                                                20,
+                                                                            fontWeight:
+                                                                                FontWeight.bold),
+                                                                      )),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ));
+                                            },
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                     const Padding(
                                       padding: EdgeInsets.only(left: 30.0),
@@ -166,10 +309,11 @@ class _NewsScreenAdminState extends State<NewsScreenAdmin> {
                                     TextButton(
                                         onPressed: () {
                                           UrlLuncher.launchURL(snapshot
-                                              .data!.news![index].content!);
+                                              .data!.news![index].youtubeLink!);
                                         },
                                         child: Text(
-                                          snapshot.data!.news![index].content!,
+                                          snapshot
+                                              .data!.news![index].youtubeLink!,
                                           style: const TextStyle(
                                               color: Colors.blue, fontSize: 14),
                                         )),
@@ -181,6 +325,9 @@ class _NewsScreenAdminState extends State<NewsScreenAdmin> {
                     }
                   },
                 ),
+              ),
+              SizedBox(
+                height: mq.height * 0.05,
               ),
             ],
           ),

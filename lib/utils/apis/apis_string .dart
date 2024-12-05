@@ -67,6 +67,11 @@ const String editActivityApi =
     "https://mujtaba-io-university-portal.hf.space/api/calendar/edit/";
 const String deleteActivityApi =
     "https://mujtaba-io-university-portal.hf.space/api/calendar/delete/";
+const String deleteNews =
+    "https://mujtaba-io-university-portal.hf.space/api/news/delete/";
+
+const String editNewsApi =
+    "https://mujtaba-io-university-portal.hf.space/api/news/delete/";
 
 //
 // Faculty apis

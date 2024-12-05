@@ -14,31 +14,46 @@ class NewsData {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (news != null) {
-      data['news'] = news!.map((v) => v.toJson()).toList();
+    if (this.news != null) {
+      data['news'] = this.news!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class News {
+  int? newsId;
   String? title;
   String? content;
+  String? youtubeLink;
+  String? image;
   String? createdAt;
 
-  News({this.title, this.content, this.createdAt});
+  News(
+      {this.newsId,
+      this.title,
+      this.content,
+      this.youtubeLink,
+      this.image,
+      this.createdAt});
 
   News.fromJson(Map<String, dynamic> json) {
+    newsId = json['news_id'];
     title = json['title'];
     content = json['content'];
+    youtubeLink = json['youtube_link'];
+    image = json['image'];
     createdAt = json['created_at'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['title'] = title;
-    data['content'] = content;
-    data['created_at'] = createdAt;
+    data['news_id'] = this.newsId;
+    data['title'] = this.title;
+    data['content'] = this.content;
+    data['youtube_link'] = this.youtubeLink;
+    data['image'] = this.image;
+    data['created_at'] = this.createdAt;
     return data;
   }
 }
