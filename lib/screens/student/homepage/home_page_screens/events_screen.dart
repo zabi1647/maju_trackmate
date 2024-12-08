@@ -119,7 +119,7 @@ class _EventsScreenState extends State<EventsScreen> {
                                         borderRadius: BorderRadius.circular(20),
                                       ),
                                       child: Image.network(
-                                        "${snapshot.data!.events![index].imageUrl!}",
+                                        "https://mujtaba-io-university-portal.hf.space${snapshot.data!.events![index].image}",
                                         fit: BoxFit.fill,
                                       ),
                                     ),
@@ -135,7 +135,7 @@ class _EventsScreenState extends State<EventsScreen> {
                                     Align(
                                       alignment: Alignment.centerLeft,
                                       child: Text(
-                                        "Data and time: ${snapshot.data!.events![index].day!} ${snapshot.data!.events![index].time!}",
+                                        "Date and time: ${snapshot.data!.events![index].date!} ${snapshot.data!.events![index].time!}",
                                         style: const TextStyle(
                                           color: Colors.black,
                                           fontSize: 12,

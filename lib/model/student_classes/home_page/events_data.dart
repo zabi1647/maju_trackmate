@@ -14,20 +14,21 @@ class EventsData {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.events != null) {
-      data['events'] = this.events!.map((v) => v.toJson()).toList();
+    if (events != null) {
+      data['events'] = events!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Events {
+  int? eventId;
   String? title;
-  String? imageUrl;
+  String? image;
   String? description;
   String? link;
   String? createdAt;
-  String? day;
+  String? date;
   String? time;
   String? venue;
   String? registration;
@@ -35,12 +36,13 @@ class Events {
   String? linkedin;
 
   Events(
-      {this.title,
-      this.imageUrl,
+      {this.eventId,
+      this.title,
+      this.image,
       this.description,
       this.link,
       this.createdAt,
-      this.day,
+      this.date,
       this.time,
       this.venue,
       this.registration,
@@ -48,12 +50,13 @@ class Events {
       this.linkedin});
 
   Events.fromJson(Map<String, dynamic> json) {
+    eventId = json['event_id'];
     title = json['title'];
-    imageUrl = json['image_url'];
+    image = json['image'];
     description = json['description'];
     link = json['link'];
     createdAt = json['created_at'];
-    day = json['day'];
+    date = json['date'];
     time = json['time'];
     venue = json['venue'];
     registration = json['registration'];
@@ -63,16 +66,17 @@ class Events {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['title'] = this.title;
-    data['image_url'] = this.imageUrl;
-    data['description'] = this.description;
-    data['link'] = this.link;
-    data['created_at'] = this.createdAt;
-    data['day'] = this.day;
-    data['time'] = this.time;
-    data['venue'] = this.venue;
-    data['registration'] = this.registration;
-    data['participation_registration'] = this.participationRegistration;
+    data['event_id'] = eventId;
+    data['title'] = title;
+    data['image'] = image;
+    data['description'] = description;
+    data['link'] = link;
+    data['created_at'] = createdAt;
+    data['date'] = date;
+    data['time'] = time;
+    data['venue'] = venue;
+    data['registration'] = registration;
+    data['participation_registration'] = participationRegistration;
     data['linkedin'] = linkedin;
     return data;
   }

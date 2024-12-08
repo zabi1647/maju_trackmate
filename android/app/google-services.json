@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1034527585371",
+    "project_id": "maju-trackmate",
+    "storage_bucket": "maju-trackmate.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1034527585371:android:a744a575032df152863b7e",
+        "android_client_info": {
+          "package_name": "com.example.maju_trackmate"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDADwMwvjDEaZZf5plVl0RYI0F9gjbLczE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

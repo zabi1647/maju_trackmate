@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:maju_trackmate/apis/admin/add_new_event.dart';
 import 'package:maju_trackmate/apis/student/get_events_data.dart';
 import 'package:maju_trackmate/screens/admin/home_page.dart/home_page_screen.dart/add_new_event.dart';
+import 'package:maju_trackmate/screens/admin/home_page.dart/home_page_screen.dart/edit_event.dart';
 import 'package:maju_trackmate/utils/constant_values/size.dart';
 import 'package:maju_trackmate/utils/url/url_luncher.dart';
 import 'package:maju_trackmate/widgets/student/logout_button.dart';
@@ -123,7 +125,7 @@ class _EventsScreenAdminState extends State<EventsScreenAdmin> {
                                 return Container(
                                   margin: const EdgeInsets.only(bottom: 20),
                                   padding: const EdgeInsets.all(15),
-                                  height: mq.height * 0.82,
+                                  height: mq.height * 0.9,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(15),
                                     color: Colors.white,
@@ -146,6 +148,138 @@ class _EventsScreenAdminState extends State<EventsScreenAdmin> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     children: [
+                                      Align(
+                                        alignment: Alignment.topRight,
+                                        child: IconButton(
+                                          // ignore: prefer_const_constructors
+                                          icon: Icon(Icons.more_vert),
+                                          onPressed: () {
+                                            showDialog(
+                                                context: context,
+                                                builder:
+                                                    (context) => AlertDialog(
+                                                          title: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              const Text(
+                                                                "Select",
+                                                                style:
+                                                                    TextStyle(
+                                                                  color: Color(
+                                                                      0xff0D4065),
+                                                                  fontSize: 20,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
+                                                              ),
+                                                              IconButton(
+                                                                  onPressed:
+                                                                      () {
+                                                                    Get.back();
+                                                                  },
+                                                                  icon:
+                                                                      const Icon(
+                                                                    Icons.close,
+                                                                    color: Colors
+                                                                        .red,
+                                                                  ))
+                                                            ],
+                                                          ),
+                                                          content: SizedBox(
+                                                            width:
+                                                                mq.width * 0.2,
+                                                            child: Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceAround,
+                                                              children: [
+                                                                ElevatedButton(
+                                                                    onPressed:
+                                                                        () async {
+                                                                      final result =
+                                                                          await Get.to(() =>
+                                                                              EditEventScreen(
+                                                                                event: snapshot.data!.events![index],
+                                                                              ));
+                                                                      if (result ==
+                                                                          true) {
+                                                                        // Trigger a refresh
+                                                                        setState(
+                                                                            () {});
+                                                                      }
+                                                                    },
+                                                                    style: ButtonStyle(
+                                                                        backgroundColor: const WidgetStatePropertyAll(
+                                                                          Color(
+                                                                              0xff0D4065),
+                                                                        ),
+                                                                        shape: WidgetStatePropertyAll(
+                                                                          RoundedRectangleBorder(
+                                                                            borderRadius:
+                                                                                BorderRadius.circular(10),
+                                                                          ),
+                                                                        )),
+                                                                    child: const Text(
+                                                                      "Edit",
+                                                                      style: TextStyle(
+                                                                          color: Colors
+                                                                              .white,
+                                                                          fontSize:
+                                                                              20,
+                                                                          fontWeight:
+                                                                              FontWeight.bold),
+                                                                    )),
+
+                                                                //
+                                                                // Delete Button
+                                                                //
+                                                                ElevatedButton(
+                                                                    onPressed:
+                                                                        () async {
+                                                                      bool value = await AddNewEventApi().deleteEvent(snapshot
+                                                                          .data!
+                                                                          .events![
+                                                                              index]
+                                                                          .eventId
+                                                                          .toString());
+
+                                                                      if (value) {
+                                                                        setState(
+                                                                            () {});
+                                                                        Get.back();
+                                                                      }
+                                                                    },
+                                                                    style: ButtonStyle(
+                                                                        backgroundColor: const WidgetStatePropertyAll(
+                                                                          Color(
+                                                                              0xff0D4065),
+                                                                        ),
+                                                                        shape: WidgetStatePropertyAll(
+                                                                          RoundedRectangleBorder(
+                                                                            borderRadius:
+                                                                                BorderRadius.circular(10),
+                                                                          ),
+                                                                        )),
+                                                                    child: const Text(
+                                                                      "Delete",
+                                                                      style: TextStyle(
+                                                                          color: Colors
+                                                                              .redAccent,
+                                                                          fontSize:
+                                                                              20,
+                                                                          fontWeight:
+                                                                              FontWeight.bold),
+                                                                    )),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ));
+                                          },
+                                        ),
+                                      ),
                                       Container(
                                         height: mq.height * 0.45,
                                         width: mq.width * 0.85,
@@ -154,8 +288,7 @@ class _EventsScreenAdminState extends State<EventsScreenAdmin> {
                                               BorderRadius.circular(20),
                                         ),
                                         child: Image.network(
-                                          snapshot
-                                              .data!.events![index].imageUrl!,
+                                          "https://mujtaba-io-university-portal.hf.space${snapshot.data!.events![index].image}",
                                           fit: BoxFit.fill,
                                         ),
                                       ),
@@ -171,7 +304,7 @@ class _EventsScreenAdminState extends State<EventsScreenAdmin> {
                                       Align(
                                         alignment: Alignment.centerLeft,
                                         child: Text(
-                                          "Data and time: ${snapshot.data!.events![index].day!} ${snapshot.data!.events![index].time!}",
+                                          "Date and time: ${snapshot.data!.events![index].date!} ${snapshot.data!.events![index].time!}",
                                           style: const TextStyle(
                                             color: Colors.black,
                                             fontSize: 12,
@@ -271,6 +404,9 @@ class _EventsScreenAdminState extends State<EventsScreenAdmin> {
                       }
                     },
                   ),
+                ),
+                SizedBox(
+                  height: mq.height * 0.1,
                 ),
               ],
             ),

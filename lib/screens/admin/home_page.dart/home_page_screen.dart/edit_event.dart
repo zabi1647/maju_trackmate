@@ -4,19 +4,22 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:maju_trackmate/apis/admin/add_new_event.dart';
+import 'package:maju_trackmate/model/student_classes/home_page/events_data.dart';
 import 'package:maju_trackmate/utils/constant_values/size.dart';
 import 'package:maju_trackmate/widgets/student/logout_button.dart';
 
-class AddNeweventScreen extends StatefulWidget {
-  const AddNeweventScreen({
+class EditEventScreen extends StatefulWidget {
+  final Events? event;
+  const EditEventScreen({
     super.key,
+    this.event,
   });
 
   @override
-  State<AddNeweventScreen> createState() => _AddNeweventScreenState();
+  State<EditEventScreen> createState() => _EditEventScreenState();
 }
 
-class _AddNeweventScreenState extends State<AddNeweventScreen> {
+class _EditEventScreenState extends State<EditEventScreen> {
   final newsTitleController = TextEditingController();
   final descriptionController = TextEditingController();
   File? _file;
@@ -26,6 +29,21 @@ class _AddNeweventScreenState extends State<AddNeweventScreen> {
   final dayController = TextEditingController();
   final timeController = TextEditingController();
   final venuController = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    newsTitleController.text = widget.event!.title!;
+    descriptionController.text = widget.event!.description!;
+    registrationController.text = widget.event!.registration!;
+    participtionController.text = widget.event!.participationRegistration!;
+    linkedInController.text = widget.event!.linkedin!;
+    dayController.text = widget.event!.date!;
+    timeController.text = widget.event!.time!;
+    venuController.text = widget.event!.venue!;
+  }
+
   @override
   void dispose() {
     super.dispose();
@@ -92,7 +110,7 @@ class _AddNeweventScreenState extends State<AddNeweventScreen> {
                         ),
                       ),
                       const Text(
-                        'Add New Event',
+                        'Edit Event',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 30,
@@ -415,7 +433,8 @@ class _AddNeweventScreenState extends State<AddNeweventScreen> {
                   child: ElevatedButton(
                     onPressed: () async {
                       final addNewEventApi = AddNewEventApi();
-                      final result = await addNewEventApi.addEvent(
+                      final result = await addNewEventApi.editEvent(
+                        widget.event!.eventId.toString(),
                         newsTitleController.text,
                         descriptionController.text,
                         _file!,
@@ -479,7 +498,7 @@ class _AddNeweventScreenState extends State<AddNeweventScreen> {
                       ),
                     ),
                     child: const Text(
-                      "Upload",
+                      "Edit",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 14,

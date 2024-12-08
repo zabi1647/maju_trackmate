@@ -4,6 +4,9 @@ const String adminLoginApi =
     'https://mujtaba-io-university-portal.hf.space/api/login/admin/';
 const String facultyLoginApi =
     'https://mujtaba-io-university-portal.hf.space/api/login/faculty/';
+
+const String firebaseTokenApi =
+    'https://mujtaba-io-university-portal.hf.space/api/registerfcmtoken/';
 //
 // Student apis
 //
@@ -73,6 +76,10 @@ const String deleteNews =
 const String editNewsApi =
     "https://mujtaba-io-university-portal.hf.space/api/news/delete/";
 
+const String editEventApi =
+    'https://mujtaba-io-university-portal.hf.space/api/events/edit/';
+const String deleteEventApi =
+    'https://mujtaba-io-university-portal.hf.space/api/events/delete/';
 //
 // Faculty apis
 //

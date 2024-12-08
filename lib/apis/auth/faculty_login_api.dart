@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:maju_trackmate/screens/faculty/faculity_landing_page.dart';
@@ -27,9 +28,6 @@ class FacultyLoginApi {
       var streamedResponse = await request.send();
       var response = await http.Response.fromStream(streamedResponse);
 
-      log('Response status: ${response.statusCode}');
-      log('Response body: ${response.body}');
-
       final responseBody = jsonDecode(response.body);
 
       if (response.statusCode == 200) {
@@ -40,9 +38,7 @@ class FacultyLoginApi {
 
         final token = responseBody['token'];
         prefs.setString("token", token);
-
-        MyDialogs.success(msg: 'Login Successful!');
-        Get.off(() => const FaculityLandingPage());
+        await firebaseToken();
       } else if (response.statusCode == 401) {
         Get.back();
         MyDialogs.error(msg: "Invalid username or password");
@@ -53,6 +49,47 @@ class FacultyLoginApi {
     } catch (e) {
       Get.back();
       MyDialogs.error(msg: "Internet is not working...");
+    }
+  }
+
+  Future<void> firebaseToken() async {
+    MyDialogs.showProgress();
+    String url = firebaseTokenApi;
+
+    String? tokens = await FirebaseMessaging.instance.getToken();
+    log(tokens!);
+    final prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+    try {
+      // Use MultipartRequest for form-data
+      var request = http.MultipartRequest('POST', Uri.parse(url));
+      request.fields['device_fcm_token'] = tokens;
+
+      // Add headers if needed
+      request.headers.addAll({
+        'Content-Type': 'multipart/form-data',
+        'token': token!,
+      });
+
+      // Send the request
+      var streamedResponse = await request.send();
+      var response = await http.Response.fromStream(streamedResponse);
+      log(response.body);
+      if (response.statusCode == 200) {
+        // Save the data if login is successful
+        Get.off(() => const FaculityLandingPage());
+        MyDialogs.success(msg: 'Login Successful!');
+        Get.back();
+      } else if (response.statusCode == 401) {
+        Get.back();
+      } else {
+        Get.back();
+        MyDialogs.error(msg: "An error occurred: ${response.statusCode}");
+      }
+    } catch (e) {
+      Get.back();
+      log(e.toString());
+      MyDialogs.error(msg: "An error occurred: $e");
     }
   }
 }
