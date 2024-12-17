@@ -88,7 +88,8 @@ class _NewsScreenStudentState extends State<NewsScreenStudent> {
                             itemCount: snapshot.data!.news!.length,
                             itemBuilder: (context, index) {
                               return Container(
-                                height: mq.height * 0.3,
+                                height: mq.height * 0.35,
+                                margin: const EdgeInsets.only(bottom: 20),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(15),
                                   color: Colors.white,
@@ -133,10 +134,11 @@ class _NewsScreenStudentState extends State<NewsScreenStudent> {
                                     TextButton(
                                         onPressed: () {
                                           UrlLuncher.launchURL(snapshot
-                                              .data!.news![index].content!);
+                                              .data!.news![index].youtubeLink!);
                                         },
                                         child: Text(
-                                          snapshot.data!.news![index].content!,
+                                          snapshot
+                                              .data!.news![index].youtubeLink!,
                                           style: TextStyle(
                                               color: Colors.blue, fontSize: 14),
                                         )),

@@ -20,7 +20,7 @@ class _FirstAuthScreenState extends State<FirstAuthScreen> {
       backgroundColor: Colors.white,
       body: Center(
         child: Container(
-          height: mq.height * 0.85,
+          height: mq.height * 0.9,
           width: mq.width * 0.85,
           decoration: BoxDecoration(
             color: Colors.white,
@@ -36,10 +36,10 @@ class _FirstAuthScreenState extends State<FirstAuthScreen> {
           ),
           child: Column(
             children: [
-              const CircleAvatar(
+              CircleAvatar(
                 backgroundColor: Colors.white,
-                radius: 100,
-                foregroundImage: AssetImage('assets/png/logo/logo.png'),
+                radius: mq.height * 0.1,
+                foregroundImage: const AssetImage('assets/png/logo/logo.png'),
               ),
               SizedBox(height: mq.height * 0.05),
               const StrokeText(

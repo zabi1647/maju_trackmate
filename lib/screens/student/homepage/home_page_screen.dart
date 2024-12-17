@@ -92,7 +92,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
           child: Column(
             children: [
               Container(
-                height: mq.height * 0.2,
+                height: mq.height * 0.25,
                 width: mq.width,
                 decoration: const BoxDecoration(
                   color: Color(0xff0D4065),
@@ -101,77 +101,79 @@ class _HomePageScreenState extends State<HomePageScreen> {
                     bottomRight: Radius.circular(40),
                   ),
                 ),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        const Text(
-                          "MAJU TRACKMATE",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(
-                          width: mq.width * 0.1,
-                        ),
-                        getLogoutButton(),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                Get.to(() => const ProfileScreen());
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xff0D4065),
-                                side: const BorderSide(
-                                  width: 3.0,
-                                  color: Colors.white,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          const Text(
+                            "MAJU TRACKMATE",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(
+                            width: mq.width * 0.1,
+                          ),
+                          getLogoutButton(),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  Get.to(() => const ProfileScreen());
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: const Color(0xff0D4065),
+                                  side: const BorderSide(
+                                    width: 3.0,
+                                    color: Colors.white,
+                                  ),
                                 ),
-                              ),
-                              child: const Text(
-                                "Profile",
-                                style: TextStyle(color: Colors.white),
+                                child: const Text(
+                                  "Profile",
+                                  style: TextStyle(color: Colors.white),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          width: mq.width * 0.3,
-                        ),
-                        Column(
-                          children: [
-                            const ImageIcon(
-                              AssetImage("assets/png/icons/student/sun.png"),
-                              size: 50,
-                              color: Colors.white,
-                            ),
-                            Text(
-                              getTodayDay(),
-                              style: const TextStyle(
+                          SizedBox(
+                            width: mq.width * 0.3,
+                          ),
+                          Column(
+                            children: [
+                              const ImageIcon(
+                                AssetImage("assets/png/icons/student/sun.png"),
+                                size: 50,
                                 color: Colors.white,
-                                fontSize: 20,
                               ),
-                            ),
-                            Text(
-                              formatTodayDate(),
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
+                              Text(
+                                getTodayDay(),
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
+                              Text(
+                                formatTodayDate(),
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
               SizedBox(
@@ -226,22 +228,25 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                   },
                                   child: Container(
                                     padding: const EdgeInsets.symmetric(
-                                        horizontal: 12, vertical: 8),
+                                        horizontal: 8, vertical: 8),
                                     decoration: BoxDecoration(
                                       color: _selectedDay == day
                                           ? Colors.blue
                                           : Colors.grey[300],
                                       borderRadius: BorderRadius.circular(8),
                                     ),
-                                    child: Text(
-                                      day,
-                                      style: TextStyle(
-                                        color: _selectedDay == day
-                                            ? Colors.white
-                                            : Colors.black,
-                                        fontWeight: _selectedDay == day
-                                            ? FontWeight.bold
-                                            : FontWeight.normal,
+                                    child: SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      child: Text(
+                                        day,
+                                        style: TextStyle(
+                                          color: _selectedDay == day
+                                              ? Colors.white
+                                              : Colors.black,
+                                          fontWeight: _selectedDay == day
+                                              ? FontWeight.bold
+                                              : FontWeight.normal,
+                                        ),
                                       ),
                                     ),
                                   ),

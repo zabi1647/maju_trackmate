@@ -76,7 +76,7 @@ class _AdminHomePageScreenState extends State<AdminHomePageScreen> {
           child: Column(
             children: [
               Container(
-                height: mq.height * 0.2,
+                height: mq.height * 0.25,
                 width: mq.width,
                 decoration: const BoxDecoration(
                   color: Color(0xff0D4065),

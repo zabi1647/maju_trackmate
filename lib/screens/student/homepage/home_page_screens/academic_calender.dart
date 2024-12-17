@@ -31,32 +31,34 @@ class _AcademicCalenderState extends State<AcademicCalender> {
                     bottomRight: Radius.circular(40),
                   ),
                 ),
-                child: Column(
-                  children: [
-                    Align(
-                      alignment: Alignment.topRight,
-                      child: getLogoutButton(),
-                    ),
-                    const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Text(
-                          "Academic \nCalender",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: getLogoutButton(),
+                      ),
+                      const Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Text(
+                            "Academic \nCalender",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                        ImageIcon(
-                          AssetImage(
-                              "assets/png/icons/student/calender_icon.png"),
-                          size: 80,
-                          color: Colors.white,
-                        ),
-                      ],
-                    )
-                  ],
+                          ImageIcon(
+                            AssetImage(
+                                "assets/png/icons/student/calender_icon.png"),
+                            size: 80,
+                            color: Colors.white,
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               ),
               SizedBox(

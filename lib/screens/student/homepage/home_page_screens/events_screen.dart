@@ -89,8 +89,8 @@ class _EventsScreenState extends State<EventsScreen> {
                             itemBuilder: (context, index) {
                               return Container(
                                 margin: const EdgeInsets.only(bottom: 20),
-                                padding: const EdgeInsets.all(15),
-                                height: mq.height * 0.82,
+                                padding: const EdgeInsets.all(10),
+                                height: mq.height * 0.85,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(15),
                                   color: Colors.white,

@@ -52,27 +52,29 @@ class _ExtraMileScreenState extends State<ExtraMileScreen> {
                       bottomRight: Radius.circular(40),
                     ),
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Align(
-                        alignment: Alignment.topRight,
-                        child: getLogoutButton(),
-                      ),
-                      Image.asset(
-                        'assets/png/icons/student/extra_mile_image.png',
-                        height: mq.height * 0.07,
-                      ),
-                      const Text(
-                        'Extra Mile',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Align(
+                          alignment: Alignment.topRight,
+                          child: getLogoutButton(),
                         ),
-                      ),
-                    ],
+                        Image.asset(
+                          'assets/png/icons/student/extra_mile_image.png',
+                          height: mq.height * 0.07,
+                        ),
+                        const Text(
+                          'Extra Mile',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 SizedBox(height: mq.height * 0.02),

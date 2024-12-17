@@ -125,7 +125,7 @@ class _EventsScreenAdminState extends State<EventsScreenAdmin> {
                                 return Container(
                                   margin: const EdgeInsets.only(bottom: 20),
                                   padding: const EdgeInsets.all(15),
-                                  height: mq.height * 0.9,
+                                  height: mq.height * 0.93,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(15),
                                     color: Colors.white,

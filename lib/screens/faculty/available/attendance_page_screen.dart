@@ -40,9 +40,6 @@ class _AttendancePageScreenState extends State<AttendancePageScreen> {
               width: mq.width * 0.3,
               child: ElevatedButton(
                 onPressed: () async {
-                  print('Present Students: $presentStudents');
-                  print('Absent Students: $absentStudents');
-
                   if (presentStudents.isNotEmpty) {
                     // Add logic to send this data to the backend or API
                     bool value = await AddStudentAttendanceApi().addAttendence(
@@ -121,7 +118,7 @@ class _AttendancePageScreenState extends State<AttendancePageScreen> {
               children: [
                 // Header Section
                 Container(
-                  height: mq.height * 0.2,
+                  height: mq.height * 0.22,
                   width: mq.width,
                   decoration: const BoxDecoration(
                     color: Color(0xff0D4065),

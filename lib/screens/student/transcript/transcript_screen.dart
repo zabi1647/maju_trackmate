@@ -61,54 +61,56 @@ class _TranscriptScreenState extends State<TranscriptScreen> {
                     bottomRight: Radius.circular(40),
                   ),
                 ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Align(
-                      alignment: Alignment.topRight,
-                      child: IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.more_vert,
-                          color: Colors.white,
-                          size: 35,
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: IconButton(
+                          onPressed: () {},
+                          icon: const Icon(
+                            Icons.more_vert,
+                            color: Colors.white,
+                            size: 35,
+                          ),
                         ),
                       ),
-                    ),
 
-                    const Text(
-                      'Transcript',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
+                      const Text(
+                        'Transcript',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    // GPA Circle Widget
-                    const SizedBox(height: 10),
-                    GPACircle(
-                      gpa: cgpa ?? 0.0,
-                    ),
+                      // GPA Circle Widget
+                      const SizedBox(height: 10),
+                      GPACircle(
+                        gpa: cgpa ?? 0.0,
+                      ),
 
-                    // Display Student Name
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: TextButton(
-                          onPressed: () {
-                            Get.to(() => RoadmapScreen(
-                                  resultData: resultData,
-                                ));
-                          },
-                          child: const Text(
-                            "Road map",
-                            style: TextStyle(
-                                decoration: TextDecoration.underline,
-                                decorationColor: Colors.white,
-                                color: Colors.white),
-                          )),
-                    )
-                  ],
+                      // Display Student Name
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: TextButton(
+                            onPressed: () {
+                              Get.to(() => RoadmapScreen(
+                                    resultData: resultData,
+                                  ));
+                            },
+                            child: const Text(
+                              "Road map",
+                              style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  decorationColor: Colors.white,
+                                  color: Colors.white),
+                            )),
+                      )
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(height: 20),
