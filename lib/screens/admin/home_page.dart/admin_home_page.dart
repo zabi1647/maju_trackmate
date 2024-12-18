@@ -161,100 +161,112 @@ class _AdminHomePageScreenState extends State<AdminHomePageScreen> {
               SizedBox(
                 height: mq.height * 0.03,
               ),
-              Container(
-                height: mq.height * 0.1,
-                width: mq.width * 0.9,
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: const Color(0xff0D4065),
-                    width: 1,
-                  ),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Column(
+              Semantics(
+                button: true,
+                child: InkWell(
+                  onTap: () {
+                    Get.to(() => const AdminAcademicCalender());
+                  },
+                  child: Container(
+                    height: mq.height * 0.1,
+                    width: mq.width * 0.9,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: const Color(0xff0D4065),
+                        width: 1,
+                      ),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        SizedBox(
-                          height: mq.height * 0.02,
+                        Column(
+                          children: [
+                            SizedBox(
+                              height: mq.height * 0.02,
+                            ),
+                            const Text("Academic Calendar",
+                                style: TextStyle(
+                                    color: Color(0xff0D4065),
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w500)),
+                            SizedBox(
+                              width: mq.width * 0.4,
+                              child: const Divider(
+                                color: Colors.red,
+                                thickness: 2,
+                              ),
+                            ),
+                          ],
                         ),
-                        const Text("Academic Calendar",
-                            style: TextStyle(
-                                color: Color(0xff0D4065),
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500)),
-                        SizedBox(
-                          width: mq.width * 0.4,
-                          child: const Divider(
-                            color: Colors.red,
-                            thickness: 2,
+                        IconButton(
+                          onPressed: () {},
+                          icon: const ImageIcon(
+                            AssetImage(
+                                "assets/png/icons/student/calender_icon.png"),
+                            size: 80,
                           ),
-                        ),
+                          iconSize: 50,
+                          color: const Color(0xff0D4065),
+                        )
                       ],
                     ),
-                    IconButton(
-                      onPressed: () {
-                        Get.to(() => const AdminAcademicCalender());
-                      },
-                      icon: const ImageIcon(
-                        AssetImage(
-                            "assets/png/icons/student/calender_icon.png"),
-                        size: 80,
-                      ),
-                      iconSize: 50,
-                      color: const Color(0xff0D4065),
-                    )
-                  ],
+                  ),
                 ),
               ),
               SizedBox(
                 height: mq.height * 0.03,
               ),
-              Container(
-                height: mq.height * 0.1,
-                width: mq.width * 0.9,
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: const Color(0xff0D4065),
-                    width: 1,
-                  ),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Column(
+              Semantics(
+                button: true,
+                child: InkWell(
+                  onTap: () {
+                    Get.to(() => const AdminNewsEventScreen());
+                  },
+                  child: Container(
+                    height: mq.height * 0.1,
+                    width: mq.width * 0.9,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: const Color(0xff0D4065),
+                        width: 1,
+                      ),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        SizedBox(
-                          height: mq.height * 0.02,
+                        Column(
+                          children: [
+                            SizedBox(
+                              height: mq.height * 0.02,
+                            ),
+                            const Text("News & Events",
+                                style: TextStyle(
+                                    color: Color(0xff0D4065),
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w500)),
+                            SizedBox(
+                              width: mq.width * 0.4,
+                              child: const Divider(
+                                color: Colors.red,
+                                thickness: 2,
+                              ),
+                            ),
+                          ],
                         ),
-                        const Text("News & Events",
-                            style: TextStyle(
-                                color: Color(0xff0D4065),
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500)),
-                        SizedBox(
-                          width: mq.width * 0.4,
-                          child: const Divider(
-                            color: Colors.red,
-                            thickness: 2,
+                        IconButton(
+                          onPressed: () {},
+                          icon: const ImageIcon(
+                            AssetImage("assets/png/icons/student/speaker.png"),
+                            size: 80,
                           ),
-                        ),
+                          color: const Color(0xff0D4065),
+                        )
                       ],
                     ),
-                    IconButton(
-                      onPressed: () {
-                        Get.to(() => const AdminNewsEventScreen());
-                      },
-                      icon: const ImageIcon(
-                        AssetImage("assets/png/icons/student/speaker.png"),
-                        size: 80,
-                      ),
-                      color: const Color(0xff0D4065),
-                    )
-                  ],
+                  ),
                 ),
               ),
               SizedBox(

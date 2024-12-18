@@ -176,18 +176,21 @@ class _AdminProfileScreenState extends State<AdminProfileScreen> {
   }
 
   Widget getRow(String first, String second) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        Text(
-          first,
-          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-        ),
-        Text(
-          second,
-          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-        ),
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            first,
+            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+          ),
+          Text(
+            second,
+            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -325,89 +325,102 @@ class _FacultyHomePageState extends State<FacultyHomePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Container(
-                    height: mq.height * 0.1,
-                    width: mq.width * 0.43,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: const Color(0xff0D4065),
-                        width: 1,
-                      ),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Column(
+                  Semantics(
+                    button: true,
+                    child: InkWell(
+                      onTap: () {
+                        Get.to(() => const AcademicCalender());
+                      },
+                      child: Container(
+                        height: mq.height * 0.1,
+                        width: mq.width * 0.43,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: const Color(0xff0D4065),
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            const Text("Academic \nCalendar",
-                                style: TextStyle(
-                                    color: Color(0xff0D4065),
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500)),
-                            SizedBox(
-                              width: mq.width * 0.2,
-                              child: const Divider(
-                                color: Colors.red,
-                                thickness: 2,
-                              ),
+                            Column(
+                              children: [
+                                const Text("Academic \nCalendar",
+                                    style: TextStyle(
+                                        color: Color(0xff0D4065),
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500)),
+                                SizedBox(
+                                  width: mq.width * 0.2,
+                                  child: const Divider(
+                                    color: Colors.red,
+                                    thickness: 2,
+                                  ),
+                                ),
+                              ],
                             ),
+                            IconButton(
+                              onPressed: () {},
+                              icon: const ImageIcon(
+                                AssetImage(
+                                    "assets/png/icons/student/calender_icon.png"),
+                              ),
+                              iconSize: 50,
+                              color: const Color(0xff0D4065),
+                            )
                           ],
                         ),
-                        IconButton(
-                          onPressed: () {
-                            Get.to(() => const AcademicCalender());
-                          },
-                          icon: const ImageIcon(
-                            AssetImage(
-                                "assets/png/icons/student/calender_icon.png"),
-                          ),
-                          iconSize: 50,
-                          color: const Color(0xff0D4065),
-                        )
-                      ],
+                      ),
                     ),
                   ),
-                  Container(
-                    height: mq.height * 0.1,
-                    width: mq.width * 0.43,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: const Color(0xff0D4065),
-                        width: 1,
-                      ),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Column(
+                  Semantics(
+                    button: true,
+                    child: InkWell(
+                      onTap: () {
+                        Get.to(() => const NewsEventScreen());
+                      },
+                      child: Container(
+                        height: mq.height * 0.1,
+                        width: mq.width * 0.43,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: const Color(0xff0D4065),
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            const Text("News & \nEvents",
-                                style: TextStyle(
-                                    color: Color(0xff0D4065),
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500)),
-                            SizedBox(
-                              width: mq.width * 0.2,
-                              child: const Divider(
-                                color: Colors.red,
-                                thickness: 2,
-                              ),
+                            Column(
+                              children: [
+                                const Text("News & \nEvents",
+                                    style: TextStyle(
+                                        color: Color(0xff0D4065),
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500)),
+                                SizedBox(
+                                  width: mq.width * 0.2,
+                                  child: const Divider(
+                                    color: Colors.red,
+                                    thickness: 2,
+                                  ),
+                                ),
+                              ],
                             ),
+                            IconButton(
+                              onPressed: () {},
+                              icon: const ImageIcon(
+                                AssetImage(
+                                    "assets/png/icons/student/speaker.png"),
+                              ),
+                              iconSize: 50,
+                              color: const Color(0xff0D4065),
+                            )
                           ],
                         ),
-                        IconButton(
-                          onPressed: () {
-                            Get.to(() => const NewsEventScreen());
-                          },
-                          icon: const ImageIcon(
-                            AssetImage("assets/png/icons/student/speaker.png"),
-                          ),
-                          iconSize: 50,
-                          color: const Color(0xff0D4065),
-                        )
-                      ],
+                      ),
                     ),
                   ),
                 ],

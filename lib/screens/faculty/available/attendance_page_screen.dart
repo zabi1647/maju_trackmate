@@ -245,17 +245,66 @@ class _AttendancePageScreenState extends State<AttendancePageScreen> {
                                       itemCount: timetableData!.length,
                                       itemBuilder: (context, index) {
                                         final data = timetableData![index];
-                                        return ListTile(
-                                          title: Text("${data.day}"),
-                                          trailing: Text(
-                                              "${data.startTime} - ${data.endTime}"),
-                                          onTap: () {
-                                            setState(() {
-                                              selectedDayAndTime = data;
-                                              dayAndTime = false;
-                                              courseAndSection = true;
-                                            });
-                                          },
+                                        return Container(
+                                          margin: const EdgeInsets.symmetric(
+                                              vertical: 5),
+                                          decoration: BoxDecoration(
+                                            color: const Color(
+                                                0xffF0F4F8), // Light background color for the button
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            border: Border.all(
+                                                color: const Color(0xff0D4065),
+                                                width: 1.5),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.grey
+                                                    .withOpacity(0.2),
+                                                spreadRadius: 2,
+                                                blurRadius: 5,
+                                                offset: const Offset(
+                                                    0, 3), // Shadow position
+                                              ),
+                                            ],
+                                          ),
+                                          child: ListTile(
+                                            contentPadding:
+                                                const EdgeInsets.symmetric(
+                                                    vertical: 10,
+                                                    horizontal: 15),
+                                            title: Text(
+                                              "Day: ${data.day}",
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 16,
+                                                color: Color(0xff0D4065),
+                                              ),
+                                            ),
+                                            subtitle: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  "Time: ${data.startTime} - ${data.endTime}",
+                                                  style: const TextStyle(
+                                                    fontSize: 14,
+                                                    color: Colors.black54,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            trailing: const Icon(
+                                              Icons.arrow_forward_ios,
+                                              color: Color(0xff0D4065),
+                                            ),
+                                            onTap: () {
+                                              setState(() {
+                                                selectedDayAndTime = data;
+                                                dayAndTime = false;
+                                                courseAndSection = true;
+                                              });
+                                            },
+                                          ),
                                         );
                                       },
                                     ),
@@ -304,15 +353,36 @@ class _AttendancePageScreenState extends State<AttendancePageScreen> {
                                           selectedDayAndTime!.startTime) {
                                     return Container();
                                   }
-                                  return ListTile(
-                                    title: Text("${data.courseName})"),
-                                    onTap: () {
-                                      setState(() {
-                                        selectedCourse = data;
-                                        courseAndSection = false;
-                                      });
-                                      fetchStudentData(data.lectureId!);
-                                    },
+                                  return Container(
+                                    margin:
+                                        const EdgeInsets.symmetric(vertical: 5),
+                                    decoration: BoxDecoration(
+                                      color: const Color(
+                                          0xffF0F4F8), // Light background color for the button
+                                      borderRadius: BorderRadius.circular(10),
+                                      border: Border.all(
+                                          color: const Color(0xff0D4065),
+                                          width: 1.5),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(0.2),
+                                          spreadRadius: 2,
+                                          blurRadius: 5,
+                                          offset: const Offset(
+                                              0, 3), // Shadow position
+                                        ),
+                                      ],
+                                    ),
+                                    child: ListTile(
+                                      title: Text("${data.courseName}"),
+                                      onTap: () {
+                                        setState(() {
+                                          selectedCourse = data;
+                                          courseAndSection = false;
+                                        });
+                                        fetchStudentData(data.lectureId!);
+                                      },
+                                    ),
                                   );
                                 },
                               ),
@@ -484,6 +554,24 @@ class _AttendancePageScreenState extends State<AttendancePageScreen> {
       }
       presentStudents.remove(studentId);
     }
+  }
+
+// Mark all students as absent
+  void markAllAbsent() {
+    absentStudents = studentData!.students!
+        .map((student) => student.studentUsername!)
+        .toList();
+    presentStudents.clear(); // Clear the present list since all are absent
+    setState(() {});
+  }
+
+// Mark all students as present
+  void markAllPresent() {
+    presentStudents = studentData!.students!
+        .map((student) => student.studentUsername!)
+        .toList();
+    absentStudents.clear(); // Clear the absent list since all are present
+    setState(() {});
   }
 
   Future<void> fetchStudentData(int lectureId) async {
