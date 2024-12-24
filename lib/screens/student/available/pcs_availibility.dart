@@ -29,7 +29,7 @@ class _PcsAvailibilityState extends State<PcsAvailibility> {
           child: Column(
             children: [
               Container(
-                height: mq.height * 0.2,
+                height: mq.height * 0.22,
                 width: mq.width,
                 decoration: const BoxDecoration(
                   color: Color(0xff0D4065),

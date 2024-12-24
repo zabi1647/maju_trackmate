@@ -40,7 +40,7 @@ class _AttendancePageScreenState extends State<AttendancePageScreen> {
               width: mq.width * 0.3,
               child: ElevatedButton(
                 onPressed: () async {
-                  if (presentStudents.isNotEmpty) {
+                  if (presentStudents.isNotEmpty || absentStudents.isNotEmpty) {
                     // Add logic to send this data to the backend or API
                     bool value = await AddStudentAttendanceApi().addAttendence(
                         selectedCourse!.lectureId.toString(), presentStudents);
