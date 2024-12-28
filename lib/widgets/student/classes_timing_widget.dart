@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:maju_trackmate/model/student_classes/available/exams_data.dart';
 import 'package:maju_trackmate/model/student_classes/extra_mile/extra_classes_Data.dart';
 
 import 'package:maju_trackmate/model/student_classes/home_page/time_table_data.dart';
@@ -132,6 +133,75 @@ class ExtraScheduleItemWidget extends StatelessWidget {
                   '${item.courseName} (${item.room})',
                   style: TextStyle(
                     color: Colors.grey[600],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class ExamItemWidget extends StatelessWidget {
+  final ExamPaper item;
+  final bool isLast;
+
+  const ExamItemWidget({super.key, required this.item, this.isLast = false});
+
+  @override
+  Widget build(BuildContext context) {
+    return IntrinsicHeight(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Time Column
+
+          // Vertical Line and Dot
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(horizontal: 15),
+          //   child: Column(
+          //     children: [
+          //       Container(
+          //         width: 12,
+          //         height: 12,
+          //         decoration: const BoxDecoration(
+          //           shape: BoxShape.circle,
+          //           color: Colors.blue,
+          //         ),
+          //       ),
+          //       Expanded(
+          //         child: Container(
+          //           width: 2,
+          //           color: !isLast
+          //               ? Colors.blue.withOpacity(0.5)
+          //               : Colors.transparent,
+          //           child: CustomPaint(
+          //             painter: DashedLinePainter(),
+          //           ),
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          // ),
+
+          // Subject Details
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '${item.startTime} - ${item.endTime}',
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  '${item.course} \n(${item.room})',
+                  style: TextStyle(
+                    color: Colors.blue[600],
                   ),
                 ),
               ],

@@ -248,8 +248,8 @@ class _LeaveScreenState extends State<LeaveScreen> {
                                                               fontWeight:
                                                                   FontWeight
                                                                       .bold,
-                                                              color: Colors
-                                                                  .yellow),
+                                                              color: Color(
+                                                                  0xffFFA500)),
                                                         ),
                                                       ),
                                                     if (block.absents!.length >

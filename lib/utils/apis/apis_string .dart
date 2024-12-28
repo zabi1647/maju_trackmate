@@ -34,6 +34,9 @@ const String getAttendanceApi =
 const String getStudentProfileApi =
     'https://mujtaba-io-university-portal.hf.space/api/student/get/';
 
+const String getExamsData =
+    'https://mujtaba-io-university-portal.hf.space/api/examtimetables/';
+
 //
 // Admin apis
 //
