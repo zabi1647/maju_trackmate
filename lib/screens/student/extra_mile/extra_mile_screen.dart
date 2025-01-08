@@ -297,7 +297,7 @@ class _ExtraMileScreenState extends State<ExtraMileScreen> {
                                       },
                                       child: Container(
                                         padding: const EdgeInsets.symmetric(
-                                            horizontal: 12, vertical: 8),
+                                            horizontal: 8, vertical: 8),
                                         decoration: BoxDecoration(
                                           color: _selectedDay == day
                                               ? Colors.blue

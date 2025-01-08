@@ -44,7 +44,8 @@ class _FirstAuthScreenState extends State<FirstAuthScreen> {
               SizedBox(height: mq.height * 0.05),
               const StrokeText(
                 text: "MAJU TRACKMATE",
-                textStyle: TextStyle(fontSize: 35),
+                textStyle: TextStyle(fontSize: 30),
+                textColor: Colors.black,
               ),
               SizedBox(height: mq.height * 0.01),
               // ignore: prefer_const_constructors

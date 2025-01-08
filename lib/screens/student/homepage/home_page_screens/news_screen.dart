@@ -24,137 +24,139 @@ class _NewsScreenStudentState extends State<NewsScreenStudent> {
         ],
       ),
       body: SafeArea(
-          child: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            children: [
-              Container(
-                height: mq.height * 0.2,
-                width: mq.width,
-                decoration: const BoxDecoration(
-                  color: Color(0xff0D4065),
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(40),
-                    bottomRight: Radius.circular(40),
-                  ),
+        child: Column(
+          children: [
+            // Fixed Header Container
+            Container(
+              height: mq.height * 0.2,
+              width: mq.width,
+              decoration: const BoxDecoration(
+                color: Color(0xff0D4065),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(40),
+                  bottomRight: Radius.circular(40),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Text("News",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 40,
-                          fontWeight: FontWeight.bold,
-                        )),
-                    Image.asset(
-                      'assets/png/icons/student/events.png',
-                      height: mq.height * 0.1,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Text(
+                    "News",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 40,
+                      fontWeight: FontWeight.bold,
                     ),
-                  ],
-                ),
+                  ),
+                  Image.asset(
+                    'assets/png/icons/student/events.png',
+                    height: mq.height * 0.1,
+                  ),
+                ],
               ),
-              SizedBox(
-                height: mq.height * 0.02,
-              ),
-              SizedBox(
-                height: mq.height * 0.78,
-                width: mq.width * 0.9,
+            ),
+            SizedBox(height: mq.height * 0.02),
+
+            // Scrollable News Content
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: mq.width * 0.05),
                 child: FutureBuilder(
                   future: GetNewsData().fetchData(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(child: CircularProgressIndicator());
                     } else if (snapshot.hasError) {
+                      return const Center(child: Text("Error"));
+                    } else if (snapshot.data?.news?.isEmpty ?? true) {
                       return const Center(
-                        child: Text("Error"),
+                        child: Text(
+                          "No news available",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       );
-                    } else {
-                      if (snapshot.data!.news?.isEmpty ??
-                          snapshot.data!.news == null) {
-                        return const Center(
-                          child: Text(
-                            "No news available",
-                            style: TextStyle(
+                    }
+
+                    return ListView.builder(
+                      padding: EdgeInsets.only(bottom: mq.height * 0.02),
+                      itemCount: snapshot.data!.news!.length,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          height: mq.height * 0.35,
+                          margin: const EdgeInsets.only(bottom: 20),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: Colors.white,
+                            border: Border.all(
+                              style: BorderStyle.solid,
                               color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
+                              width: 1,
                             ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 2,
+                                blurRadius: 2,
+                                offset: const Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                height: mq.height * 0.2,
+                                width: mq.width * 0.7,
+                                child: Image.asset(
+                                  'assets/png/icons/student/majunews.png',
+                                ),
+                              ),
+                              const Padding(
+                                padding: EdgeInsets.only(left: 30.0),
+                                child: Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Text(
+                                    "Watch Now:",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  UrlLuncher.launchURL(
+                                    snapshot.data!.news![index].youtubeLink!,
+                                  );
+                                },
+                                child: Text(
+                                  snapshot.data!.news![index].youtubeLink!,
+                                  style: const TextStyle(
+                                    color: Colors.blue,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         );
-                      } else {
-                        return ListView.builder(
-                            itemCount: snapshot.data!.news!.length,
-                            itemBuilder: (context, index) {
-                              return Container(
-                                height: mq.height * 0.35,
-                                margin: const EdgeInsets.only(bottom: 20),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  color: Colors.white,
-                                  border: Border.all(
-                                    style: BorderStyle.solid,
-                                    color: Colors.black,
-                                    width: 1,
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.5),
-                                      spreadRadius: 2,
-                                      blurRadius: 2,
-                                      offset: const Offset(0, 3),
-                                    ),
-                                  ],
-                                ),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    SizedBox(
-                                      height: mq.height * 0.2,
-                                      width: mq.width * 0.7,
-                                      child: Image.asset(
-                                          'assets/png/icons/student/majunews.png'),
-                                    ),
-                                    const Padding(
-                                      padding: EdgeInsets.only(left: 30.0),
-                                      child: Align(
-                                        alignment: Alignment.topLeft,
-                                        child: Text(
-                                          "Watch Now:",
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    TextButton(
-                                        onPressed: () {
-                                          UrlLuncher.launchURL(snapshot
-                                              .data!.news![index].youtubeLink!);
-                                        },
-                                        child: Text(
-                                          snapshot
-                                              .data!.news![index].youtubeLink!,
-                                          style: TextStyle(
-                                              color: Colors.blue, fontSize: 14),
-                                        )),
-                                  ],
-                                ),
-                              );
-                            });
-                      }
-                    }
+                      },
+                    );
                   },
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-      )),
+      ),
     );
   }
 }

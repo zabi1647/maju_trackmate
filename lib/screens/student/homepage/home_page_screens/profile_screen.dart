@@ -183,11 +183,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
         children: [
           Text(
             first,
-            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
           ),
           Text(
             second,
-            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
           ),
         ],
       ),

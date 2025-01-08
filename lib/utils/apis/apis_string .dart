@@ -1,99 +1,99 @@
 const String studentLoginApi =
-    'https://mujtaba-io-university-portal.hf.space/api/login/student/';
+    'https://president250-university-portal.hf.space/api/login/student/';
 const String adminLoginApi =
-    'https://mujtaba-io-university-portal.hf.space/api/login/admin/';
+    'https://president250-university-portal.hf.space/api/login/admin/';
 const String facultyLoginApi =
-    'https://mujtaba-io-university-portal.hf.space/api/login/faculty/';
+    'https://president250-university-portal.hf.space/api/login/faculty/';
 
 const String firebaseTokenApi =
-    'https://mujtaba-io-university-portal.hf.space/api/registerfcmtoken/';
+    'https://president250-university-portal.hf.space/api/registerfcmtoken/';
 //
 // Student apis
 //
 const String studentCalenderApi =
-    'https://mujtaba-io-university-portal.hf.space/api/calendar/';
+    'https://president250-university-portal.hf.space/api/calendar/';
 const String studentNewsApi =
-    'https://mujtaba-io-university-portal.hf.space/api/news/';
+    'https://president250-university-portal.hf.space/api/news/';
 const String studentTimeTable =
-    "https://mujtaba-io-university-portal.hf.space/api/student/timetable/";
+    "https://president250-university-portal.hf.space/api/student/timetable/";
 
 const String extraCuricularApi =
-    "https://mujtaba-io-university-portal.hf.space/api/extracurricularactivities/";
+    "https://president250-university-portal.hf.space/api/extracurricularactivities/";
 const String extraClassesApi =
-    'https://mujtaba-io-university-portal.hf.space/api/student/makeuplectures/';
+    'https://president250-university-portal.hf.space/api/student/makeuplectures/';
 
 const String eventsApi =
-    "https://mujtaba-io-university-portal.hf.space/api/events/";
+    "https://president250-university-portal.hf.space/api/events/";
 
 const String availableRoomsApi =
-    'https://mujtaba-io-university-portal.hf.space/api/pcs/get/';
+    'https://president250-university-portal.hf.space/api/pcs/get/';
 const String bookPcApi =
-    'https://mujtaba-io-university-portal.hf.space/api/pcs/book/';
+    'https://president250-university-portal.hf.space/api/pcs/book/';
 const String getAttendanceApi =
-    'https://mujtaba-io-university-portal.hf.space/api/student/attendance/';
+    'https://president250-university-portal.hf.space/api/student/attendance/';
 const String getStudentProfileApi =
-    'https://mujtaba-io-university-portal.hf.space/api/student/get/';
+    'https://president250-university-portal.hf.space/api/student/get/';
 
 const String getExamsData =
-    'https://mujtaba-io-university-portal.hf.space/api/examtimetables/';
+    'https://president250-university-portal.hf.space/api/examtimetables/';
 
 //
 // Admin apis
 //
 
 const String getAdminProfileApi =
-    'https://mujtaba-io-university-portal.hf.space/api/user/get/';
+    'https://president250-university-portal.hf.space/api/user/get/';
 const String addNewActivityApi =
-    "https://mujtaba-io-university-portal.hf.space/api/calendar/addevent/";
+    "https://president250-university-portal.hf.space/api/calendar/addevent/";
 
 const String addNewNewsApi =
-    'https://mujtaba-io-university-portal.hf.space/api/news/create/';
+    'https://president250-university-portal.hf.space/api/news/create/';
 
 const String addNewEventApi =
-    'https://mujtaba-io-university-portal.hf.space/api/events/create/';
+    'https://president250-university-portal.hf.space/api/events/create/';
 
 const String getExtraClassesDataApi =
-    'https://mujtaba-io-university-portal.hf.space/api/makeuplectures/requests/';
+    'https://president250-university-portal.hf.space/api/makeuplectures/requests/';
 
 const String acceptMakeupLectureApi =
-    'https://mujtaba-io-university-portal.hf.space/api/makeuplectures/accept/';
+    'https://president250-university-portal.hf.space/api/makeuplectures/accept/';
 const String rejectMakeupLectureApi =
-    'https://mujtaba-io-university-portal.hf.space/api/makeuplectures/reject/';
+    'https://president250-university-portal.hf.space/api/makeuplectures/reject/';
 
 const String getPcsReservationDataApi =
-    'https://mujtaba-io-university-portal.hf.space/api/pcs/pcrequests/';
+    'https://president250-university-portal.hf.space/api/pcs/pcrequests/';
 
 const String rejectPcsReservationApi =
-    'https://mujtaba-io-university-portal.hf.space/api/pcs/reject/';
+    'https://president250-university-portal.hf.space/api/pcs/reject/';
 
 const String acceptPcsReservationApi =
-    'https://mujtaba-io-university-portal.hf.space/api/pcs/accept/';
+    'https://president250-university-portal.hf.space/api/pcs/accept/';
 
 const String editActivityApi =
-    "https://mujtaba-io-university-portal.hf.space/api/calendar/edit/";
+    "https://president250-university-portal.hf.space/api/calendar/edit/";
 const String deleteActivityApi =
-    "https://mujtaba-io-university-portal.hf.space/api/calendar/delete/";
+    "https://president250-university-portal.hf.space/api/calendar/delete/";
 const String deleteNews =
-    "https://mujtaba-io-university-portal.hf.space/api/news/delete/";
+    "https://president250-university-portal.hf.space/api/news/delete/";
 
 const String editNewsApi =
-    "https://mujtaba-io-university-portal.hf.space/api/news/delete/";
+    "https://president250-university-portal.hf.space/api/news/edit/";
 
 const String editEventApi =
-    'https://mujtaba-io-university-portal.hf.space/api/events/edit/';
+    'https://president250-university-portal.hf.space/api/events/edit/';
 const String deleteEventApi =
-    'https://mujtaba-io-university-portal.hf.space/api/events/delete/';
+    'https://president250-university-portal.hf.space/api/events/delete/';
 //
 // Faculty apis
 //
 
 const String getFacultyAllLecturesApi =
-    'https://mujtaba-io-university-portal.hf.space/api/faculty/alllectures/';
+    'https://president250-university-portal.hf.space/api/faculty/alllectures/';
 
 const String getStudentAttendanceNamesApi =
-    'https://mujtaba-io-university-portal.hf.space/api/faculty/studentsinlecture/';
+    'https://president250-university-portal.hf.space/api/faculty/studentsinlecture/';
 const String postMarkAttendenceApi =
-    'https://mujtaba-io-university-portal.hf.space/api/faculty/markattendance/';
+    'https://president250-university-portal.hf.space/api/faculty/markattendance/';
 
 const String addExtraClassApi =
-    'https://mujtaba-io-university-portal.hf.space/api/faculty/requestmakeuplecture/';
+    'https://president250-university-portal.hf.space/api/faculty/requestmakeuplecture/';

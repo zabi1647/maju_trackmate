@@ -153,61 +153,40 @@ class ExamItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IntrinsicHeight(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Time Column
-
-          // Vertical Line and Dot
-          // Padding(
-          //   padding: const EdgeInsets.symmetric(horizontal: 15),
-          //   child: Column(
-          //     children: [
-          //       Container(
-          //         width: 12,
-          //         height: 12,
-          //         decoration: const BoxDecoration(
-          //           shape: BoxShape.circle,
-          //           color: Colors.blue,
-          //         ),
-          //       ),
-          //       Expanded(
-          //         child: Container(
-          //           width: 2,
-          //           color: !isLast
-          //               ? Colors.blue.withOpacity(0.5)
-          //               : Colors.transparent,
-          //           child: CustomPaint(
-          //             painter: DashedLinePainter(),
-          //           ),
-          //         ),
-          //       ),
-          //     ],
-          //   ),
-          // ),
-
-          // Subject Details
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '${item.startTime} - ${item.endTime}',
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
+      child: Container(
+        width: MediaQuery.of(context).size.width * 0.5,
+        decoration: BoxDecoration(
+          color: Colors.grey[200],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Time Column
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '${item.startTime} - ${item.endTime}',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      '${item.course} \n(${item.room})',
+                      style: TextStyle(
+                        color: Colors.blue[600],
+                      ),
+                    ),
+                  ],
                 ),
-                Text(
-                  '${item.course} \n(${item.room})',
-                  style: TextStyle(
-                    color: Colors.blue[600],
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

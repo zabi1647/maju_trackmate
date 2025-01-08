@@ -34,7 +34,7 @@ class StudentLandingPageController extends StatelessWidget {
             NavigationDestination(
               icon: ImageIcon(
                   AssetImage('assets/png/icons/student/available.png')),
-              label: 'Available',
+              label: 'Availability',
             ),
             NavigationDestination(
               icon: ImageIcon(

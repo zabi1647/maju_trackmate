@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:http/http.dart';
 import 'package:maju_trackmate/model/student_classes/leave/attendance_data.dart';
@@ -18,6 +19,7 @@ class GetAttendanceData {
 
     try {
       final response = await get(url, headers: headers);
+      log(response.body);
       if (response.statusCode == 200) {
         return AttendanceData.fromJson(jsonDecode(response.body));
       } else {

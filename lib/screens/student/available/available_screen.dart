@@ -30,6 +30,46 @@ class _AvailableScreenState extends State<AvailableScreen> {
   String _selectedDay = 'Mon';
   final AvailableRoomsController controller =
       Get.put(AvailableRoomsController());
+  ExamData? examData;
+  bool isLoadingExams = false;
+  String? examError;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadExamData();
+  }
+
+  Future<void> _loadExamData() async {
+    setState(() {
+      isLoadingExams = true;
+      examError = null;
+    });
+
+    try {
+      final data = await GetPapersData().fetchData();
+      setState(() {
+        examData = data;
+        isLoadingExams = false;
+      });
+    } catch (error) {
+      setState(() {
+        examError = "Error fetching exam data";
+        isLoadingExams = false;
+      });
+    }
+  }
+
+  List<ExamPaper> _getFilteredExams() {
+    if (examData == null || examData!.examTimetables.isEmpty) {
+      return [];
+    }
+
+    return examData!.examTimetables.first.examPapers
+        .where((item) =>
+            item.day.toLowerCase().startsWith(_selectedDay.toLowerCase()))
+        .toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -145,162 +185,7 @@ class _AvailableScreenState extends State<AvailableScreen> {
                     ),
 
                     // Exams Section
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            width: mq.width * 0.9,
-                            child: ElevatedButton(
-                              onPressed: () => controller.toggleExam(),
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xff0D4065),
-                              ),
-                              child: const Text(
-                                "Exams",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
-                          Obx(() {
-                            if (controller.expandExam.value) {
-                              return FutureBuilder(
-                                future: GetPapersData().fetchData(),
-                                builder: (context, snapshot) {
-                                  if (snapshot.connectionState ==
-                                      ConnectionState.waiting) {
-                                    return const Center(
-                                      child: CircularProgressIndicator(),
-                                    );
-                                  } else if (snapshot.hasError) {
-                                    return const Center(
-                                      child: Text("Error fetching data"),
-                                    );
-                                  } else if (!snapshot.hasData ||
-                                      snapshot.data!.examTimetables.isEmpty) {
-                                    return const Center(
-                                      child: Text(
-                                        'No schedule available',
-                                        style: TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: 18,
-                                        ),
-                                      ),
-                                    );
-                                  }
-
-                                  final ExamData examData = snapshot.data!;
-                                  final List<ExamPaper> filteredTimetable =
-                                      examData
-                                          .examTimetables.first.examPapers
-                                          .where((item) =>
-                                              item.day.toLowerCase().startsWith(
-                                                  _selectedDay.toLowerCase()))
-                                          .toList();
-
-                                  if (filteredTimetable.isEmpty) {
-                                    return const Center(
-                                      child: Text(
-                                        'No schedule for this day',
-                                        style: TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: 18,
-                                        ),
-                                      ),
-                                    );
-                                  }
-
-                                  return Column(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 10),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          children: weekdays
-                                              .map((day) => GestureDetector(
-                                                    onTap: () {
-                                                      setState(() {
-                                                        _selectedDay = day;
-                                                      });
-                                                    },
-                                                    child: Container(
-                                                      padding: const EdgeInsets
-                                                          .symmetric(
-                                                          horizontal: 8,
-                                                          vertical: 8),
-                                                      decoration: BoxDecoration(
-                                                        color: _selectedDay ==
-                                                                day
-                                                            ? Colors.blue
-                                                            : Colors.grey[300],
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8),
-                                                      ),
-                                                      child:
-                                                          SingleChildScrollView(
-                                                        scrollDirection:
-                                                            Axis.horizontal,
-                                                        child: Text(
-                                                          day,
-                                                          style: TextStyle(
-                                                            color:
-                                                                _selectedDay ==
-                                                                        day
-                                                                    ? Colors
-                                                                        .white
-                                                                    : Colors
-                                                                        .black,
-                                                            fontWeight:
-                                                                _selectedDay ==
-                                                                        day
-                                                                    ? FontWeight
-                                                                        .bold
-                                                                    : FontWeight
-                                                                        .normal,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ))
-                                              .toList(),
-                                        ),
-                                      ),
-                                      Container(
-                                        padding: const EdgeInsets.all(16.0),
-                                        child: ListView.builder(
-                                          shrinkWrap: true,
-                                          physics:
-                                              const NeverScrollableScrollPhysics(),
-                                          itemCount: filteredTimetable.length,
-                                          itemBuilder: (context, index) {
-                                            final time =
-                                                filteredTimetable[index];
-                                            return ExamItemWidget(
-                                              item: time,
-                                              isLast: index ==
-                                                  (filteredTimetable.length -
-                                                      1),
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
-                            }
-                            return const SizedBox.shrink();
-                          }),
-                        ],
-                      ),
-                    )
+                    _buildExamSection(),
                   ],
                 ),
               ),
@@ -308,6 +193,137 @@ class _AvailableScreenState extends State<AvailableScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildExamSection() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Column(
+        children: [
+          SizedBox(
+            width: mq.width * 0.9,
+            child: ElevatedButton(
+              onPressed: () => controller.toggleExam(),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xff0D4065),
+              ),
+              child: const Text(
+                "Exams",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+          Obx(() {
+            if (!controller.expandExam.value) {
+              return const SizedBox.shrink();
+            }
+
+            if (isLoadingExams) {
+              return const Center(child: CircularProgressIndicator());
+            }
+
+            if (examError != null) {
+              return Center(child: Text(examError!));
+            }
+
+            return Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: weekdays
+                        .map((day) => GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _selectedDay = day;
+                                });
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                  vertical: 8,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: _selectedDay == day
+                                      ? Colors.blue
+                                      : Colors.grey[300],
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Text(
+                                    day,
+                                    style: TextStyle(
+                                      color: _selectedDay == day
+                                          ? Colors.white
+                                          : Colors.black,
+                                      fontWeight: _selectedDay == day
+                                          ? FontWeight.bold
+                                          : FontWeight.normal,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ))
+                        .toList(),
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.all(16.0),
+                  child: _buildExamList(),
+                ),
+              ],
+            );
+          }),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildExamList() {
+    final filteredExams = _getFilteredExams();
+
+    if (examData == null || examData!.examTimetables.isEmpty) {
+      return const Center(
+        child: Text(
+          'No schedule available',
+          style: TextStyle(
+            color: Colors.grey,
+            fontSize: 18,
+          ),
+        ),
+      );
+    }
+
+    if (filteredExams.isEmpty) {
+      return const Center(
+        child: Text(
+          'No schedule for this day',
+          style: TextStyle(
+            color: Colors.grey,
+            fontSize: 18,
+          ),
+        ),
+      );
+    }
+
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: filteredExams.length,
+      itemBuilder: (context, index) {
+        final time = filteredExams[index];
+        return ExamItemWidget(
+          item: time,
+          isLast: index == (filteredExams.length - 1),
+        );
+      },
     );
   }
 

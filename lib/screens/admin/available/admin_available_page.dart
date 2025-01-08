@@ -169,16 +169,48 @@ class AdminAvailablePage extends StatelessWidget {
                                                       onTap: () {
                                                         // Handle room tap
 
-                                                        Get.to(() =>
-                                                            AdminPcReservation(
-                                                                labe: block
-                                                                    ?.rooms?[i]
-                                                                    .roomName));
+                                                        if (index == 0) {
+                                                          Get.to(() =>
+                                                              AdminPcReservation(
+                                                                  labe: block
+                                                                      ?.rooms?[
+                                                                          i]
+                                                                      .roomName));
+                                                        }
                                                       },
-                                                      child: Text(
-                                                        block?.rooms?[i]
-                                                                .roomName ??
-                                                            'Unknown Room',
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Text(
+                                                            block?.rooms?[i]
+                                                                    .roomName ??
+                                                                'Unknown Room',
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .only(
+                                                                    right:
+                                                                        20.0),
+                                                            child: Text(
+                                                              i == 0
+                                                                  ? 'Available'
+                                                                  : 'Not Available',
+                                                              style: TextStyle(
+                                                                color: i == 0
+                                                                    ? Colors
+                                                                        .green
+                                                                    : Colors
+                                                                        .red,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
                                                       ),
                                                     ),
                                                   );

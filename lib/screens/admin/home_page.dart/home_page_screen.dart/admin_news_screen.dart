@@ -16,6 +16,30 @@ class NewsScreenAdmin extends StatefulWidget {
 }
 
 class _NewsScreenAdminState extends State<NewsScreenAdmin> {
+  Future<void> _handleDelete(String newsId) async {
+    try {
+      bool success = await AddNewNewsApi().deleteNewsDate(newsId);
+      if (success) {
+        // First close the dialog
+        Navigator.of(context).pop();
+
+        // Then update the state and show success message
+        setState(() {});
+      } else {
+        Get.snackbar("Error", "Failed to delete news",
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red,
+            colorText: Colors.white);
+      }
+    } catch (e) {
+      Navigator.of(context).pop();
+      Get.snackbar("Error", "An error occurred while deleting news",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,8 +63,8 @@ class _NewsScreenAdminState extends State<NewsScreenAdmin> {
             }
           },
           style: ButtonStyle(
-            backgroundColor: const WidgetStatePropertyAll(Color(0xff0D4065)),
-            shape: WidgetStatePropertyAll(
+            backgroundColor: const MaterialStatePropertyAll(Color(0xff0D4065)),
+            shape: MaterialStatePropertyAll(
               RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(13),
               ),
@@ -88,247 +112,222 @@ class _NewsScreenAdminState extends State<NewsScreenAdmin> {
                   ],
                 ),
               ),
-              SizedBox(
-                height: mq.height * 0.02,
-              ),
+              SizedBox(height: mq.height * 0.02),
               SizedBox(
                 height: mq.height * 0.78,
                 width: mq.width * 0.9,
-                child: FutureBuilder(
-                  future: GetNewsData().fetchData(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(child: CircularProgressIndicator());
-                    } else if (snapshot.hasError) {
-                      return const Center(
-                        child: Text("Error"),
-                      );
-                    } else {
-                      if (snapshot.data!.news?.isEmpty ??
-                          snapshot.data!.news == null) {
-                        return const Center(
-                          child: Text(
-                            "No news available",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        );
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: FutureBuilder(
+                    future: GetNewsData().fetchData(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(child: CircularProgressIndicator());
+                      } else if (snapshot.hasError) {
+                        return const Center(child: Text("Error"));
                       } else {
-                        return ListView.builder(
-                            itemCount: snapshot.data!.news!.length,
-                            itemBuilder: (context, index) {
-                              return Container(
-                                margin: const EdgeInsets.only(bottom: 10),
-                                height: mq.height * 0.3,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  color: Colors.white,
-                                  border: Border.all(
-                                    style: BorderStyle.solid,
-                                    color: Colors.black,
-                                    width: 1,
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.5),
-                                      spreadRadius: 2,
-                                      blurRadius: 2,
-                                      offset: const Offset(0, 3),
+                        if (snapshot.data!.news?.isEmpty ??
+                            snapshot.data!.news == null) {
+                          return const Center(
+                            child: Text(
+                              "No news available",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          );
+                        } else {
+                          return ListView.builder(
+                              itemCount: snapshot.data!.news!.length,
+                              itemBuilder: (context, index) {
+                                return Container(
+                                  margin: const EdgeInsets.only(bottom: 10),
+                                  height: mq.height * 0.3,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    color: Colors.white,
+                                    border: Border.all(
+                                      style: BorderStyle.solid,
+                                      color: Colors.black,
+                                      width: 1,
                                     ),
-                                  ],
-                                ),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    // icon button for delete and edit
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(left: 15.0),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          SizedBox(
-                                            height: mq.height * 0.2,
-                                            width: mq.width * 0.7,
-                                            child: Image.network(
-                                                "https://mujtaba-io-university-portal.hf.space${snapshot.data!.news![index].image!}"),
-                                          ),
-                                          IconButton(
-                                            // ignore: prefer_const_constructors
-                                            icon: Icon(Icons.more_vert),
-                                            onPressed: () {
-                                              showDialog(
-                                                  context: context,
-                                                  builder:
-                                                      (context) => AlertDialog(
-                                                            title: Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceBetween,
-                                                              children: [
-                                                                const Text(
-                                                                  "Select",
-                                                                  style:
-                                                                      TextStyle(
-                                                                    color: Color(
-                                                                        0xff0D4065),
-                                                                    fontSize:
-                                                                        20,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                  ),
-                                                                ),
-                                                                IconButton(
-                                                                    onPressed:
-                                                                        () {
-                                                                      Get.back();
-                                                                    },
-                                                                    icon:
-                                                                        const Icon(
-                                                                      Icons
-                                                                          .close,
-                                                                      color: Colors
-                                                                          .red,
-                                                                    ))
-                                                              ],
-                                                            ),
-                                                            content: SizedBox(
-                                                              width: mq.width *
-                                                                  0.2,
-                                                              child: Row(
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.withOpacity(0.5),
+                                        spreadRadius: 2,
+                                        blurRadius: 2,
+                                        offset: const Offset(0, 3),
+                                      ),
+                                    ],
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 10.0),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            SizedBox(
+                                              height: mq.height * 0.2,
+                                              width: mq.width * 0.7,
+                                              child: Image.network(
+                                                  "https://mujtaba-io-university-portal.hf.space${snapshot.data!.news![index].image!}"),
+                                            ),
+                                            IconButton(
+                                              icon: const Icon(Icons.more_vert),
+                                              onPressed: () {
+                                                showDialog(
+                                                    context: context,
+                                                    builder:
+                                                        (context) =>
+                                                            AlertDialog(
+                                                              title: Row(
                                                                 mainAxisAlignment:
                                                                     MainAxisAlignment
-                                                                        .spaceAround,
+                                                                        .spaceBetween,
                                                                 children: [
-                                                                  ElevatedButton(
-                                                                      onPressed:
-                                                                          () async {
-                                                                        final result = await Get.to(() =>
-                                                                            EditNewsScreen(
-                                                                              news: snapshot.data!.news![index],
-                                                                            ));
-                                                                        if (result ==
-                                                                            true) {
-                                                                          // Trigger a refresh
-                                                                          setState(
-                                                                              () {});
-                                                                        }
-                                                                      },
-                                                                      style: ButtonStyle(
-                                                                          backgroundColor: const WidgetStatePropertyAll(
-                                                                            Color(0xff0D4065),
-                                                                          ),
-                                                                          shape: WidgetStatePropertyAll(
-                                                                            RoundedRectangleBorder(
-                                                                              borderRadius: BorderRadius.circular(10),
-                                                                            ),
-                                                                          )),
-                                                                      child: const Text(
-                                                                        "Edit",
-                                                                        style: TextStyle(
-                                                                            color: Colors
-                                                                                .white,
-                                                                            fontSize:
-                                                                                20,
-                                                                            fontWeight:
-                                                                                FontWeight.bold),
-                                                                      )),
-
-                                                                  //
-                                                                  // Delete Button
-                                                                  //
-                                                                  ElevatedButton(
-                                                                      onPressed:
-                                                                          () async {
-                                                                        bool
-                                                                            value =
-                                                                            await AddNewNewsApi().deleteNewsDate(
-                                                                          snapshot
-                                                                              .data!
-                                                                              .news![index]
-                                                                              .newsId
-                                                                              .toString(),
-                                                                        );
-
-                                                                        if (value) {
-                                                                          setState(
-                                                                              () {});
-                                                                          Get.back();
-                                                                        }
-                                                                      },
-                                                                      style: ButtonStyle(
-                                                                          backgroundColor: const WidgetStatePropertyAll(
-                                                                            Color(0xff0D4065),
-                                                                          ),
-                                                                          shape: WidgetStatePropertyAll(
-                                                                            RoundedRectangleBorder(
-                                                                              borderRadius: BorderRadius.circular(10),
-                                                                            ),
-                                                                          )),
-                                                                      child: const Text(
-                                                                        "Delete",
-                                                                        style: TextStyle(
-                                                                            color: Colors
-                                                                                .redAccent,
-                                                                            fontSize:
-                                                                                20,
-                                                                            fontWeight:
-                                                                                FontWeight.bold),
-                                                                      )),
+                                                                  const Text(
+                                                                    "Select",
+                                                                    style:
+                                                                        TextStyle(
+                                                                      color: Color(
+                                                                          0xff0D4065),
+                                                                      fontSize:
+                                                                          20,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                    ),
+                                                                  ),
+                                                                  IconButton(
+                                                                      onPressed: () =>
+                                                                          Navigator.of(context)
+                                                                              .pop(),
+                                                                      icon:
+                                                                          const Icon(
+                                                                        Icons
+                                                                            .close,
+                                                                        color: Colors
+                                                                            .red,
+                                                                      ))
                                                                 ],
                                                               ),
-                                                            ),
-                                                          ));
-                                            },
-                                          ),
-                                        ],
+                                                              content: SizedBox(
+                                                                width:
+                                                                    mq.width *
+                                                                        0.2,
+                                                                child: Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .spaceAround,
+                                                                  children: [
+                                                                    ElevatedButton(
+                                                                        onPressed:
+                                                                            () async {
+                                                                          final result = await Get.to(() =>
+                                                                              EditNewsScreen(
+                                                                                news: snapshot.data!.news![index],
+                                                                              ));
+                                                                          if (result ==
+                                                                              true) {
+                                                                            Navigator.of(context).pop();
+                                                                            setState(() {});
+                                                                          }
+                                                                        },
+                                                                        style: ButtonStyle(
+                                                                            backgroundColor: const MaterialStatePropertyAll(
+                                                                              Color(0xff0D4065),
+                                                                            ),
+                                                                            shape: MaterialStatePropertyAll(
+                                                                              RoundedRectangleBorder(
+                                                                                borderRadius: BorderRadius.circular(10),
+                                                                              ),
+                                                                            )),
+                                                                        child: const Text(
+                                                                          "Edit",
+                                                                          style: TextStyle(
+                                                                              color: Colors.white,
+                                                                              fontSize: 20,
+                                                                              fontWeight: FontWeight.bold),
+                                                                        )),
+                                                                    ElevatedButton(
+                                                                        onPressed: () => _handleDelete(snapshot
+                                                                            .data!
+                                                                            .news![index]
+                                                                            .newsId
+                                                                            .toString()),
+                                                                        style: ButtonStyle(
+                                                                            backgroundColor: const MaterialStatePropertyAll(
+                                                                              Color(0xff0D4065),
+                                                                            ),
+                                                                            shape: MaterialStatePropertyAll(
+                                                                              RoundedRectangleBorder(
+                                                                                borderRadius: BorderRadius.circular(10),
+                                                                              ),
+                                                                            )),
+                                                                        child: const Text(
+                                                                          "Delete",
+                                                                          style: TextStyle(
+                                                                              color: Colors.redAccent,
+                                                                              fontSize: 20,
+                                                                              fontWeight: FontWeight.bold),
+                                                                        )),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ));
+                                              },
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                    const Padding(
-                                      padding: EdgeInsets.only(left: 30.0),
-                                      child: Align(
-                                        alignment: Alignment.topLeft,
-                                        child: Text(
-                                          "Watch Now:",
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500,
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 30.0),
+                                        child: Align(
+                                          alignment: Alignment.topCenter,
+                                          child: Text(
+                                            snapshot.data!.news![index].title!,
+                                            style: const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w500,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    TextButton(
-                                        onPressed: () {
-                                          UrlLuncher.launchURL(snapshot
-                                              .data!.news![index].youtubeLink!);
-                                        },
-                                        child: Text(
-                                          snapshot
-                                              .data!.news![index].youtubeLink!,
-                                          style: const TextStyle(
-                                              color: Colors.blue, fontSize: 14),
-                                        )),
-                                  ],
-                                ),
-                              );
-                            });
+                                      TextButton(
+                                          onPressed: () {
+                                            UrlLuncher.launchURL(snapshot.data!
+                                                .news![index].youtubeLink!);
+                                          },
+                                          child: Text(
+                                            snapshot.data!.news![index]
+                                                .youtubeLink!,
+                                            style: const TextStyle(
+                                                color: Colors.blue,
+                                                fontSize: 12),
+                                          )),
+                                    ],
+                                  ),
+                                );
+                              });
+                        }
                       }
-                    }
-                  },
+                    },
+                  ),
                 ),
               ),
-              SizedBox(
-                height: mq.height * 0.05,
-              ),
+              SizedBox(height: mq.height * 0.05),
             ],
           ),
         ),

@@ -63,7 +63,7 @@ class _ActivityDetailsState extends State<ActivityDetails> {
                   height: mq.height * 0.02,
                 ),
                 SizedBox(
-                  height: mq.height * 0.55,
+                  height: mq.height * 0.6,
                   width: mq.width * 0.9,
                   child: Container(
                     height: mq.height * 0.5,

@@ -217,16 +217,17 @@ class _RoadmapScreenState extends State<RoadmapScreen> {
                 SizedBox(
                   height: mq.height * 0.02,
                 ),
-                Container(
-                  height: mq.height * 0.4,
-                  width: mq.width * 0.9,
-                  padding: const EdgeInsets.all(8.0),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: SingleChildScrollView(
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 15.0),
+                  child: Container(
+                    height: mq.height * 0.52,
+                    width: mq.width * 0.9,
+                    padding: const EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

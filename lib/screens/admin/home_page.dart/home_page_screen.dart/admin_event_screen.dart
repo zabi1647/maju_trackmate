@@ -16,6 +16,30 @@ class EventsScreenAdmin extends StatefulWidget {
 }
 
 class _EventsScreenAdminState extends State<EventsScreenAdmin> {
+  Future<void> _handleDelete(String eventId) async {
+    try {
+      bool success = await AddNewEventApi().deleteEvent(eventId);
+      if (success) {
+        // First close the dialog
+        Navigator.of(context).pop();
+
+        // Then update the state and show success message
+        setState(() {});
+      } else {
+        Get.snackbar("Error", "Failed to delete event",
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red,
+            colorText: Colors.white);
+      }
+    } catch (e) {
+      Navigator.of(context).pop();
+      Get.snackbar("Error", "An error occurred while deleting event",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,13 +52,12 @@ class _EventsScreenAdminState extends State<EventsScreenAdmin> {
           onPressed: () async {
             final result = await Get.to(() => const AddNeweventScreen());
             if (result == true) {
-              // Trigger a refresh
               setState(() {});
             }
           },
           style: ButtonStyle(
-            backgroundColor: const WidgetStatePropertyAll(Color(0xff0D4065)),
-            shape: WidgetStatePropertyAll(
+            backgroundColor: const MaterialStatePropertyAll(Color(0xff0D4065)),
+            shape: MaterialStatePropertyAll(
               RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(13),
               ),
@@ -90,9 +113,7 @@ class _EventsScreenAdminState extends State<EventsScreenAdmin> {
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: mq.height * 0.02,
-                ),
+                SizedBox(height: mq.height * 0.02),
                 SizedBox(
                   height: mq.height * 0.85,
                   width: mq.width * 0.9,
@@ -102,9 +123,7 @@ class _EventsScreenAdminState extends State<EventsScreenAdmin> {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const Center(child: CircularProgressIndicator());
                       } else if (snapshot.hasError) {
-                        return const Center(
-                          child: Text("Error"),
-                        );
+                        return const Center(child: Text("Error"));
                       } else {
                         if (snapshot.data!.events?.isEmpty ??
                             snapshot.data!.events == null) {
@@ -151,8 +170,7 @@ class _EventsScreenAdminState extends State<EventsScreenAdmin> {
                                       Align(
                                         alignment: Alignment.topRight,
                                         child: IconButton(
-                                          // ignore: prefer_const_constructors
-                                          icon: Icon(Icons.more_vert),
+                                          icon: const Icon(Icons.more_vert),
                                           onPressed: () {
                                             showDialog(
                                                 context: context,
@@ -176,10 +194,10 @@ class _EventsScreenAdminState extends State<EventsScreenAdmin> {
                                                                 ),
                                                               ),
                                                               IconButton(
-                                                                  onPressed:
-                                                                      () {
-                                                                    Get.back();
-                                                                  },
+                                                                  onPressed: () =>
+                                                                      Navigator.of(
+                                                                              context)
+                                                                          .pop(),
                                                                   icon:
                                                                       const Icon(
                                                                     Icons.close,
@@ -206,17 +224,18 @@ class _EventsScreenAdminState extends State<EventsScreenAdmin> {
                                                                               ));
                                                                       if (result ==
                                                                           true) {
-                                                                        // Trigger a refresh
+                                                                        Navigator.of(context)
+                                                                            .pop();
                                                                         setState(
                                                                             () {});
                                                                       }
                                                                     },
                                                                     style: ButtonStyle(
-                                                                        backgroundColor: const WidgetStatePropertyAll(
+                                                                        backgroundColor: const MaterialStatePropertyAll(
                                                                           Color(
                                                                               0xff0D4065),
                                                                         ),
-                                                                        shape: WidgetStatePropertyAll(
+                                                                        shape: MaterialStatePropertyAll(
                                                                           RoundedRectangleBorder(
                                                                             borderRadius:
                                                                                 BorderRadius.circular(10),
@@ -232,32 +251,19 @@ class _EventsScreenAdminState extends State<EventsScreenAdmin> {
                                                                           fontWeight:
                                                                               FontWeight.bold),
                                                                     )),
-
-                                                                //
-                                                                // Delete Button
-                                                                //
                                                                 ElevatedButton(
-                                                                    onPressed:
-                                                                        () async {
-                                                                      bool value = await AddNewEventApi().deleteEvent(snapshot
-                                                                          .data!
-                                                                          .events![
-                                                                              index]
-                                                                          .eventId
-                                                                          .toString());
-
-                                                                      if (value) {
-                                                                        setState(
-                                                                            () {});
-                                                                        Get.back();
-                                                                      }
-                                                                    },
+                                                                    onPressed: () => _handleDelete(snapshot
+                                                                        .data!
+                                                                        .events![
+                                                                            index]
+                                                                        .eventId
+                                                                        .toString()),
                                                                     style: ButtonStyle(
-                                                                        backgroundColor: const WidgetStatePropertyAll(
+                                                                        backgroundColor: const MaterialStatePropertyAll(
                                                                           Color(
                                                                               0xff0D4065),
                                                                         ),
-                                                                        shape: WidgetStatePropertyAll(
+                                                                        shape: MaterialStatePropertyAll(
                                                                           RoundedRectangleBorder(
                                                                             borderRadius:
                                                                                 BorderRadius.circular(10),
@@ -292,9 +298,7 @@ class _EventsScreenAdminState extends State<EventsScreenAdmin> {
                                           fit: BoxFit.fill,
                                         ),
                                       ),
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
+                                      const SizedBox(height: 10),
                                       Text(snapshot.data!.events![index].title!,
                                           style: const TextStyle(
                                             color: Color(0xff0D4065),
@@ -314,7 +318,7 @@ class _EventsScreenAdminState extends State<EventsScreenAdmin> {
                                       Align(
                                         alignment: Alignment.centerLeft,
                                         child: Text(
-                                          "Venu: ${snapshot.data!.events![index].venue!}",
+                                          "Venue: ${snapshot.data!.events![index].venue!}",
                                           style: const TextStyle(
                                             color: Colors.black,
                                             fontSize: 12,
@@ -339,14 +343,14 @@ class _EventsScreenAdminState extends State<EventsScreenAdmin> {
                                           child: Text(
                                             snapshot.data!.events![index]
                                                 .registration!,
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 color: Colors.blue,
                                                 fontSize: 14),
                                           )),
                                       const Align(
                                         alignment: Alignment.centerLeft,
                                         child: Text(
-                                          "Partcipation Registration:",
+                                          "Participation Registration:",
                                           style: TextStyle(
                                             color: Colors.black,
                                             fontSize: 12,
@@ -363,7 +367,7 @@ class _EventsScreenAdminState extends State<EventsScreenAdmin> {
                                           child: Text(
                                             snapshot.data!.events![index]
                                                 .participationRegistration!,
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 color: Colors.blue,
                                                 fontSize: 14),
                                           )),
@@ -390,7 +394,7 @@ class _EventsScreenAdminState extends State<EventsScreenAdmin> {
                                               child: Text(
                                                 snapshot.data!.events![index]
                                                     .linkedin!,
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                     color: Colors.blue,
                                                     fontSize: 14),
                                               )),
@@ -405,9 +409,7 @@ class _EventsScreenAdminState extends State<EventsScreenAdmin> {
                     },
                   ),
                 ),
-                SizedBox(
-                  height: mq.height * 0.1,
-                ),
+                SizedBox(height: mq.height * 0.1),
               ],
             ),
           ),
