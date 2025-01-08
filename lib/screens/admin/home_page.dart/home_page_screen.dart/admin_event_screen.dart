@@ -294,7 +294,7 @@ class _EventsScreenAdminState extends State<EventsScreenAdmin> {
                                               BorderRadius.circular(20),
                                         ),
                                         child: Image.network(
-                                          "https://mujtaba-io-university-portal.hf.space${snapshot.data!.events![index].image}",
+                                          "https://president250-university-portal.hf.space${snapshot.data!.events![index].image}",
                                           fit: BoxFit.fill,
                                         ),
                                       ),
@@ -340,12 +340,17 @@ class _EventsScreenAdminState extends State<EventsScreenAdmin> {
                                             UrlLuncher.launchURL(snapshot.data!
                                                 .events![index].registration!);
                                           },
-                                          child: Text(
-                                            snapshot.data!.events![index]
-                                                .registration!,
-                                            style: const TextStyle(
-                                                color: Colors.blue,
-                                                fontSize: 14),
+                                          child: SizedBox(
+                                            height: mq.height * 0.05,
+                                            child: SingleChildScrollView(
+                                              child: Text(
+                                                snapshot.data!.events![index]
+                                                    .registration!,
+                                                style: const TextStyle(
+                                                    color: Colors.blue,
+                                                    fontSize: 14),
+                                              ),
+                                            ),
                                           )),
                                       const Align(
                                         alignment: Alignment.centerLeft,
@@ -364,12 +369,17 @@ class _EventsScreenAdminState extends State<EventsScreenAdmin> {
                                                 .events![index]
                                                 .participationRegistration!);
                                           },
-                                          child: Text(
-                                            snapshot.data!.events![index]
-                                                .participationRegistration!,
-                                            style: const TextStyle(
-                                                color: Colors.blue,
-                                                fontSize: 14),
+                                          child: SizedBox(
+                                            height: mq.height * 0.05,
+                                            child: SingleChildScrollView(
+                                              child: Text(
+                                                snapshot.data!.events![index]
+                                                    .participationRegistration!,
+                                                style: const TextStyle(
+                                                    color: Colors.blue,
+                                                    fontSize: 14),
+                                              ),
+                                            ),
                                           )),
                                       const Align(
                                         alignment: Alignment.centerLeft,

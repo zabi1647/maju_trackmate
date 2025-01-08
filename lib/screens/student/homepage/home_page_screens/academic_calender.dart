@@ -81,87 +81,93 @@ class _AcademicCalenderState extends State<AcademicCalender> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          Table(
-                            border: TableBorder.all(color: Color(0xff0D4065)),
-                            columnWidths: const {
-                              0: FractionColumnWidth(0.1),
-                              1: FractionColumnWidth(0.6),
-                              2: FractionColumnWidth(0.3),
-                            },
-                            children: [
-                              const TableRow(
-                                decoration:
-                                    BoxDecoration(color: Color(0xff0D4065)),
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Text(
-                                      "No",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Text(
-                                      "Activity",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Text(
-                                      "Date",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                ],
-                              ),
-
-                              // Course Rows
-                              ...snapshot.data!.calendar!
-                                  .asMap()
-                                  .entries
-                                  .map((entry) {
-                                int index = entry.key;
-                                final cal = entry.value;
-                                return TableRow(
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Table(
+                              border: TableBorder.all(color: Color(0xff0D4065)),
+                              columnWidths: const {
+                                0: FractionColumnWidth(0.1),
+                                1: FractionColumnWidth(0.6),
+                                2: FractionColumnWidth(0.3),
+                              },
+                              children: [
+                                const TableRow(
+                                  decoration:
+                                      BoxDecoration(color: Color(0xff0D4065)),
                                   children: [
                                     Padding(
-                                      padding: const EdgeInsets.all(8.0),
+                                      padding: EdgeInsets.all(8.0),
                                       child: Text(
-                                        "${index + 1}",
+                                        "No",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white),
                                         textAlign: TextAlign.center,
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.all(8.0),
+                                      padding: EdgeInsets.all(8.0),
                                       child: Text(
-                                        cal.title ?? "",
+                                        "Activity",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
                                         textAlign: TextAlign.center,
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.all(8.0),
+                                      padding: EdgeInsets.all(8.0),
                                       child: Text(
-                                        cal.startDate ?? "",
+                                        "Date",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
                                         textAlign: TextAlign.center,
                                       ),
                                     ),
                                   ],
-                                );
-                              }).toList(),
-                            ],
+                                ),
+
+                                // Course Rows
+                                ...snapshot.data!.calendar!
+                                    .asMap()
+                                    .entries
+                                    .map((entry) {
+                                  int index = entry.key;
+                                  final cal = entry.value;
+                                  return TableRow(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          "${index + 1}",
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          cal.title ?? "",
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          cal.startDate ?? "",
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                }).toList(),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: mq.height * 0.02,
                           ),
                         ],
                       );

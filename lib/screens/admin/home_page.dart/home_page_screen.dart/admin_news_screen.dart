@@ -180,9 +180,10 @@ class _NewsScreenAdminState extends State<NewsScreenAdmin> {
                                               height: mq.height * 0.2,
                                               width: mq.width * 0.7,
                                               child: Image.network(
-                                                  "https://mujtaba-io-university-portal.hf.space${snapshot.data!.news![index].image!}"),
+                                                  "https://president250-university-portal.hf.space${snapshot.data!.news![index].image!}"),
                                             ),
                                             IconButton(
+                                              padding: EdgeInsets.zero,
                                               icon: const Icon(Icons.more_vert),
                                               onPressed: () {
                                                 showDialog(

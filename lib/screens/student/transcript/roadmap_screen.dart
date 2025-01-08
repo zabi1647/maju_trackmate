@@ -6,6 +6,7 @@ import 'package:maju_trackmate/model/student_classes/result/result_card.dart';
 import 'package:maju_trackmate/utils/constant_values/currently_enrolled_courses.dart';
 import 'package:maju_trackmate/utils/constant_values/size.dart';
 import 'package:maju_trackmate/widgets/student/bar_chart.dart';
+import 'package:maju_trackmate/widgets/student/logout_button.dart';
 
 class RoadmapScreen extends StatefulWidget {
   final ResultCardData? resultData;
@@ -70,14 +71,7 @@ class _RoadmapScreenState extends State<RoadmapScreen> {
         ),
         centerTitle: true,
         actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.more_vert,
-              color: Colors.white,
-              size: 20,
-            ),
-          ),
+          getLogoutButton(),
         ],
       ),
       backgroundColor: Colors.white,
@@ -220,7 +214,7 @@ class _RoadmapScreenState extends State<RoadmapScreen> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 15.0),
                   child: Container(
-                    height: mq.height * 0.52,
+                    height: mq.height * 0.57,
                     width: mq.width * 0.9,
                     padding: const EdgeInsets.all(8.0),
                     decoration: BoxDecoration(

@@ -5,6 +5,7 @@ import 'package:maju_trackmate/model/student_classes/result/result_card.dart';
 import 'package:maju_trackmate/screens/student/transcript/roadmap_screen.dart';
 import 'package:maju_trackmate/utils/constant_values/size.dart';
 import 'package:maju_trackmate/utils/constant_values/srudent_result_card_json.dart';
+import 'package:maju_trackmate/widgets/student/logout_button.dart';
 import 'package:maju_trackmate/widgets/student/student_gpa.dart';
 
 class TranscriptScreen extends StatefulWidget {
@@ -68,14 +69,7 @@ class _TranscriptScreenState extends State<TranscriptScreen> {
                     children: [
                       Align(
                         alignment: Alignment.topRight,
-                        child: IconButton(
-                          onPressed: () {},
-                          icon: const Icon(
-                            Icons.more_vert,
-                            color: Colors.white,
-                            size: 35,
-                          ),
-                        ),
+                        child: getLogoutButton(),
                       ),
 
                       const Text(

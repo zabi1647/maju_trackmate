@@ -40,7 +40,7 @@ class _LeaveScreenState extends State<LeaveScreen> {
                       Row(
                         children: [
                           const Padding(
-                            padding: EdgeInsets.only(left: 100),
+                            padding: EdgeInsets.only(left: 150),
                             child: Text("Leave",
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 30)),

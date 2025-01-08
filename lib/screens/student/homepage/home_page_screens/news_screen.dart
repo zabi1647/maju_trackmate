@@ -113,17 +113,16 @@ class _NewsScreenStudentState extends State<NewsScreenStudent> {
                               SizedBox(
                                 height: mq.height * 0.2,
                                 width: mq.width * 0.7,
-                                child: Image.asset(
-                                  'assets/png/icons/student/majunews.png',
-                                ),
+                                child: Image.network(
+                                    "https://president250-university-portal.hf.space${snapshot.data!.news![index].image!}"),
                               ),
-                              const Padding(
-                                padding: EdgeInsets.only(left: 30.0),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 30.0),
                                 child: Align(
                                   alignment: Alignment.topLeft,
                                   child: Text(
-                                    "Watch Now:",
-                                    style: TextStyle(
+                                    snapshot.data!.news![index].title!,
+                                    style: const TextStyle(
                                       color: Colors.black,
                                       fontSize: 14,
                                       fontWeight: FontWeight.w500,
